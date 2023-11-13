@@ -1,0 +1,12 @@
+name: "suppe-og-analyse"
+title: "Suppe og analyse"
+description: |
+  Blogg om diverse analyser, kanskje suppe.
+output_dir: "_site"
+navbar:
+  right:
+    - text: "Hjem"
+      href: index.html
+    - text: "Om"
+      href: about.html
+output: distill::distill_article

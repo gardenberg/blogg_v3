@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "Om",
+      "description": "In Soup We Trust. All Others Must Bring Data.",
+      "author": [],
+      "contents": "\r\nDet er noe alle statsvitere, data-entusiaster og folk over gjennomsnittet glad i metoder og suppe kan skrive under på.\r\nNår jeg ikke lager blogposter om data, R og andre spennende ting, jobber jeg i ideas2evidence som seniorutreder og fagansvarlig for integrering.\r\nTidligere har jeg blant annet…\r\njobba med statistikk om barnevernet og monitorering av kommunalt barnevern,\r\narbeida med utvikling og drift av statistikk-sidene hos IMDi,,\r\nskrevet den årlige rapporteringa om hvordan det Egentlig går med integreringa.\r\njobba jeg med landbrukspolitikk, og skrev bl.a. om Korn og krise. Hvorfor Norge bør starte kornlagring.\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-11-13T21:17:50+01:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Suppe og analyse",
+      "author": [],
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-11-13T21:17:50+01:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}

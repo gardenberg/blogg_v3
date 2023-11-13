@@ -1,0 +1,20 @@
+---
+title: "Om"
+description: |
+  In Soup We Trust. All Others Must Bring Data.
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Det er noe alle statsvitere, data-entusiaster og folk over gjennomsnittet glad i metoder og suppe kan skrive under på. 
+
+Når jeg ikke lager blogposter om data, R og andre spennende ting, jobber jeg i [ideas2evidence](https://www.ideas2evidence.com/) som seniorutreder og fagansvarlig for integrering. 
+
+ Tidligere har jeg blant annet...
+
+- jobba med [statistikk om barnevernet](https://bufdir.no/Statistikk_og_analyse/Barnevern/Oppsummert_status_i_tall_for_barnevernet/) og [monitorering av kommunalt barnevern](https://bufdir.no/Statistikk_og_analyse/Barnevern_kommunemonitor/#/), 
+- arbeida med utvikling og drift av [statistikk-sidene](https://www.imdi.no/om-integrering-i-norge/statistikk/) hos IMDi,,
+- skrevet den [årlige rapporteringa](https://www.imdi.no/globalassets/dokumenter/arsrapporter-og-styrende-dokumenter/arsrapport-2017/integrering-i-norge-overordnet-analyse-2017.pdf) om hvordan det Egentlig går med integreringa. 
+- jobba jeg med landbrukspolitikk, og skrev bl.a. om [Korn og krise. Hvorfor Norge bør starte kornlagring](https://www.agrianalyse.no/publikasjoner/korn-og-krise-article335-856.html).
