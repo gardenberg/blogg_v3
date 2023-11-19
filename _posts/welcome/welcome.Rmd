@@ -4,10 +4,8 @@ description: |
   Welcome to our new blog, Suppe og analyse. We hope you enjoy 
   reading what we have to say!
 author:
-  - name: Nora Jones 
-    url: https://example.com/norajones
-    affiliation: Spacely Sprockets
-    affiliation_url: https://example.com/spacelysprokets
+  - name: Eivind Hageberg 
+    url: https://suppe-og-analyse.netlify.app
 date: 11-13-2023
 output:
   distill::distill_article:
@@ -23,4 +21,5 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
+Her er det litt tekst. Også med æ, ø og å.
 

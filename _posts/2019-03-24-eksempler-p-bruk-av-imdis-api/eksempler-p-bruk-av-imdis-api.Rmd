@@ -1,0 +1,26 @@
+---
+title: "Eksempler på bruk av IMDis API"
+description: |
+  Dette var en innføring i bruk av IMDis udokumenterte API. Siden det er uklart om de fortsatt støtter slik udokumentert fremferd, er koden tatt vekk.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2019-03-24
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+IMDis [tall og statistikk-nettsider](https://www.imdi.no/tall-og-statistikk/) henter dataene sine om innvandring og integrering i kommuner, fylker og Norge fra et API.
+
+APIet er dessverre ikke dokumentert, men lar seg enkelt utforske ved hjelp av en nettleser-konsoll, f.eks. i Chrome. Her kommer et kort forsøk på litt forklaring. Datasettet bruker NLOD-lisensen. (Det gjorde i hvert fall det i 2019, men sjekk gjerne med IMDis nettsider om det har skjedd endringer).
+
+## Innhold i datasettet
+Datasettet har informasjon om innvandrere og integrering på en rekke områder i norske kommuner, næringsregioner, fylker, hele landet og bydeler i Oslo, og er tilgjengelig med NLOD-lisens (se nederst for lisens-betingelser). Noe kommer fra IMDi, men mesteparten kommer fra Statistisk sentralbyrå (SSB).
+
+IMDi tilgjengeliggjør dataene fra nettsidene i et krysstabellformat som er uhensiktsmessig for analyseformål, og dataene tilgjengeliggjøres derfor her (som et privat prosjekt) i et flatt format.
+
+__En advarsel__: Datasettene er kodet, og kodeboka er foreløpig ikke en del av dette repoet. Beskrivelser av data skal egentlig være tilgjengelig fra et API fra IMDi.no ("http://imdi.no/api/indikatorcarddescriptions" og "http://imdi.no/api/indikatordimensions"), men det ser p.t. ikke ut til å være tilfelle.
+
+## Resten av innholdet fjernet.
+
