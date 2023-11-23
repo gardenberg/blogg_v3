@@ -1,0 +1,2668 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+<title>Suppe og analyse: Hvordan hente data fra Doffin?</title>
+
+<meta property="description" itemprop="description" content="Målet er å lage en webscraper som regelmessig henter data fra Doffin om relevante utlysninger. Det ser ut til å funke fint - dermed kan en med litt mer jobb, evt. jevnlig kjøring, lage seg et system som automatisk finner nye aktuelle utlysninger når de lyses ut. En kan også hente data til analyser av utlysningsmarkedet.."/>
+
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2022-01-25"/>
+<meta property="article:created" itemprop="dateCreated" content="2022-01-25"/>
+<meta name="article:author" content="Eivind Hageberg"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="Suppe og analyse: Hvordan hente data fra Doffin?"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="Målet er å lage en webscraper som regelmessig henter data fra Doffin om relevante utlysninger. Det ser ut til å funke fint - dermed kan en med litt mer jobb, evt. jevnlig kjøring, lage seg et system som automatisk finner nye aktuelle utlysninger når de lyses ut. En kan også hente data til analyser av utlysningsmarkedet.."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="Suppe og analyse"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary"/>
+<meta property="twitter:title" content="Suppe og analyse: Hvordan hente data fra Doffin?"/>
+<meta property="twitter:description" content="Målet er å lage en webscraper som regelmessig henter data fra Doffin om relevante utlysninger. Det ser ut til å funke fint - dermed kan en med litt mer jobb, evt. jevnlig kjøring, lage seg et system som automatisk finner nye aktuelle utlysninger når de lyses ut. En kan også hente data til analyser av utlysningsmarkedet.."/>
+
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Hvordan hente data fra Doffin?"]},{"type":"character","attributes":{},"value":["Målet er å lage en webscraper som regelmessig henter data fra Doffin om relevante utlysninger. Det ser ut til å funke fint - dermed kan en med litt mer jobb, evt. jevnlig kjøring, lage seg et system som automatisk finner nye aktuelle utlysninger når de lyses ut. En kan også hente data til analyser av utlysningsmarkedet.."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Eivind Hageberg"]},{"type":"character","attributes":{},"value":["https://suppe-og-analyse.netlify.app"]}]}]},{"type":"character","attributes":{},"value":["2022-01-25"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"NULL"}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
+  font-size: 100%;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+hr.section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0px;
+}
+
+
+d-byline {
+  border-top: none;
+}
+
+d-article {
+  padding-top: 2.5rem;
+  padding-bottom: 30px;
+  border-top: none;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: auto;
+}
+
+d-article div.sourceCode {
+  background-color: white;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+d-article pre {
+  font-size: 12px;
+  color: black;
+  background: none;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+d-article details {
+  grid-column: text;
+  margin-bottom: 0.8em;
+}
+
+@media(min-width: 768px) {
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+/* tweak for Pandoc numbered line within distill */
+d-article pre.numberSource code > span {
+    left: -2em;
+}
+
+d-article pre {
+  font-size: 14px;
+}
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
+  }
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
+
+/* Citation hover box */
+
+.tippy-box[data-theme~=light-border] {
+  background-color: rgba(250, 250, 250, 0.95);
+}
+
+.tippy-content > p {
+  margin-bottom: 0;
+  padding: 2px;
+}
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+  }
+
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // separator
+  var separator = '<hr class="section-separator" style="clear: both"/>';
+  // prepend separator above appendix
+  $('.d-byline').before(separator);
+  $('.d-article').before(separator);
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme, except when numbering line
+  // in code chunk
+  $('pre:not(.numberLines) code.sourceCode a:empty').remove();
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      var author_name = front_matter.authors[i].author
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
+    });
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // hoverable references
+    $('span.citation[data-cites]').each(function() {
+      const citeChild = $(this).children()[0]
+      // Do not process if @xyz has been used without escaping and without bibliography activated
+      // https://github.com/rstudio/distill/issues/466
+      if (citeChild === undefined) return true
+
+      if (citeChild.nodeName == "D-FOOTNOTE") {
+        var fn = citeChild
+        $(this).html(fn.shadowRoot.querySelector("sup"))
+        $(this).id = fn.id
+        fn.remove()
+      }
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        // Could use CSS.escape too here, we insure backward compatibility in navigator
+        return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+      }).join("\n");
+      window.tippy(this, {
+        allowHTML: true,
+        content: refHtml,
+        maxWidth: 500,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start'
+      });
+    });
+
+    // fix footnotes in tables (#411)
+    // replacing broken distill.pub feature
+    $('table d-footnote').each(function() {
+      // we replace internal showAtNode methode which is triggered when hovering a footnote
+      this.hoverBox.showAtNode = function(node) {
+        // ported from https://github.com/distillpub/template/pull/105/files
+        calcOffset = function(elem) {
+            let x = elem.offsetLeft;
+            let y = elem.offsetTop;
+            // Traverse upwards until an `absolute` element is found or `elem`
+            // becomes null.
+            while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                x += elem.offsetLeft;
+                y += elem.offsetTop;
+            }
+
+            return { left: x, top: y };
+        }
+        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+        const bbox = node.getBoundingClientRect();
+        const offset = calcOffset(node);
+        this.show([offset.left + bbox.width, offset.top + bbox.height]);
+      }
+    })
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-contents').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    // ignore leaflet img layers (#106)
+    figures = figures.filter(':not(img[class*="leaflet"])')
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.25/header-attrs.js"></script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Hvordan hente data fra Doffin?","description":"Målet er å lage en webscraper som regelmessig henter data fra Doffin om relevante utlysninger. Det ser ut til å funke fint - dermed kan en med litt mer jobb, evt. jevnlig kjøring, lage seg et system som automatisk finner nye aktuelle utlysninger når de lyses ut. En kan også hente data til analyser av utlysningsmarkedet..","authors":[{"author":"Eivind Hageberg","authorURL":"https://suppe-og-analyse.netlify.app","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-01-25T00:00:00.000+01:00","citationText":"Hageberg, 2022"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">Suppe og analyse</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Hjem</a>
+<a href="../../about.html">Om</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Hvordan hente data fra Doffin?</h1>
+
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>Målet er å lage en webscraper som regelmessig henter data fra Doffin om relevante utlysninger. Det ser ut til å funke fint - dermed kan en med litt mer jobb, evt. jevnlig kjøring, lage seg et system som automatisk finner nye aktuelle utlysninger når de lyses ut. En kan også hente data til analyser av utlysningsmarkedet..</p></p>
+</div>
+
+<div class="d-byline">
+  Eivind Hageberg <a href="https://suppe-og-analyse.netlify.app" class="uri">https://suppe-og-analyse.netlify.app</a> 
+  
+<br/>2022-01-25
+</div>
+
+<div class="d-article">
+<p>Oppdatering: Etter at nye doffin ble lansert høsten 2023, slutten denne koden å virke.</p>
+<p><a href="https://www.doffin.no/">Doffin</a> er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser på doffin.no .</p>
+<ul>
+<li>For å holde seg oppdatert på aktuelle kunngjøringer, kan det være en fordel å med jevne mellomrom få varslinger om nye kunngjøringer.</li>
+<li>Det kan også være nyttig å kunne sette opp abonnementer på relativt komplekse søk (f.eks. etter flere oppdragsgivere en kjenner godt, mange mindre oppdragsgivere som publiserer sjeldnere og dermed lettere går under radaren).</li>
+<li>Det kan også potensielt være verdi å kunne se statistikk over omfanget av utlysninger etter ulike parametre (som. f.eks. om det er spesielle måneder hvor det lyses ut spesielt mye FoU-prosjekter, om det er aktører som i større eller mindre grad bruker Doffin (og dermed heller bruker andre anskaffelseskanaler).</li>
+</ul>
+<p>Men Doffin-nettsida tilbyr i dag lite som passer slikt. Doffin er kun en database og et web-grensesnitt for å søke i databasen, og tilbyr ikke selv noen tjenester som dekker dette.</p>
+<p>Jeg har tidligere (i en anna sammenheng) vært i kontakt med daværende eier av Doffin-databasen, og undersøkte mulighetene for å få den utlevert. Det førte ingen steder. Vi må dermed ta sakene i egne hender. Det ser heller ikke ut til å ligge noe kode åpent tilgjengelig som gjør det samme, men et par ting finnes dog:
+- En <a href="https://github.com/petterreinholdtsen/local-doffin-db">open source-entusiast</a> har laget en webscraper for scraperwiki for å konvertere Doffin til en lokal sqlite-database. Den er sist oppdatert i 2006, og jeg snakker ikke scraperwiki (eller QuickCode, som det heter nå? En plattform for R og Python? Verdt å kikke nærmere på ved en anna anledning.)
+- Det finnes også, i <a href="https://gist.github.com/ringe/db4c2fde97b9b8ae5fee">gist-form på GitHub</a>, en Ruby-basert “Mechanize based Sidekiq Worker” som rapporterer om nye utlysninger. Den ble sist oppdatert for 7 år siden, og jeg snakker ikke Ruby heller.</p>
+<h1 id="hvordan-løse-dette">Hvordan løse dette</h1>
+<p>Begge kode-eksemplene jeg fant bruker webscraping med xpath og css-selectorer. En kikk på nettsida med konsollet i Chrome, bekrefter på at dataene ikke hentes fra noe åpent tilgjengelig API eller lignende.</p>
+<p>For å hente ut informasjonen må en dermed lese inn HTML-filene, og behandle disse. Dermed trenger vi disse bibliotekene:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#biblioteker</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rvest.tidyverse.org/'>rvest</a></span><span class='op'>)</span> <span class='co'>#scrape-pakke</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/sfirke/janitor'>janitor</a></span><span class='op'>)</span> <span class='co'>#for den hendige get_dupes()-funksjonen</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/robotstxt/'>robotstxt</a></span><span class='op'>)</span> <span class='co'>#for å spørre om jeg får lov til å skrape</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span></span>
+<span>  eval <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Planen er å bruke rvest til å simulere ulike former for søk mot Doffin, og så hente ut informasjonen i tabellform på en slik måte at det kan sorteres og visualiseres. Evt. også formatere det om til lesbar tekst igjen.</p>
+<h2 id="obsobs---er-det-lov">Obsobs - er det lov?</h2>
+<p>Før en stuper inn i det, er det et par ting som må avklares:</p>
+<ul>
+<li>Tillater <a href="https://doffin.no/Home/TermOfUseSupplier">brukerbetingelsene for Doffin</a> at vi bruker innholdet?</li>
+</ul>
+<p>I følge betingelsene (i skrivende stund, januar 2022) tilhører alt materiale enten EU-supply eller Nærings- og fiskeridepartementet, men rettighetene er også overført Fornyings- og administrasjonsdepartementet - med mindre annet er oppgitt.</p>
+<p>Det er ikke spesielt tydelig, ettersom FAD ble lagt ned i 2014, og EU-supply ikke lenger er leverandør for Doffin. Det står imidlertid ingenting om bruk av materialet i betingelsene. Ettersom dette er en offentlig portal for publisering av informasjon, legger jeg derfor til grunn at materialet kan hentes ned. Hvis en skulle brukt det i et prosjekt eller til å lage et produkt, ville jeg imidlertid tatt kontakt med noen for å oppklare dette.</p>
+<ul>
+<li>Tillater nettsida at vi bruker en robot for å skrape ut innholdet?</li>
+</ul>
+<p>En av flere guider er <a href="https://stevenmortimer.com/scraping-responsibly-with-r/">her</a>, som anbefaler <a href="https://cran.r-project.org/web/packages/robotstxt/vignettes/using_robotstxt.html">robotstxt-pakka</a>. Her kan en teste enkelt-stier i robots.txt-fila på nettsida, og se om det er tillatt for roboter å aksessere den. Jeg sjekker for et generelt søkeresultat og en enkelt kunngjøring:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#for søkeresultatet</span></span>
+<span><span class='fu'><a href='https://docs.ropensci.org/robotstxt/reference/paths_allowed.html'>paths_allowed</a></span><span class='op'>(</span></span>
+<span>  paths <span class='op'>=</span> <span class='st'>"/Notice/?query=&amp;PageNumber=1&amp;PageSize=10&amp;OrderingType=0&amp;OrderingDirection=1&amp;RegionId=&amp;CountyId=&amp;MunicipalityId=&amp;IsAdvancedSearch=false&amp;location=&amp;NoticeType=&amp;PublicationType=&amp;IncludeExpired=false&amp;Cpvs=&amp;EpsReferenceNr=&amp;DeadlineFromDate=&amp;DeadlineToDate=&amp;PublishedFromDate=&amp;PublishedToDate="</span>,</span>
+<span>  domain <span class='op'>=</span> <span class='st'>"doffin.no"</span>,</span>
+<span>  bot <span class='op'>=</span> <span class='st'>"*"</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#for ett enkelt-oppslag/en enkelt kunngjøring</span></span>
+<span><span class='fu'><a href='https://docs.ropensci.org/robotstxt/reference/paths_allowed.html'>paths_allowed</a></span><span class='op'>(</span></span>
+<span>  paths <span class='op'>=</span> <span class='st'>"Notice/Details/2022-360774"</span>,</span>
+<span>  domain <span class='op'>=</span> <span class='st'>"doffin.no"</span>,</span>
+<span>  bot <span class='op'>=</span> <span class='st'>"*"</span></span>
+<span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Begge test-spørringene returnerer SANN, og det bør derfor være tillatt. Det kommer imidlertid også en rekke advarsler her - on_not_found er en hendelse som trigges ved en 404-feil, dvs. “ikke funnet”. Kan det dermed tenkes at robots.txt mangler eller ikke er definert som forventa? Eller er det pakka det er noe feil med?</p>
+<p>Et annet alternativ er å bruke <a href="https://dmi3kno.github.io/polite/">polite-pakka</a>, det <a href="https://rvest.tidyverse.org/">anbefales også av tidyverse-Wickham</a>. Hvis en skal lage funksjoner som henter info fra mange nettsider, kan det være lurt. Samtidig tror jeg det viktigste er å ikke overbelaste nettsida, noe som også kan gjøres med å sette godt med Sys.sleep-tid mellom spørringer.</p>
+<h2 id="rvest">Rvest</h2>
+<p>Rvest er tidyverse-pakka for enkel web-scraping, ifølge <a href="https://cloud.r-project.org/web/packages/rvest/vignettes/rvest.html">vignetten</a>. Eksempelet i vignetten for pakka er basert på en enkel side-struktur:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#fra https://rvest.tidyverse.org/</span></span>
+<span><span class='co'>#les html</span></span>
+<span><span class='va'>starwars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='st'>"https://rvest.tidyverse.org/articles/starwars.html"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#finn elementer som matcher en css-selector eller et xpath-uttrykk</span></span>
+<span><span class='va'>films</span> <span class='op'>&lt;-</span> <span class='va'>starwars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"section"</span><span class='op'>)</span></span>
+<span><span class='va'>films</span></span>
+<span></span>
+<span><span class='co'>#hver tittel er tagga med en &lt;h2&gt;, og kan hentes med html_element</span></span>
+<span><span class='co'>#teksten i html-elementet kan så ekstraheres med html_text2</span></span>
+<span></span>
+<span><span class='va'>title</span> <span class='op'>&lt;-</span> <span class='va'>films</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='st'>"h2"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>title</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>starwars</span>, <span class='va'>films</span>, <span class='va'>title</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Tutorial-innføringa i rvest er ganske enkel, og ikke direkte overførbar til Doffin-sida, hvor elementene vi er interessert i ligger på nivå 9 som barnebarns barnebarn e.l. under en hel haug div-tagger. En bør dermed kjenne til xpath for å finne fram.</p>
+<h2 id="en-liten-omvei-om-xpath">En liten omvei om Xpath</h2>
+<p>Xpath er XML path language, og bruker sti-aktig språk for å finne noder i et xml-dokument. HTML-dokumenter kan dermed også leses med dette språket. W3 har en grei oversikt over syntax og begreper. W3 styrer med dette, og har en god intro til syntaksen <a href="https://www.w3schools.com/xml/xpath_intro.asp">her</a>.</p>
+<p>En kan finne xpath i Chrome-konsollet (“inspiser element” -&gt; “elements” -&gt; høyreklikk -&gt; “copy xpath” eller “copy full xpath”. Første steg er å hente ut innholdet jeg ønsker meg. Her er litt div. forsøk på å finne fram:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>test</span> <span class='op'>=</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='st'>"https://doffin.no/Notice"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#denne xpathen velger ting under id-attributten "content", så div-noden under denne, og så tredje article-node under der igjen.</span></span>
+<span></span>
+<span><span class='va'>alle_elementer</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#en spesifikk utlsyningstittel burde være det første div/div-elementet her</span></span>
+<span><span class='va'>titler_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, xpath <span class='op'>=</span> <span class='st'>"div[1]/div[1]"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#tittelen inneholder tittelen og en relativ href til selve utlysningen</span></span>
+<span></span>
+<span><span class='co'>#her får jeg også med tags for hr, de trenger jeg ikke</span></span>
+<span></span>
+<span><span class='co'>#hva med alle a-elementene?</span></span>
+<span><span class='va'>titler_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, xpath <span class='op'>=</span> <span class='st'>"//a"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#html_elements gir et større resultat?</span></span>
+<span><span class='va'>titler_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, xpath <span class='op'>=</span> <span class='st'>"//a"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#a-taggen kan også brukes?</span></span>
+<span><span class='va'>titler_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, <span class='st'>"a"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#hva med boksen med opplysninger om hver enkelt utlysning?</span></span>
+<span><span class='co'>#burde denne velge alle div-elementer med et class-attributt som er "notice-search-item"?</span></span>
+<span><span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, xpath <span class='op'>=</span> <span class='st'>"//div[@class = 'notice-search-item']"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@class = 'notice-search-item']"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#jeg klarer ikke å kun velge en, den første</span></span>
+<span></span>
+<span><span class='co'>#jeg kan teoretisk manuelt sette opp en velger her som tar enkelt-elementene, 1-10?</span></span>
+<span><span class='va'>spesifikk_utlysning</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@class = 'notice-search-item'][5]"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>##i følge chrome er xpath til et element //*[@id="content"]/div/article[3]/div[1]</span></span>
+<span><span class='va'>spesifikk_utlysning</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div[5]"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#men da må jeg teste for når jeg går tom</span></span>
+<span><span class='va'>spesifikk_utlysning</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>alle_elementer</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@class = 'notice-search-item'][100]"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#ikke at det er verre enn at lista da blir tom.</span></span>
+<span><span class='co'>#ligger problemet i mellom-steget, tro?</span></span>
+<span><span class='co'>#i følge chrome er xpath til et element //*[@id="content"]/div/article[3]/div[1]</span></span>
+<span><span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#html_elements</span></span>
+<span><span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#konvertere til tekst</span></span>
+<span></span>
+<span><span class='co'>#- den spesifikke</span></span>
+<span><span class='va'>spesifikk_utlysning</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div[5]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#alle</span></span>
+<span><span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#å konvertere alle disse elementene til tekst er ikke så nyttig, den må håndteres på en anna måte.</span></span></code></pre>
+</div>
+</div>
+<p>I vignetten forklares et vanlig mønster for rvesting: Først bruke html_elements for å få ut alt, og så html_element for å velge enkelt-klosser som skal utgjøre den enkelte rad eller kolonne. Det er fordi html_element alltid returnerer like mange elementer som du sender inn, og fyller inn med NA. Dermed er den sikrere (hvis f.eks. en av oppføringene mangler et under-element, får den NA, i stedet for å bare mangle uten noen mulighet til å finne ut av hvem som mangler). Ett eksempel: Første gjennomgang ga 11 elementer fra navn, men 10 elementer fra alle de andre elementene. Det var fordi også en av de andre elementene ble tatt med, ikke bare noticene, og hadde et navn.</p>
+<p>Det er potensielt problematisk og sårbart ved avvikende formater - jeg veit ikke om alle disse feltene alltid kommer til å være med.</p>
+<h1 id="la-oss-finne-informasjonen-vi-skal-ha">La oss finne informasjonen vi skal ha!</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#alle utlysninger</span></span>
+<span><span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#det er mulig jeg fisker med meg for mange ting her</span></span>
+<span><span class='co'>#fordi jeg bruker div til slutt, identifiserer den alle div-elementene, ogdet siste div-elementet er "pagination- ctm-pagination", ikke "notice-search-item</span></span>
+<span><span class='co'>#prøver i stedet</span></span>
+<span><span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>test</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div[@class = 'notice-search-item']"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#navn</span></span>
+<span><span class='va'>navn</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"//div[@class = 'notice-search-item-header']/a"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#html-elements her returnerer 11 objekter, jeg vil ha for alle de funnede objektene</span></span>
+<span><span class='va'>navn</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"//div[@class = 'notice-search-item-header']/a"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#av en eller annen grunn finner html_element kopier av den første matchen her?</span></span>
+<span><span class='va'>navn</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'notice-search-item-header']/a"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#uten // først, som matcher alt?, men i stedet går rett på å søke dem opp, så går det bra? klø-i-hodet</span></span>
+<span><span class='co'>#men neste problem</span></span>
+<span><span class='co'># denne fintes ut av at oppfølring nr. 10 har to &lt;a&gt; under headeren, der den første lenker til mercell-plattformen. Men jeg vil kun ha den andre. Jeg kan ikke bruke bare de som har href, siden den har det Kan jeg bruke contains og matche på de stedene hvor det lenkes til en doffin-notice? Hvis alle gjør det?</span></span>
+<span><span class='va'>navn</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'notice-search-item-header']/a[contains(@href, 'Notice')]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#lenke til kunngjøring</span></span>
+<span><span class='co'>#den faktiske lenka bør ligge i tittelen/navnet på det som er kunngjort</span></span>
+<span><span class='co'>#da må jeg hente verdien av attributtet?</span></span>
+<span><span class='co'>#det gjøres ved å legge selve attributtet til slutt</span></span>
+<span><span class='co'>#men siden jeg også må partial-matche med contains må den komme før</span></span>
+<span><span class='va'>lenke</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'notice-search-item-header']/a[contains(@href, 'Notice')]/@href"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#hvem har publisert</span></span>
+<span><span class='va'>publisert_av</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'left-col']/div[1]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#kunngjøringstype</span></span>
+<span><span class='va'>kunngjoring_type</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'left-col']/div[2]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#doffin referanse</span></span>
+<span><span class='va'>doffin_referanse</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'right-col']/div[1]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#kunngjøringsdato</span></span>
+<span><span class='va'>kunngjoring_dato</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'right-col']/div[2]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#enda en snag - siste oppfølring her er visst den eneste faktiske konkurransekunngjøringa. </span></span>
+<span><span class='co'>#den har dermed tre elementer i right-col</span></span>
+<span><span class='co'>#velge last bør fikse.</span></span>
+<span><span class='va'>kunngjoring_dato</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'right-col']/div[last()]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#tilbudsfrist</span></span>
+<span><span class='co'>#veldig sentralt. på det ene eksempelet her er den inni enda en span, så den bør la seg identifisere?</span></span>
+<span><span class='co'>#men vet ikke hvor robust det er - kan andre ting være inni en span?</span></span>
+<span><span class='va'>tilbudsfrist_dato</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'right-col']/div[2]/span"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='co'>#setter sammen datasettet</span></span>
+<span><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  <span class='va'>doffin_referanse</span>, <span class='va'>navn</span>, <span class='va'>publisert_av</span>, <span class='va'>kunngjoring_type</span>, <span class='va'>kunngjoring_dato</span>, <span class='va'>tilbudsfrist_dato</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Det er første side, med noen caser her. Hva skjer med neste side, og andre enheter? URL-en ser ut til å oppdatere sge på veldig fornuftig vis: URL-en endres fra <a href="https://doffin.no/Notice" class="uri">https://doffin.no/Notice</a> til <a href="https://doffin.no/Notice?pageNumber=1&amp;pageSize=10" class="uri">https://doffin.no/Notice?pageNumber=1&amp;pageSize=10</a>. Altså to egenskaper - sidenummer og sidestørrelse.</p>
+<h1 id="la-oss-lage-noen-funksjoner-for-å-få-litt-mer-oversiktlig-kode">La oss lage noen funksjoner for å få litt mer oversiktlig kode</h1>
+<p>Dette ser ut til å fungere etter hensikten. Men koden tar litt mye plass, og er ganske gjentakende.</p>
+<p>Først to funksjoner, en for å lage URL og en for å hente ut de ønskede dataene fra søkeresultatet.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#doffin_url_builder</span></span>
+<span><span class='co'>#definerer funksjonen som en i utgangspunktet tom funksjon, kun sidenummer, antall resultater pr side, og sortering etter kunngjøringsdato. isadvancedsearch og includeexpired er false.</span></span>
+<span><span class='co'>#CamelCase</span></span>
+<span></span>
+<span><span class='co'>#argumenter</span></span>
+<span><span class='co'>#query: "Direktoratet+for+høyere+utdanning+og+kompetanse+(HK-dir)"',</span></span>
+<span><span class='co'>#PageNumber: sidenummer, brukt over</span></span>
+<span><span class='co'>#PageSize:  hvor mange treff pr side</span></span>
+<span><span class='co'>#&amp;OrderingType: 0 - relevans, 1 - kunngjøringsdato, 2 - tilbudsfrist, 3 - doffin-referanse, 4 - tittel, 5 - publisert av</span></span>
+<span><span class='co'>#OrderingDirection:  0 - stigende, 1 - synkende</span></span>
+<span><span class='co'>#RegionId:  div geokoder på regionnivå</span></span>
+<span><span class='co'>#CountyId: div goekoder på flkenivå</span></span>
+<span><span class='co'>#MunicipalityId. div geokoder på kommunenivå</span></span>
+<span><span class='co'>#IsAdvancedSearch: true hvis du inkluderer overliggende regioner , false som standard</span></span>
+<span><span class='co'>#location:  usikker på denne, kanskje en kombo av geokodene?</span></span>
+<span><span class='co'>#NoticeType:  kunngjøringstype - blank = alle, 1 = veiledende, 2 = kunngjøring av konkurranse, 3 = tildeling, 4 = intensjonskunngjøring, 6 = kjøperprofil, 999999 = Dynamisk innkjøpsprofil.</span></span>
+<span><span class='co'>#PublicationType: blank = alle, 1 = nasjonal, 2 = europeisk, 5 = market consulting</span></span>
+<span><span class='co'>#IncludeExpired: #skal utgåtte inkluderes? true hvis ja, false hvis nei</span></span>
+<span><span class='co'>#Cpvs: CPV-koder her - flere bindes sammen med + , eksempel: Cpvs=34000000+33000000</span></span>
+<span><span class='co'>#EpsReferenceNr: Doffin referanse-nr.</span></span>
+<span><span class='co'>#DeadlineFromDate; tilbudsfrist fra, formateres 01.01.2022 DD.MM.ÅÅÅÅ</span></span>
+<span><span class='co'>#DeadlineToDate: tilbudsfrist til, formateres 01.02.2022</span></span>
+<span><span class='co'>#PublishedFromDate: #kunngjøringsdato fra, formateres 01.02.2022</span></span>
+<span><span class='co'>#PublishedToDate: #kunngjøringsdato til, formaters også 01.02.2022</span></span>
+<span></span>
+<span><span class='va'>doffin_url_builder</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>Query</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>PageNumber</span> <span class='op'>=</span> <span class='st'>"1"</span>, <span class='va'>PageSize</span> <span class='op'>=</span> <span class='st'>"100"</span>, <span class='va'>OrderingType</span> <span class='op'>=</span> <span class='st'>"1"</span>, <span class='va'>OrderingDirection</span> <span class='op'>=</span> <span class='st'>"1"</span>, <span class='va'>RegionId</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>CountyId</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>MunicipalityId</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>IsAdvancedSearch</span> <span class='op'>=</span> <span class='st'>"false"</span>, <span class='va'>Location</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>NoticeType</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>PublicationType</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>IncludeExpired</span> <span class='op'>=</span> <span class='st'>"false"</span>, <span class='va'>Cpvs</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>EpsReferenceNr</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>DeadlineFromDate</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>DeadlineToDate</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>PublishedFromDate</span> <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>PublishedToDate</span> <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>temp_url</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://doffin.no/Notice?"</span>,</span>
+<span>        <span class='st'>"query="</span>, <span class='va'>Query</span>,</span>
+<span>        <span class='st'>"&amp;PageNumber="</span>, <span class='va'>PageNumber</span>,</span>
+<span>        <span class='st'>"&amp;PageSize="</span>, <span class='va'>PageSize</span>,</span>
+<span>        <span class='st'>"&amp;OrderingType="</span>, <span class='va'>OrderingType</span>, </span>
+<span>        <span class='st'>"&amp;OrderingDirection="</span>, <span class='va'>OrderingDirection</span>, </span>
+<span>        <span class='st'>"&amp;RegionId="</span>, <span class='va'>RegionId</span>,</span>
+<span>        <span class='st'>"&amp;CountyId="</span>, <span class='va'>CountyId</span>,</span>
+<span>        <span class='st'>"&amp;MunicipalityId="</span>, <span class='va'>MunicipalityId</span>,</span>
+<span>        <span class='st'>"&amp;IsAdvancedSearch="</span>, <span class='va'>IsAdvancedSearch</span>,</span>
+<span>        <span class='st'>"&amp;location="</span>, <span class='va'>Location</span>,</span>
+<span>        <span class='st'>"&amp;NoticeType="</span>, <span class='va'>NoticeType</span>,</span>
+<span>        <span class='st'>"&amp;PublicationType="</span>, <span class='va'>PublicationType</span>,</span>
+<span>        <span class='st'>"&amp;IncludeExpired="</span>, <span class='va'>IncludeExpired</span>,</span>
+<span>        <span class='st'>"&amp;Cpvs="</span>, <span class='va'>Cpvs</span>,</span>
+<span>        <span class='st'>"&amp;EpsReferenceNr="</span>, <span class='va'>EpsReferenceNr</span>,</span>
+<span>        <span class='st'>"&amp;DeadlineFromDate="</span>, <span class='va'>DeadlineFromDate</span>,</span>
+<span>        <span class='st'>"&amp;DeadlineToDate=&amp;"</span>, <span class='va'>DeadlineToDate</span>,</span>
+<span>        <span class='st'>"PublishedFromDate="</span>, <span class='va'>PublishedFromDate</span>,</span>
+<span>        <span class='st'>"&amp;PublishedToDate="</span>, <span class='va'>PublishedToDate</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'>#doffin_fetch_results</span></span>
+<span><span class='co'>#en funksjon som tar en doffin-query-url som input, og returnerer resultatet som en data.frame</span></span>
+<span><span class='co'>#basert på rvest-pakken</span></span>
+<span></span>
+<span><span class='va'>doffin_fetch_results</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='co'>#henter html-fil</span></span>
+<span>  <span class='va'>temp_html</span> <span class='op'>=</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span>
+<span>  <span class='co'>#henter ut kun utlysninger fra html-fila</span></span>
+<span>  <span class='va'>kun_utlysninger</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>temp_html</span>, </span>
+<span>                                  xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div[@class = 'notice-search-item']"</span><span class='op'>)</span></span>
+<span>  <span class='co'>#setter sammen datasettet</span></span>
+<span>  <span class='va'>temp_df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>    doffin_referanse <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, </span>
+<span>                                    xpath <span class='op'>=</span> <span class='st'>"div[@class = 'right-col']/div[1]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
+<span>    navn <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, </span>
+<span>                        xpath <span class='op'>=</span> <span class='st'>"div[@class = 'notice-search-item-header']/a[contains(@href, 'Notice')]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
+<span>    publisert_av <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'left-col']/div[1]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
+<span>    kunngjoring_type <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'left-col']/div[2]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
+<span>    kunngjoring_dato <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'right-col']/div[last()]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
+<span>    tilbudsfrist_dato <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, xpath <span class='op'>=</span> <span class='st'>"div[@class = 'right-col']/div[2]/span"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
+<span>    lenke <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>kun_utlysninger</span>, </span>
+<span>                         xpath <span class='op'>=</span> <span class='st'>"div[@class = 'notice-search-item-header']/a[contains(@href, 'Notice')]/@href"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>      <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Denne funksjonen har en del forbedringspotensiale:</p>
+<ul>
+<li>hvis lista kun_utlysninger er like lang som PageSize, er det fare for at det er flere sider med resultater. Dette burde en advare om, og ideelt sett også håndtere. Kjapp kikk på det:</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>url</span> <span class='op'>=</span> <span class='fu'>doffin_url_builder</span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>temp_html</span> <span class='op'>=</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span>
+<span><span class='co'>#henter pagineringselementet</span></span>
+<span><span class='va'>paginering</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>temp_html</span>, </span>
+<span>                         xpath <span class='op'>=</span> <span class='st'>"//*[@id='content']/div/article[3]/div[101]"</span><span class='op'>)</span></span>
+<span><span class='co'>#henter sidetallet fra denne, trekker ut teksten, og konverterer tallet til et tall.</span></span>
+<span><span class='va'>antall_sider</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>paginering</span>, xpath <span class='op'>=</span> <span class='st'>"ul[2]/li[3]"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://readr.tidyverse.org/reference/parse_number.html'>parse_number</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<ul>
+<li>Query-argumentet bør ha noe for å sjekke at strengen er korrekt definert (med + i stedet for mellomrom, evt “” hvis strengt søk)</li>
+<li>Hvis det skal brukes i en loop - feilhåndtering?</li>
+</ul>
+<p>Men på denne måten kan spørringene skrives langt mer kompakte.</p>
+<h2 id="hente-siste-kunngjøringer">Hente siste kunngjøringer</h2>
+<p>Standard-søket blir da slik:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>url</span> <span class='op'>=</span> <span class='fu'>doffin_url_builder</span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>resultater</span> <span class='op'>=</span> <span class='fu'>doffin_fetch_results</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="loope-gjennom-en-liste-av-kunder">Loope gjennom en liste av kunder</h2>
+<p>Her er et eksempel, med alle ikke-utgåtte kunngjøringer av konkurranser fra noen offentlige oppdragsgivere:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#merk %22 er HTML for "", de trengs her og der for å få treff.</span></span>
+<span><span class='co'>#stoler ikke 100 % på denne.</span></span>
+<span></span>
+<span><span class='va'>kunder</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span>  <span class='st'>"Viken+fylkeskommune"</span>,</span>
+<span>  <span class='st'>"Arbeids-+og+inkluderingsdepartementet"</span>,</span>
+<span>  <span class='st'>"NAV"</span>,</span>
+<span>  <span class='st'>"Bergen+kommune"</span>,</span>
+<span>  <span class='st'>"%22Barne-,+ungdoms-+og+familiedirektoratet%22"</span>,</span>
+<span>  <span class='st'>"Digitaliseringsdirektoratet"</span>,</span>
+<span>  <span class='st'>"Direktoratet+for+forvaltning+og+økonomistyring+(DFØ)"</span>,</span>
+<span>  <span class='st'>"%22Direktoratet+for+høyere+utdanning+og+kompetanse+(HK-dir)%22"</span>,</span>
+<span>  <span class='st'>"Distriktssenteret"</span>,</span>
+<span>  <span class='st'>"Integrerings-+og+mangfoldsdirektoratet+(IMDi)"</span>,</span>
+<span>  <span class='st'>"Husbanken"</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>resultater</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>kunder</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>url</span> <span class='op'>=</span> <span class='fu'>doffin_url_builder</span><span class='op'>(</span>Query <span class='op'>=</span> <span class='va'>kunder</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>, NoticeType <span class='op'>=</span> <span class='st'>"2"</span><span class='op'>)</span></span>
+<span>  <span class='va'>temp_resultater</span> <span class='op'>=</span> <span class='fu'>doffin_fetch_results</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span>
+<span>  <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>temp_resultater</span><span class='op'>)</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/message.html'>message</a></span><span class='op'>(</span><span class='st'>"ingen funn for "</span>, <span class='va'>i</span>, <span class='st'>" - "</span>, <span class='va'>kunder</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>temp_resultater</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>    <span class='va'>temp_resultater</span><span class='op'>$</span><span class='va'>`søk`</span> <span class='op'>=</span> <span class='va'>kunder</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span></span>
+<span>    <span class='va'>resultater</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>resultater</span>, <span class='va'>temp_resultater</span><span class='op'>)</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/message.html'>message</a></span><span class='op'>(</span><span class='st'>"ferdig med "</span>, <span class='va'>i</span>, <span class='st'>", "</span>, <span class='va'>kunder</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>resultater</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>5 sekunders Sys.sleep-tid bør være bra.</p>
+<h2 id="kunngjøring-av-konkurranser-etter-cpv">Kunngjøring av konkurranser etter CPV</h2>
+<p>Før vi ser på muligheten for å hente mer informasjon enn det som ligger i oppslaget, la oss bare ta et kjapt søk som sammenfatter siste ukes kunngjøringer av konkurranser på en sentral CPV:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fradato</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>7</span>, <span class='st'>"%d.%m.%Y"</span><span class='op'>)</span></span>
+<span><span class='va'>tildato</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"%d.%m.%Y"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>url</span> <span class='op'>=</span> <span class='fu'>doffin_url_builder</span><span class='op'>(</span></span>
+<span>  NoticeType <span class='op'>=</span> <span class='st'>"2"</span>,</span>
+<span>  Cpvs <span class='op'>=</span> <span class='st'>"73000000"</span>, </span>
+<span>  PublishedFromDate <span class='op'>=</span> <span class='va'>fradato</span>, </span>
+<span>  PublishedToDate <span class='op'>=</span> <span class='va'>tildato</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>resultater</span> <span class='op'>=</span> <span class='fu'>doffin_fetch_results</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>resultater</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="hente-ut-mer-informasjon-fra-selve-kunngjøringen">Hente ut mer informasjon fra selve kunngjøringen</h2>
+<p>Jeg har URL til kunngjøringen, og kan dermed hente informasjon herifra.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>url</span> <span class='op'>=</span> <span class='fu'>doffin_url_builder</span><span class='op'>(</span>Query <span class='op'>=</span> <span class='st'>"IMDi"</span>, NoticeType <span class='op'>=</span> <span class='st'>"2"</span><span class='op'>)</span></span>
+<span><span class='va'>temp_resultater</span> <span class='op'>=</span> <span class='fu'>doffin_fetch_results</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#denne kan fjerne info</span></span>
+<span><span class='va'>test</span> <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_remove.html'>str_remove</a></span><span class='op'>(</span><span class='va'>temp_resultater</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>]</span>, <span class='fu'><a href='https://stringr.tidyverse.org/reference/modifiers.html'>fixed</a></span><span class='op'>(</span><span class='st'>"Doffin referanse: "</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#men vi har jo lenka</span></span>
+<span><span class='va'>mer_info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://doffin.no"</span>, <span class='va'>temp_resultater</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>cpv</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>mer_info</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='notice']/div[3]/div[2]/div[5]/div/span"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#er det samme mønster på en anna en?</span></span>
+<span><span class='va'>mer_info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://doffin.no"</span>, <span class='va'>temp_resultater</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>cpv</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>mer_info</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='notice']/div[3]/div[2]/div[5]/div/span"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='co'>#kort beskrivelse også?</span></span>
+<span><span class='va'>beskrivelse</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>mer_info</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='notice']/div[3]/div[2]/div[9]/div"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#vi looper igjennom litt flere samtidig!</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>temp_resultater</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>mer_info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://doffin.no"</span>, <span class='va'>temp_resultater</span><span class='op'>[</span><span class='va'>i</span>,<span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>temp_resultater</span><span class='op'>$</span><span class='va'>cpv</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>mer_info</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='notice']/div[3]/div[2]/div[5]/div/span"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>temp_resultater</span><span class='op'>$</span><span class='va'>beskrivelse</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='va'>mer_info</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='notice']/div[3]/div[2]/div[9]/div"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>temp_resultater</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Virker dette også hvis jeg henter de 100 siste kunngjøringene, uavhengig av type, oppdragsgiver, mm? Det kan godt være. Legger inn en liten if-setning for å unngå nullfunn. Fikk en feil her, på /Notice/Details/2022-312872, som mangler denne beskrivelsen. Den er p.t. ikke håndtert.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>url</span> <span class='op'>=</span> <span class='fu'>doffin_url_builder</span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>temp_resultater</span> <span class='op'>=</span> <span class='fu'>doffin_fetch_results</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>temp_resultater</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>mer_info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://doffin.no"</span>, <span class='va'>temp_resultater</span><span class='op'>[</span><span class='va'>i</span>,<span class='fl'>7</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>temp_cpv</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>mer_info</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='notice']/div[3]/div[2]/div[5]/div/span"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>temp_cpv</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>    <span class='va'>temp_resultater</span><span class='op'>$</span><span class='va'>cpv</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>temp_cpv</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>temp_cpv</span><span class='op'>)</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>    <span class='va'>temp_resultater</span><span class='op'>$</span><span class='va'>cpv</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>=</span> <span class='cn'>NA</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='va'>temp_beskrivelse</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_element</a></span><span class='op'>(</span><span class='va'>mer_info</span>, xpath <span class='op'>=</span> <span class='st'>"//*[@id='notice']/div[3]/div[2]/div[9]/div"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>temp_beskrivelse</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>    <span class='va'>temp_resultater</span><span class='op'>$</span><span class='va'>beskrivelse</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>=</span> <span class='va'>temp_beskrivelse</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>temp_beskrivelse</span><span class='op'>)</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>    <span class='va'>temp_resultater</span><span class='op'>$</span><span class='va'>beskrivelse</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>=</span> <span class='cn'>NA</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<h1 id="mulige-videreutviklinger">Mulige videreutviklinger</h1>
+<p>For å automatisere kjøring av script, er det flere på internett som anbefaler pakka <a href="https://cran.r-project.org/web/packages/taskscheduleR/vignettes/taskscheduleR.html">taskscheduleR</a>.Da trenger vi en kompakt versjon av dette som et script. Har så langt ikke fått det til å virke.</p>
+<p>For å få tilsendt varsel på epost, virker pakken mailR virker relevant - <a href="https://www.rdocumentation.org/packages/mailR/versions/0.8" class="uri">https://www.rdocumentation.org/packages/mailR/versions/0.8</a>. Oppretter en test-epostadresse i Google. MailR krever rJava, som igjen krever at Java er installert på maskinen. For å bruke Google-kontoen, må en aktivere sikkerhetsinnstillingen som åpner for “mindre trygger apper”. Så ikke gjør dette med en alvorlig epostadresse, kanskje?</p>
+<h3 id="gjenstående-ting-å-se-på">Gjenstående ting å se på</h3>
+<ul>
+<li>Teste funnene fra robot-søk mot manuelle søk - er det noe som forsvinner for roboten?</li>
+<li>Sikker berikelse med beskrivelse og cvp fra selve kunngjøringen for ulike edgecaser?
+– “Warning in temp_resultater$beskrivelse[i] &lt;- temp_beskrivelse : number of items to replace is not a multiple of replacement length”</li>
+<li>Hva er fornuftige søkestrenger og cpv-er? M.a.o.: hvilke kunngjøringer er det vi er interessert i?</li>
+<li>Automatisk kjøring i script-form</li>
+<li>Resultater på epost</li>
+<li>Jeg får advarsler om at “closing unused connection n (url)”. Verdt å ta en titt på <a href="https://stackoverflow.com/questions/37839566/how-do-i-close-unused-connections-after-read-html-in-r">stackoverflow</a> her?<br />
+</li>
+<li>hvis lista kun_utlysninger er like lang som PageSize, er det fare for at det er flere sider med resultater. Dette burde en advare om, og ideelt sett også håndtere.</li>
+<li>Query-argumentet bør ha noe for å sjekke at strengen er korrekt definert (med + i stedet for mellomrom, evt “” hvis strengt søk)</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

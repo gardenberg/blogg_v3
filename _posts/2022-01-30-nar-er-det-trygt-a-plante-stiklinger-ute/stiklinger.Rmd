@@ -5,7 +5,7 @@ description: |
 author:
   - name: Eivind Hageberg
     url: https://suppe-og-analyse.netlify.app
-date: 2023-02-05
+date: 2022-03-05
 output:
   distill::distill_article:
     self_contained: false
@@ -232,9 +232,9 @@ prob_table =
 
 ```
 
-Dette kan vi lage en tabell av!
+Dette kan vi lage en tabell av! Men koden er endra, så denne oppdaterer seg ikke lenger - eval = FALSE!
 
-```{r, echo = FALSE}
+```{r, eval = FALSE}
 gt(prob_table, locale = "nb_NO") %>%
     tab_header(title =  md("**Når er det trygt å plante ut?**"),
                subtitle = "Sannsynlighet for at den siste frostdagen er forbi") %>%

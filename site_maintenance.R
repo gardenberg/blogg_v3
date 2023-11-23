@@ -6,10 +6,10 @@
 #Æ, ø, å kan ikke brukes i tittelen her, men kan brukes i selve artikkelen etterpå
 #mulig det skyldes slug, men lettere å la den settes automatisk
 distill::create_post(
-  title = "Hvor like er to variabler",
+  title = "Dashboard for Age of Empires 2",
   collection = "posts",
   author = "auto",
-  date = as.Date("2019-09-17")
+  date = as.Date("2022-04-09")
   )
 
 #skriv eller rediger posten
