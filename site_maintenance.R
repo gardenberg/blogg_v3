@@ -23,7 +23,9 @@ distill::create_post(
 
 #rmarkdown::render_site
 
-#for å slette en post, slett fila. slett mapp
+# SLETTING
+#for å slette en post, slett mappa i _posts-mappa, og build sida.
+#da fjernes filene fra _site-mappa
 
 #hvis det blir encoding-problemer for skandinaviske tegn, restart R-session.
 
