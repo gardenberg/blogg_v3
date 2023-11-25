@@ -1,0 +1,50 @@
+---
+title: "Integrering: Tre ting kommunene bør gjøre"
+description: |
+  Vi spurte 50 organisasjoner om hva de trenger for å styrke sin innsats for integrering. De aller fleste ønsker mer samarbeid med sin kommune. Her er tre av tipsene vi fikk..
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2023-01-02
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+*Innlegg publisert i [Kommunal rapport](https://www.kommunal-rapport.no/debatt/integrering-tre-ting-kommunene-bor-gjore/148209!/) 2. januar.*
+
+Frivilligheten spiller en viktig rolle for integrering. Ikke minst har flyktningstrømmene fra Ukraina og Syria vist hvor viktig frivillighetens tilbud er.
+
+De frivillige hjelper enkeltindivider gjennom tilbud som språkkafeer, besøksvenner og matutdeling. De har også en viktig integrerende funksjon som møteplass i lokalsamfunnet. Både fotballklubben, turforeninga, bygdekvinnelaget og alle de andre små og store organisasjonene bidrar til å skape samhold og bygge bro mellom innbyggerne i kommunen.
+
+I året som gikk, fikk vi mulighet til å intervjue 50 organisasjoner om deres behov for kompetanse og samarbeid på integreringsfeltet, i forbindelse med et oppdrag for Integrerings- og mangfoldsdirektoratet (IMDi).
+
+På spørsmål om hva de trenger for å kunne gjøre enda mer for integreringen, peker de aller fleste på sin kommune. Her er tre ting de fortalte oss:
+
+# 1) Vær tilgjengelig. 
+
+Som en entusiastisk turlagsleder fortalte oss, begynner mange frivillige sitt virke først når de kommer hjem fra dagjobben. Hvis kommunen din inviterer til møteplasser for frivilligheten eller informasjonsmøter om tilskuddsordninger, bør det skje utenfor ordinær arbeidstid dersom kommunen ønsker å inkludere organisasjoner uten fast ansatte.
+
+Dette er kanskje lettere sagt enn gjort. Kommunen må følge regler for arbeidstid, og kommunalt ansatte har også krav på fritid. Forskning har imidlertid funnet at en på denne måten kan få enda flere organisasjoner med på laget.
+
+# 2) Åpne opp kommunale tjenester som rekrutteringsarenaer.
+
+Flere organisasjoner etterlyste en mulighet til å rekruttere deltakere til sine aktiviteter og frivillige til sin organisasjon på kommunale møteplasser. Det gjelder barne- og ungdomsskoler, voksenopplæring, flyktningmottak, helsestasjoner, bibliotek og andre steder hvor folk møtes lokalt.
+
+Flere foreninger vi snakket med, pekte på at de ellers gjerne rekrutterer i sine vante kanaler. *«Hvis vi skal treffe og bli kjent med noen vi ellers ikke ville truffet, så må vi nesten komme inn en plass der alle er. Og det er jo gjerne på skolene»*, fikk vi høre.
+
+Å sørge for lik praksis er lurt. Enkelte organisasjoner stilte spørsmål som: *«Hvorfor får den andre organisasjonen komme til den skolen, når ikke vi får? Hvorfor har kommunen en avtale med den store klubben, og ikke oss?»*
+
+# 3) Del av kommunens kompetanse.
+
+Mange organisasjoner som har få medlemmer med innvandrerbakgrunn, sitter med en følelse av at de skulle «visst mer». Noen peker på at de tidligere har prøvd ulike tiltak for å rekruttere personer med innvandrerbakgrunn til organisasjonen sin, men ikke lykkes med å holde på medlemmer og frivillige. Kanskje dukket ingen opp på den organiserte turen, og det var ingen som kom på mer enn én øving i korpset.
+
+Her tror vi at mange ansatte i kommunene har god innsikt i relevante kulturelle forskjeller. Mange kan nok også ha mer innsikt i ulike barrierer som noen innvandrerfamilier står overfor, som kan hindre deltakelse. Flere organisasjoner vi snakket med, hadde gode erfaringer med årlige seminarer med ansatte i flyktningtjenesten og deres nettverk. Dette kan særlig være viktig for frivillige organisasjoner som jobber med barn og unge.
+
+Kanskje kommunen også har ordninger for gratis lån av utstyr eller fritidskortordninger som organisasjonene kunne kjent bedre til?
+
+Mange mindre og nystartede organisasjoner, særlig minoritetsorganisasjoner, fortalte også at de trengte mer en-til-en-veiledning i søknadsprosesser. Når midlene blir knappe, er det gjerne de små organisasjonene som kanskje sliter litt med språket, som taper i konkurransen mot mer etablerte aktører med ansatte.
+
+Det kan være krevende å tilby organisasjonene direkte oppfølging, særlig hvis det er en språkbarriere der. Samtidig vet vi at for hver ildsjel en kan gi en god innføring i søknadsskriving, vil kompetansen spres videre.
+
+Det frivilligheten ønsker seg fra kommunen for å styrke innsatsen på integreringsfeltet, er tilgjengelighet, rekrutteringsarenaer og kompetansedeling. Selv om Frivillighetens år 2022 er omme, er frivillighetens innsats like viktig neste år – ikke minst på integreringsfeltet.

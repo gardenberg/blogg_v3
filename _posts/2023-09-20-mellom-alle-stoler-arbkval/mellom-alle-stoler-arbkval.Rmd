@@ -1,0 +1,126 @@
+---
+title: "Kompetanse for fremtiden - en presentasjon"
+description: |
+  En rapport-presentasjon jeg holdt for NAV Oslo - hvordan kan vi forbedre kvalifiseringstilbudet til de som står lengst unna arbeidsmarkedet?.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2023-09-20
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Her har vi en faksimile av en nyhetssak på nrk.no, fra mai. Det forteller historen om Zahra Alavi i Rogaland, som hadde sin første skoledag når hun var 37 år. Nå, fem år senere, er klar for å starte praksis som helsefagarbeider. Jeg er 37 år nå. Det er interessant å prøve å se for seg seg selv i denne situasjonen.
+
+![et bilde av en suksess](suksesshistorie.png)
+
+Det Alavi her har gjort, omtales av læreren hennes som et mirakel. Mange av dere har nok kanskje selv opplevd eller kjenner til tilsvarende suksesshistorier.
+
+Men dere kjenner nok antakeligvis også alt for godt til tilfellene der det ikke fungerer - der personen ikke kom videre, ikke lærte seg språket, ble anbefalt å gjøre noe annet enn å ta utdanning, og så videre. 
+
+Det prosjektet jeg nå skal fortelle om, handler om tilbud som har som mål å skulle skape slike suksesshistorier. Men ikke som mirakler, men mer pålitelige resultater. Det trengs i en situasjon som vi har valgt å kalle «mellom alle stoler». 
+
+Denne rapporten utgjør en del av kunnskapsgrunnlaget for et arbeid som IMDi sammen med Arbeids- og velferdsdirektoratet og Direktoratet for høyere utdanning og kompetanse har gjort for AID om akkurat denne tematikken. Som en del av arbeidet har vi gjennomgått litteratur og skriftlig materiale, og intervjuet mange eksperter. Det vil blant annet si personer som dere som er i rommet i dag. Her har vi også trukket på arbeid vi i ideas2evidence gjør på beslekta områder – for de av dere som ikke kjenner oss, så gjør vi blant annet 
+
+-	Evaluering av modulstrukturert voksenopplæring for Kunnskapsdepartementet
+-	Kartlegging og utprøving av modeller for samarbeid om tilrettelagt fag og yrkesopplæring – for NAV
+-	Undersøkelse av utvidet opplæringstiltak – for NAV.
+
+Det dette prosjektet handler om, er tre forskjellige ting.For det første: å kartlegge hva som finnes av arbeidsretta kvalifiseringstilbud for denne målgruppa? 
+
+Målgruppen er innvandrere med lite formell kompetanse, lave norskferdigheter og lite relevant arbeidserfaring. Lite formell kompetanse betyr ikke fullført grunnskole, gjerne langt unna å fullføre grunnskole. En gjennomgang av statistikk viser at vi anslagsvis snakker om mellom 12 000 og 39 000 personer, med en rekke ulike kjennetegn. Dette er veldig usikkert – hvis du ikke har tatt utdanning i Norge, så står du hovedsakelig ikke i registrene. Men for personene vi vet mangler grunnskole, så er det mange i Oslo og Oslo-området. Det er mange som har opphold som flyktninger, men også familiegjenforente. Mange har mer enn ti års botid.  
+
+Men ellers er gruppa veldig variert. Når vi snakker med praksisfeltet om hvem målgruppa er, er det først og fremst variasjon, forskjeller og veldig komplekse livssituasjoner det som vektlegges. Omsorgsoppgaver, helseutfordringer, og en økonomisk krevende liv.
+
+Deretter: 1) Hvordan dekker dagens tilbud disse behovene? og 2) Hvordan kan tilbudene bedre møte behovene? Overordna: Trengs det tilpasninger eller noe nytt?
+
+# Hva finnes av tilbud?
+
+Vi veit fra forskning at det for å få en varig jobb er viktig å kunne godt norsk og at du har formell kompetanse på videregående-nivå. Det er også mange som peker på at praksisnær læring kan være nyttig for mange. Vårt oppdrag var derfor å finne tilbud som kombinerer disse tre tingene – grunnskole, språkopplæring og arbeidspraksis. 
+
+-	Vi samla inn informasjon om rundt 50 tilbud. 
+-	Vi gjorde en nærmere utvelgelse av 16 av disse, som mulig interessante for vår målgruppe. Disse 16 er nærmere beskrevet i rapporten. 
+
+Og dette må jeg si! Her gjøres det veldig mye godt arbeid. Vi har ikke kunnet gjøre en grundig evaluering av disse tilbudene, men vi ser jo i resultatrapporter og intervjuer at mange viser til svært god måloppnåelse – gjerne overgang til arbeid. Mange følger også det jeg vil si er noe av det nærmeste en kommer kjente kvalitetskriterier for å dekke målgruppens behov, som 1) grundig og helhetlig kartlegging, 2) brukermedvirkning, og 3) tett oppfølging av deltaker og arbeidsgiver. 
+
+Men – som dere nok kan tenke dere, så finner vi svært få tilbud som inneholder alle tre elementene grunnskole, norskopplæring og praksis. Av tilbudene vi ser på, er det 
+
+- tre lokalt utviklede tilbud 
+- I tillegg til dette er det ett av voksenopplæringssentrene vi har undersøkt som oppgir at de kombinerer forsøk med modulstrukturert forberedende voksenopplæring (FVO) med arbeidspraksis fra dag 1. Fra den pågående følgeevalueringen vet vi at en håndfull av FVO-kommunene tilbyr dette, men at det ikke er vanlig. Det er aktuelt for introduksjonsprogram-deltakere, intropraksis, men ikke for andre grunnskole-deltakere.
+- Stedene hvor kombinasjonsforsøket nå pågår. Her vet vi at deltakerne der er blant de mest ressurssterke i denne målgruppa, og et flertall kan nok ikke sies å ha svake norskferdigheter når de begynner på videregående-delen av programmet. Kombinasjonsforsøket er et forsøk som kombinerer forsøket med modulstrukturert forberedende voksenopplæring på nivået under videregående (FVO), og forsøket med modulstrukturert fag- og yrkesopplæring for voksne innenfor utvalgte lærefag (MFY).
+- Vi finner også to tilbud som kombinerer norskopplæring, arbeidspraksis og fag- og yrkesopplæring på videregående nivå.
+
+# Tilbudene dekker ikke behovene til målgruppa
+
+Vår vurdering er at tilgangen på offentlige arbeidsrettede kvalifiseringstilbud ikke dekker behovene til denne gruppen, slik det er i dag. 
+Begrensa omfang: Siden vi fant så få tilbud som inneholdt alle disse elementene, er det opplagt at det ikke er nok slike tilbudsplasser til 13 000 eller 39 000 personer
+
+**Tilbudene er ikke tilgjengelig for de svakeste delene av målgruppen, **
+
+-	det stilles språkkrav, 
+-	krav til helse, 
+-	velger (oppfatta) motiverte deltakere,
+-	tilbudet du kan få avhenger av finansieringsmuligheter – både for tilbudet sin del, og for din egen inntekt.
+
+Som flere av dere vet godt, er det mange grunner til å gjøre det slik.Opplæring av personer som er på samme språknivå, mulig å skaffe praksisplass, osv. Men – konsekvensen er gjerne at de som har litt større sjans for å komme seg ut på arbeidsmarkedet, blir foretrukket. 
+
+**Vi ser også at mange i praksisfeltet sliter med å rekruttere målgruppa.** Det er vanskelig å finne dem, det finnes ikke noen ferdigdefinerte lister hos saksbehandlerne som en bare kan begynne å ringe. Og når en oppnår kontakt, så er det ikke alltid like lett å fortelle og formidle.
+
+Dette er vel så mye poeng som angår de store kvalifikasjonsprogrammene, som de mindre, spesifikke tilbudene vi har sett på: evalueringer av introduksjonsprogrammet, opplæring i norsk og samfunnskunnskap, forsøket med modulstrukturert forberedende voksenopplæring, kvalifikasjonsprogrammet og NAVs virkemiddelapparat mer generelt. Disse evalueringene finner at behovene for målgruppen vi snakker om generelt sett ikke dekkes, men med enkelte unntak.
+
+# Hva bør gjøres?
+
+Her er fire anbefalinger til hvordan en kan gjøre det bedre. 
+
+## 1.	Vi trenger ikke et nytt nasjonalt tilbud
+
+Vi anser det som lite hensiktsmessig å opprette et nytt kvalifiseringstilbud. Denne vurderingen bygger på flere poenger: 
+
+- Det er allerede krevende for saksbehandlere og førstelinje å holde oversikt over ulike tilbud. 
+- Både praksisfelt og sektormyndigheter peker på en rekke utfordringer av mer strukturell art. Selv om mye kan håndteres innenfor et spesifikt tilbud, gitt ressurser og ildsjeler med systemkjennskap, vil allikevel utfordringer med f.eks. manglende samordning, et «lappeteppe» av finansieringskilder for tilbud og deltakere, livsopphold for deltakerne, manglende informasjon og informasjonsdeling om målgruppen, og manglende koordinering av kontakt med arbeidsgivere stå i veien.
+- Med unntak av det pågående forsøket med modulstrukturert forberedende voksenopplæring, er tilbudene vi har identifisert lokale. Vi har ikke sett effektevalueringer som viser at ett eller flere av disse fungerer bedre enn andre, og vil være egnet for nasjonal utrulling uten videre pilotering og effektstudier. 
+- Det kommer om kort tid noe nytt – som flere av dere nok er klar over, kommer det fra høsten 2024 en ny modell for det som i dag er grunnskole for voksne. Det er under utprøving i dag, og skal hete «forberedende opplæring for voksne (FOV). og det står andre her som skal si mer om det. Men et hovedmål med omlegginga er å gjøre situasjonen bedre nettopp for denne målgruppa. 
+
+## 2.	Sammenheng mellom FOV-tilbud og arbeidsretta tilbud
+
+Vi mener at grunnlaget for flere sentrale tilbud fremover ligger i å se FOV, som innføres høsten 2024, i sammenheng med arbeidsrettede tilbud. 
+Det må påpekes at læreplaner for FOV fremdeles er under utvikling, resultatene fra følge- og effektforskningen av forsøket med forberedende voksenopplæring (FVO) er ikke klare, og mange detaljer om implementering er enda ikke kjent.
+
+Vi ser allikevel potensiale for at ordningen, i kombinasjon med arbeidsrettede tilbud, kan løse flere av utfordringene i tilbudsfeltet. 
+Blant annet er det svært få arbeidsrettede tilbud som gir opplæring på grunnskolenivå. Enkelte sliter med å inkludere norskopplæring etter læreplan som del av tilbudet. Gitt at sentrale mål med FOV er å integrere norskopplæring og opplæring i fag, og tilrettelegge læreplanene for de med svakest forutsetninger, fremstår en kobling mellom FOV og arbeidsrettede tiltak som positivt for målgruppen. 
+
+Mange av forsøkene med modulbasert grunnopplæring strever på sin side med å koble på praksis. Å utforske hvordan praksis kan innarbeides tidlig i et FOV-løp, enten gjennom samarbeid med arbeidsgivere om praksisplasser for de med lave norskferdigheter, eller gjennom opprettelse av interne praksisplasser, for eksempel i et arbeidsrettet tilbud, virker som et godt sted for VO å samarbeide med NAV.
+
+Men! Skal alle inn i grunnskolen, altså? Her er både opplæringssektoren og de arbeidsrettede tilbudene skjønt enige om nødvendigheten for et alternativ til det utdanningsrettede sporet, for å gi et tilbud til de som ikke har forutsetninger for å gå i grunnskole. Det argumenteres for at 
+
+-	de som har forutsetninger for å fullføre grunnskole, bør gjøre dette på heltid, for å unngå lange løp, 
+-	mens de som ikke har forutsetninger for å fullføre grunnskole bør få et alternativt tilbud og en annen arena å oppleve mestring i.
+
+Det er to helt sentrale forutsetninger for dette. For det første, at FOV implementeres godt. Oppdragsgiverne våre i HK-dir peker på at mye av det jeg sier her nå, det er sentrale mål for deres arbeid med FOV. Men som mine kolleger har funnet i følgeevalueringa, så er implementeringa av dette ganske forskjellig i det pågående forsøket. 
+
+Å etablere slike samarbeid mellom FOV og arbeidsrettede tilbud vil være krevende. Eksisterende samarbeid mellom NAV og VO viser utfordringer knyttet til manglende samordning av virkemidler og at det å etablere et tett samarbeid og gode kommunikasjonskanaler er tid- og ressurskrevende. Men det er også gode eksempler på det. 
+
+## 3.	Økt tilpasning innenfor NAVs virkemiddelapparat
+
+Mange av tilbudene vi har identifisert eies av NAV, og de øvrige tilbudene har NAV som en sentral samarbeidspartner når det gjelder arbeid for denne målgruppen. Det er flere utfordringer som pekes på i dette samarbeidet, som en enten må finne løsninger på i spesifikke tilbud, eller adressere samlet.
+
+Vi mener det må gjøres vurderinger av
+
+-	Gi tydelig informasjon til ansvarlige saksbehandlere om hva som er tilgjengelige og relevante tilbud?
+-	mulighetene for å differensiere tiltak for denne målgruppen, for eksempel hvorvidt det kan åpnes for at denne gruppen kan gis arbeidspraksis og arbeidstrening av lengre varighet.
+-	mulighetene for å etablere særskilte tiltak spesifikt for denne gruppen, for eksempel norskopplæringstilbud for person på A1 nivå eller lavere. 
+-	hvorvidt opplæringssenter og, så langt det er mulig, deltakere, har et fast kontaktpunkt i NAV,
+-	hvorvidt det kan gjennomgås hvordan lokale NAV kontor identifiserer, kontakter, rekrutterer og kartlegger kandidater til arbeidsrettede kvalifiseringstilbud, blant sine brukere, etablere felles rutiner og god praksis for dette, og evt. prioriterer arbeidstid hos ansatte til en slik oppgave.
+- Samkjørt fortolkning av sentrale deler av regelverket, f.eks. knytta til målgruppen for KVP.
+
+# Så, ta med hjem-budskapet:
+- Det er mellom 12 000 og 39 000 innvandrere uten grunnskole, norskferdigheter og arbeidserfaring. 
+- For denne gruppa finnes det få tilbud som kombinerer arbeidspraksis, norskopplæring og grunnskole. 
+- Tilbudene som finnes er få, langt imellom, og rettet mot øvre del av gruppa. Behovene er komplekse og dekkes i liten grad. 
+- Det trengs ikke et nytt tilbud. 
+- I stedet kan en f.eks.
+-- Arbeide lokalt for å koble det kommende FOV fra VO og arbeidsretta tilbud fra NAV
+-- Etablere en statlig tilskuddsordning for lokal utvikling av kinderegg-tilbud
+-- (Vurdere muligheten for å) gjøre tilpasninger innenfor NAVs virkemiddelapparat både lokalt og sentralt.
+

@@ -6,10 +6,10 @@
 #Æ, ø, å kan ikke brukes i tittelen her, men kan brukes i selve artikkelen etterpå
 #mulig det skyldes slug, men lettere å la den settes automatisk
 distill::create_post(
-  title = "kompetanse for fremtiden",
+  title = "mellom alle stoler - arbkval",
   collection = "posts",
   author = "auto",
-  date = as.Date("2023-09-23")
+  date = as.Date("2023-09-20")
   )
 
 #skriv eller rediger posten
@@ -35,6 +35,8 @@ distill::create_post(
 #enkel guide: https://themockup.blog/posts/2020-08-01-building-a-blog-with-distill/
 #annet eksempel: https://lisalendway.netlify.app/posts/2020-12-09-buildingdistill/
 #oversikt-side med flere eksempler: https://distillery.rbind.io/
+
+#markdown-cheatsheet https://www.markdownguide.org/cheat-sheet/
 
 #import
 #for å importere en post, distill::import_post
