@@ -1,0 +1,42 @@
+---
+title: "'Du får lyst til å flytte til et annet land.' Kartlegging av rasisme og diskriminering i Haugesund"
+description: |
+  På oppdrag fra Haugesund kommune har i2e undersøkt omfanget av rasisme og diskriminering i kommunen, samt hva som kjennetegner slike situasjoner og hvordan de oppleves..
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2023-01-18
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Mange innvandrere og norskfødte med innvandrerforeldre i Haugesund har opplevelser med å bli diskriminert på bakgrunn av sin etnisitet eller nasjonale opprinnelse. Basert på svarene i undersøkelsen vår, anslår vi at mellom 40 og 60 prosent av personene i Haugesund med innvandrerbakgrunn har opplevd etnisk diskriminering minst én gang i løpet av de siste 12 månedene. Når de ser lengre tilbake, stiger andelen som har opplevd minst ett tilfelle av etnisk diskriminering til mellom 60 og 70 prosent. Samlet sett mener vi at en forsiktig tolkning av datagrunnlaget tilsier at omfanget av diskriminering i Haugesund kan være like stort som ellers i landet. 
+
+Omfanget av rasisme og diskriminering varierer mye mellom ulike områder. Av områdene vi har undersøkt, finner vi at en er mest utsatt for negative opplevelser:
+- som arbeidssøker (36 prosent rapporterer om minst en opplevelse av etnisk diskriminering siste år),
+- på arbeidsplassen (33 prosent)
+- i ulike hverdagslige situasjoner, som på gata, butikken og i kollektivtrafikken (24 prosent).
+
+Deretter kommer skole og utdanning. Færre rapporterer om tilfeller av diskriminering på boligmarkedet, i kontakt med helsevesenet, NAV og politiet. De fleste som har opplevd etnisk diskriminering, har opplevd det på ett eller to av disse områdene. En liten andel – 8 prosent – melder imidlertid om opplevelser med diskriminering på fire til seks av områdene vi har undersøkt. 
+
+Bildet av situasjonen er sammensatt. Mens mange med innvandrerbakgrunn oppgir å ha opplevd rasisme eller diskriminering i Haugesund, er det også flere som svarer at de ikke har slike opplevelser. Flere av våre informanter understreket at Haugesund var en god by å bo i. Noen forklarte dette med at Haugesund er en mindre plass, enn for eksempel Oslo og Bergen, og at det derfor er lite rasisme her. Andre så på rasisme og diskriminering i Norge som relativt mild, sett opp mot voldelige opptøyer og lovfestede rettigheter for ulike grupper i andre deler av verden. Mange hadde også opplevd støtte fra andre haugesundere når de hadde havnet i vanskelige situasjoner.
+
+Andre igjen hadde et helt annet bilde av situasjonen i Haugesund. Disse kunne eksempelvis fortelle om rasistisk motivert mobbing på skolen og arbeidsplassen, eller vanskeligheter med å få jobb eller bolig på grunn av deres utenlandske navn. For å få et dypere inntrykk av hva som kjennetegner slike tilfeller, trekker vi frem en rekke av disse historiene i rapporten. 
+
+En kan skille mellom situasjoner som for «mottakerne» framstår som åpenbart rasistisk motiverte, og situasjoner med forskjellsbehandling som er vanskeligere å forstå. Situasjoner som oppfattes som åpenbart rasistisk motiverte, kan være å bli ropt etter på gaten eller å bli utsatt for skjellsord knyttet til hudfarge, antatt religion eller opprinnelsesland. 
+
+De fleste opplevelsene med rasisme og etnisk diskriminering som vi fikk kjennskap til, var imidlertid mindre opplagte. Det som kjennetegnet disse situasjonene, var at det var vanskelig for informantene å forstå situasjonen og definere motivet til de personene som utsatte en for forskjellsbehandling. Mange av informantene var usikre på om de ville bli behandlet på den samme måten hvis de var etnisk norske. Ville det blitt slik hvis de ikke snakket annerledes, kledde seg annerledes eller hadde en annen hudfarge?
+
+Vi finner også et skille i hvordan personene håndterer situasjonene. For noen er det lett å ignorere både den åpne og den skulte diskrimineringen og rasismen. Andre, gjerne personer som har bodd i Norge i mange år, forteller om forsøk på å si ifra om opplevelsene sine. Noen situasjoner er det lett å ta tak i, mens andre er mer krevende. 
+
+Blant de mest krevende situasjonene vi har fått innsikt i, er situasjoner der informantene har en relasjon til den eller de som utsetter dem for diskriminering. Det kan være kolleger, ledere og veiledere. Mens noen forteller at de har fått hjelp med å håndtere slike hendelser, eksempelvis på
+skolen eller arbeidsplassen, forteller andre at de har måttet stå i det alene og ikke blitt fulgt opp på tilstrekkelig vis. 
+
+Konsekvensene av diskriminering og rasisme kan være alvorlige. Fra annen forskning vet vi at
+- diskriminering på arbeidsmarkedet kan føre til at enkelte grupper faller utenfor,
+- diskriminering på boligmarkedet kan gi dårligere boforhold og redusert psykisk helse,
+- diskriminering samlet sett kan føre til de som blir utsatt for det, trekker seg tilbake fra visse situasjoner, som sosialt liv i byen eller deltakelse i samfunnet rundt seg,
+- å oppleve rasisme og diskriminering kan ha negativ påvirkning på psykisk og fysisk helse (Wollscheid m.fl. 2021).
+
+Noen av informantene våre forteller historier som går i denne retningen, og at diskriminering hindrer dem fra å få et godt liv i Haugesund. Her forteller de gjerne om konkurransesituasjoner, som jobbsøking eller boligjakt, hvor de opplever å komme dårligere ut enn andre. De forteller også om den emosjonelle belastningen det å være annerledes kan gi. Noen opplever også at innsatsen de legger ned for å bli integrert, aldri vil være god nok etter enkeltes syn. De sistnevnte tilfellene kan potensielt sett føre til at følelsen av utenforskap og håpløshet blir større. Enkelte sier da at de forstår dem som holder seg utenfor arbeidslivet, eller at de kunne tenke seg å flytte ut av Haugesund og Norge.

@@ -1,0 +1,50 @@
+---
+title: "Frivillige organisasjoner og integrering. Sluttrapport fra utredning av kompetansesenter for frivillig innsats."
+description: |
+  Frivillig sektor gjør i dag en stor innsats for integreringen av innvandrere og deres barn inn i det norske samfunnet. Offentlige myndigheter har et ønske om å legge til rette for at frivilligheten kan fortsette og styrke dette engasjementet. Ideas2evidence og Agenda Kaupang har utreda dette.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2022-11-14
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Frivillig sektor gjør i dag en stor innsats for integreringen av innvandrere og deres barn inn i det norske samfunnet. Offentlige myndigheter har et ønske om å legge til rette for at frivilligheten kan fortsette og styrke dette engasjementet. Denne rapporten ser derfor nærmere på tre problemstillinger: 
+
+1. Hvilke behov for kompetanse og samarbeid har frivillige organisasjoner på dette området? 
+2. Hvordan kan ulike typer kompetansesentre og kompetansemiljø dekke disse behovene? 
+3. Hvordan kan IMDi tilrettelegge for bedre samarbeid?
+
+Hele rapporten er publisert [her](https://ideas2evidence.com/publications/frivillige-organisasjoner-og-integrering-sluttrapport-fra-utredning-av). 
+
+# Frivilligheten trenger mer samarbeid og økt kompetanse
+
+Den første problemstillingen er hvilken kompetanse og form for samarbeid som frivillige organisasjoner har behov for fra offentlige myndigheter, for å kunne styrke regionalt og lokalt integreringsarbeid. Vi finner blant annet at:
+
+Mange organisasjoner har et behov for og ønske om mer samarbeid med det offentlige, gjerne kommunen. Organisasjonene vi har snakket med, peker på at de trenger mer dialog, og at kommunen tar ansvar for samordning, rekrutteringsarenaer og ulike former for møteplasser. Det er et gjennomgående ønske om at samarbeidet skjer på frivillighetens premisser, med møter og arrangementer på tidspunkt som passer frivillige. Særlig minoritetsorganisasjoner opplever seg som uutnyttet ressurs i integreringsarbeidet, som lokale myndigheter gjerne må bruke mer aktivt.
+
+Når det kommer til kompetanse, ser vi at flere organisasjoner trenger bevisstgjøring på hvilken rolle de faktisk kan spille for inkludering i lokalsamfunnet. En rekke organisasjoner melder om at de trenger kompetanse på rekruttering, og at de sliter med å rekruttere og beholde personer med innvandrerbakgrunn. Dette ser ut til å være nært beslektet med det som med ulike ord beskrives som inkluderingskompetanse eller kulturforståelse. Flere organisasjoner med få tillitsvalgte, frivillige og deltakere med innvandrerbakgrunn ønsker seg dette. De har et behov for å forstå målgruppen for organisasjonen bedre, og kunne legge til rette for å sikre like muligheter til deltakelse.
+ 
+# Dagens kompetansemiljøer kan dekke behovene
+
+Den andre problemstillingen vi ser på, er hvilke former for kompetansesentre og kompetansemiljø som kan dekke behovene til frivillige organisasjoner, og hva som er fordelene og ulempene ved disse. Vi vurderer ulike løsninger for kompetansesentre og kompetansemiljø med utgangspunkt i de aktørene som har ansvar og oppgaver på feltet i dag. Det vil si IMDi, fylkeskommunen, kommunen, frivilligheten og relevante forskningsmiljøer.
+
+Behovene for kompetanse og samarbeid er svært mangfoldige, og bør etter vår vurdering adresseres av flere enn en aktør, og på mer enn ett forvaltningsnivå. Vår utredning indikerer videre at det ikke er behov for å etablere nye kompetansesenter. Det er allerede mange involverte aktører på dette tverrsektorielle feltet. Aktørene har i mange tilfeller allerede har et tilbud som kan dekke behovene til frivilligheten, og kan betraktes som kompetansemiljøer. Flere nye aktører vil kunne gjøre situasjonen ytterligere uoversiktlig. I stedet bør en benytte kompetansen som finnes i systemet allerede, hos frivilligheten selv, kommunene, fylkeskommunene og IMDi.
+
+- Lokalt er kommunen den relevante aktøren for å dekke mange av behovene. Både når det gjelder behov knyttet til samarbeid og kompetanse på søknader og organisasjonsdrift står kommunene i mange tilfeller nærmest å kunne dekke behovene.
+- Regionalt bør fylkeskommunene ta en rolle som pådriver og veileder for kommuner med begrenset kompetanse og kapasitet på området, sørger for å skape nettverk og møteplasser, og inkluderer frivillighetens rolle på integreringsfeltet i regionalt planarbeid. Fylkeskommunene har også en rolle å spille for bevisstgjøring og kompetanseheving ovenfor organisasjoner med fylkesvise nettverk, som for eksempel idrettslag.
+- Nasjonalt er vår vurdering at det er mest hensiktsmessig om IMDi videreutvikler sin rolle som kompetansesenter på feltet. De skisserte behovene knyttet til kunnskapsutvikling og -formidling er i tråd med det ansvaret IMDi allerede har.
+- Det er behov for systematisk oversikt over virkemiddelbruken og mer koordinert innsats på lokalt, regionalt og nasjonalt nivå knyttet til kunnskapsutvikling, tilbud på kompetanseutvikling og formidling, samt tilrettelegging for samarbeid og dialog. Det er naturlig å peke på IMDi som en mulig koordinerende aktør, i kraft av sin rolle som et nasjonalt kompetansesenter på området.
+ 
+# IMDi har en rekke tilgjengelige virkemidler for samarbeid, men må prioritere arbeidet
+
+Til slutt har vi sett på hvordan IMDi, som forvaltningsorgan og nasjonalt kompetansesenter med ansvar for integreringsfeltet, kan tilrettelegge for bedre samarbeid mellom offentlige myndigheter og frivillige organisasjoner i nasjonalt og lokalt integreringsarbeid.
+
+IMDi forvalter i dag en rekke pedagogiske og økonomiske virkemidler som er egnet til å tilrettelegge for bedre samarbeid mellom offentlige myndigheter og frivillige organisasjoner i nasjonalt og lokalt integreringsarbeid. Vi har ikke gjort en helhetlig evaluering av hvorvidt og hvordan alle virkemidlene fungerer, men ser på generelt grunnlag at IMDi bl.a. bør:
+
+- Sammen med fylkeskommunene, ta en aktiv rolle for å tydeliggjøre fylkeskommunes rolle på feltet og legge til rette for at fylkeskommunene videreutvikles til regionale kompetansemiljøer. På denne måten kan de støtte kommuner med begrenset kunnskap og kompetanse på integrering og frivillighet.
+- Fortløpende vurdere om tilskuddsordningene og tilskuddssystemet som helhet fungerer etter hensikten, for eksempel om ordningene legger til rette for bedre samarbeid og samhandling mellom frivilligheten og mellom frivilligheten og offentlige aktører.
+- Vurdere en gjennomgang av relevante tilskuddsordninger overfor frivillige organisasjoner, frivilligsentraler, kommuner og fylkeskommuner, med tanke på om det kan gjøres justeringer for å fremme aktiviteter knytta til integrering av innvandrere.
+- Vurdere nærmere hvordan det kan legges til rette for å ivareta dialogen med organisasjoner som ikke har intensjonsavtale, særlig små og nyetablerte organisasjoner.

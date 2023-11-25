@@ -1,0 +1,30 @@
+---
+title: "Frivillige organisasjoner og integrering: Kartlegging av behov for kompetanse og samarbeid"
+description: |
+  ideas2evidence har i samarbeid med Agenda Kaupang utredet en mulig etablering av kompetansesenter for frivillig innsats på integreringsfeltet, på oppdrag fra IMDi. I delrapport 1 så vi nærmere på hvilke behov frivilligheten har.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2022-11-07
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Frivillig sektor gjør i dag en stor innsats for integreringen av innvandrere og deres barn inn i det norske samfunnet. Hvis en skal styrke frivillig innsats på integreringsfeltet ytterligere, er det behov for å styrke frivillige organisasjoners kompetanse. Det er også behov for å legge bedre til rette for samarbeid dem imellom og med offentlige myndigheter.
+
+Vi ser at en del medlemsrettede majoritetsorganisasjoner, som f.eks. idrettslag, korps og turlag, trenger økt bevissthet om hvilken rolle de kan spille som inkluderingsarena. De som har en slik bevissthet, etterspør kompetanseheving på hvordan de kan rekruttere og legge til rette for inkludering av flere med innvandrerbakgrunn i sin organisasjon. Samarbeidsbehovene for disse organisasjonene er ofte knyttet til rekruttering, både for å få den kompetanse de har behov for, men også for å få tilgang til rekrutteringsarenaer som skoler og voksenopplæringen. Det er også en del av disse organisasjonene som opplever at de mangler det de selv beskriver som kompetanse på integrering, inkludering eller kulturforståelse, noe som kanskje bidrar til en usikkerhet i møte med andre med annen kulturbakgrunn.
+
+I tråd med tidligere forskning viser også vår kartlegging at mange minoritetsorganisasjoner har behov for kompetanse i organisasjonsdrift og søknadsskriving. Flere av disse organisasjonene gir også uttrykk for at de trenger mer kunnskap om norsk forvaltning, og handlingsløyper, slik at de kan sende sine brukere til riktig instans i systemet, særlig i tidskritiske krisesituasjoner.
+
+Når det gjelder samarbeid med det offentlige, ønsker disse organisasjonene seg tilgang på faste lokaler. De opplever også at de sitter på viktig kompetanse, at de er en i stor grad uutnyttet ressurs i kommunenes integreringsarbeid, og flere uttrykker at de ønsker å bidra mer. Mange har fått mersmak på samarbeid med kommunen under koronapandemien.
+
+En del av de samfunnsrettede majoritetsorganisasjonene som kan kalles integreringsaktører, som har faste ansatte, og som gjerne er lokallag av nasjonale organisasjoner, opplever selv at de har relativt god kompetanse. De oppgir også at de har tilgang på relevante kurs og kompetansehevingsmuligheter. Dersom noen skulle fått kompetanseheving her, er det gjerne de frivillige i disse organisasjonene. Da dreier det seg f.eks. om relevant integreringsfaglig kompetanse eller kulturkompetanse. Samtidig er organisasjonene skeptiske til å skulle kreve for mye av sine frivillige på områder som kan oppfattes som utenfor hovedformålet til organisasjonen. En del av disse organisasjonene inngår gjerne allerede i samarbeid med det offentlige, og ønsker seg samarbeid med andre frivillige organisasjoner for å øke egen kapasitet.
+
+Mange organisasjoner ønsker at det offentlige tar mer ansvar for å legge til rette for kontakt, både organisasjonene imellom, og mellom organisasjonene og det offentlige. Noen ønsker seg oppdaterte registre eller oversikter over organisasjoner, og mange ønsker seg møteplasser.
+
+Samtidig er organisasjonene opptatt av at samarbeid må skje på frivillighetens premisser: det må være tidseffektivt, skje utenfor ordinær arbeidstid, og være tematisk relevant for organisasjonene.
+
+Løsninger for kompetanse -og samarbeidsbehovene er tema for delrapport 2. Inntrykket fra intervjuene er imidlertid at en del av kompetanse- og samarbeidsbehovene bør løses lokalt. Særlig ønsker mange av minoritetsorganisasjonene seg et kontor de kan besøke, hvor de kan møte folk ansikt til ansikt. Andre behov kan la seg skalere opp til regionalt eller nasjonalt nivå.
+
+Rapporten er publisert [her](https://ideas2evidence.com/publications/frivillige-organisasjoner-og-integrering-delrapport-1-kartlegging-av-behov-kompetanse).

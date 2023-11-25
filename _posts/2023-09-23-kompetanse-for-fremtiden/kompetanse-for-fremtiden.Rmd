@@ -1,0 +1,40 @@
+---
+title: "Kompetanse for fremtiden."
+description: |
+   Utredning av behovet for et nytt arbeidsrettet kvalifiseringstilbud for innvandrere med lave norskferdigheter og lite formell kompetanse.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2023-09-23
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+*Finn rapporten [her](https://ideas2evidence.com/index.php/news/ny-rapport-arbeidsretta-kvalifiseringstilbud).*
+
+I en ny rapport anbefaler ideas2evidence justeringer av arbeidsretta kvalifiseringstilbud for innvandrere uten fullført grunnskole og med lave norskferdigheter. Tilbudene denne gruppa får i dag er begrenset i omfang, og dekker i liten grad målgruppas behov. Det trengs allikevel ikke et nytt tilbud, viser utredningen.
+
+En gruppe innvandrere i Norge har ikke fullført grunnskole, har lave norskferdigheter og har lite relevant arbeidserfaring. Anslagene på størrelsen på gruppen varierer mellom ca. 12 000 og 39 000 personer mellom 20 og 60 år. I gruppen finner en både unge og gamle, kvinner og menn. Mange har fluktbakgrunn eller er familiegjenforent med en flyktning, men det er også personer med opphold som familieinnvandrere. Mange har vært i Norge i over ti år, og er bosatt i Oslo eller Viken. Gruppen beskrives av førstelinjetjenestene som svært sammensatt, med veldig komplekse og forskjellige livssituasjoner. Mange står langt fra arbeidsmarkedet.
+
+Det er et mål for norsk integreringspolitikk at også denne gruppen av innvandrere skal ha like muligheter til å delta i arbeids- og samfunnsliv som befolkningen ellers. Med lave norskferdigheter, lite skolebakgrunn og lite arbeidserfaring, blir deltakelse i samfunnet og på arbeidsmarkedet vanskelig. Uten et tilpasset kvalifiseringstilbud som på et tidlig tidspunkt identifiserer og adresserer de barrierene den enkelte står ovenfor, er det en reell fare for økte levekårsutfordringer for den enkelte og tapte ressurser for samfunnet.
+
+På oppdrag fra Integrerings- og mangfoldsdirektoratet (IMDi), Arbeids- og velferdsdirektoratet (AV-dir) og Direktoratet for høyere utdanning og kompetanse (HK-dir), har ideas2evidence kartlagt omfanget av arbeidsretta kvalifiseringstilbud denne gruppa får i dag, og sett på hva som trengs for at gruppas behov kan dekkes på en bedre måte.
+
+I rapporten gjennomgår vi 16 kartlagte tilbud. Vi finner at få av disse kombinerer grunnskole, norskopplæring og arbeidspraksis. Av tilbudene vi ser på, er det tre lokalt utviklede tilbud, samt stedene hvor kombinasjonsforsøket nå pågår, som oppfyller disse kravene. I tillegg til dette er det ett av voksenopplæringssentrene vi har undersøkt som oppgir at de kombinerer forsøk med modulstrukturert forberedende voksenopplæring (FVO) med arbeidspraksis fra dag 1. Fra den pågående følgeevalueringen vet vi at en håndfull av FVO-kommunene tilbyr dette. Vi finner også to tilbud som kombinerer norskopplæring, arbeidspraksis og fag- og yrkesopplæring på videregående nivå.
+
+Tilbudene med alle de tre ønskelige elementene er begrenset i omfang og geografisk nedslagsfelt.
+
+I stedet er tilbudslanskapet preget av tilbud om enten norskopplæring og grunnskole, eller arbeidspraksis og norskopplæring. Tilbudene er heller ikke tilgjengelig for de svakeste delene av målgruppen, f.eks. ved at det stilles språkkrav, krav til helse, eller ved at en velger motiverte deltakere. Praksisfeltet sliter også med å rekruttere målgruppen, og fortolke regelverket likt (og på en måte som er målgruppen til gunst) i alle deler av landet og NAV-systemet.
+
+Det er allikevel ikke behov for et nytt, nasjonalt kvalifiseringstilbud, etter ideas2evidence sin vurdering. Det er flere grunner til dette. Blant annet er det allerede krevende for saksbehandlere og førstelinje å holde oversikt over ulike tilbud. Høsten 2024 kommer det også et nytt tilbud, når «forberedende opplæring for voksne» erstatter dagens tilbud om grunnskole for voksne.
+
+I stedet bør en vurdere å
+
+1. se sammenheng mellom det fremtidige FOV-tilbudet og arbeidsrettede tilbud
+2. Etablere en tilskuddsordning for lokal utvikling av arbeidsrettede kvalifiseringstilbud for målgruppen
+3. Øke dokumenteringen av kompetanse
+4. Vurdere mulighetene for økt tilpasning innenfor NAVs virkemiddelapparat
+5. Koordinere innsatsen ovenfor arbeidslivet
+6. Adresse spørsmål om livsopphold
+7. Se på statistikk- og kunnskapsgrunnlag.
