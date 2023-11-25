@@ -23,7 +23,7 @@
 
 # presentasjoner og kronikker
 
-# den om frivilligheten og fylkeskommunen
-# den om kompetanse for fremtiden ARBKVAL-rapporten
-# kronikken om frivillighet og kommune
-# rasisme i Haugesund
+# den om frivilligheten og fylkeskommunen (ok)
+# den om kompetanse for fremtiden ARBKVAL-rapporten (ok)
+# kronikken om frivillighet og kommune (ok)
+# rasisme i Haugesund (ok)
