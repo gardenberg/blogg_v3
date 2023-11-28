@@ -1,5 +1,10 @@
 #ideer til publiseringer
 
+#utseende
+
+#skifte til about-page som hjemmeside, og blogg som side-side, med postcards-side på forsida?
+#https://github.com/seankross/postcards
+
 #poster
 
 # en om bloggbyttet til distill

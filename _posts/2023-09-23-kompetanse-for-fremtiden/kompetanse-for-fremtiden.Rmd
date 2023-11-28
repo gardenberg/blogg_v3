@@ -1,5 +1,5 @@
 ---
-title: "Kompetanse for fremtiden."
+title: "Kompetanse for fremtiden"
 description: |
    Utredning av behovet for et nytt arbeidsrettet kvalifiseringstilbud for innvandrere med lave norskferdigheter og lite formell kompetanse.
 author:

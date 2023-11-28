@@ -3,10 +3,16 @@ title: "Suppe og analyse"
 description: |
   Blogg om diverse analyser, kanskje suppe.
 output_dir: "_site"
+theme: nowind_theme.css
 navbar:
   right:
     - text: "Hjem"
       href: index.html
     - text: "Om"
       href: about.html
+    - icon: fa fa-github
+      href: https://github.com/gardenberg
+    - icon: fa fa-linkedin
+      href: https://www.linkedin.com/in/eivind-hageberg-4b775446/
 output: distill::distill_article
+    
