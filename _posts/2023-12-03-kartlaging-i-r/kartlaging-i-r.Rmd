@@ -1,0 +1,102 @@
+---
+title: "Hvordan lage kart i R - en oppdatering"
+description: |
+  Hvordan lager en kart med R på en effektiv måte i 2023?
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2023-12-03
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Jeg lærte meg i utgangspunktet R for mange år siden, fordi jeg skulle lage kart over fordelinga av griser i Danmark, melkekuer i Sverige og ammekuer i Østerrike. Alle elsker et godt kart! Det var ingen enkel oppgave - både fordi det krevde at jeg lærte meg databehandling og litt halv-avansert figurlaging i R fra bunnen av, og fordi GIS-området var ganske komplekst i R: Det var krevende å finne datafiler med vektor-data om grensene til de ulike landene og de administrative områdene, og når en først hadde funnet dem måtte en håndtere en rekke ulike pakker og avhengigheter. 
+
+Slik har jeg hatt inntrykk av at det har vært siden da. Jeg har med jevne mellomrom laget nye kart på nye områder, og når jeg har kommet tilbake til kartlaginga og prøvd å bruke gammel kode, har den vært utdatert, og de siste tutorials en kan finne på nettet benytter litt andre pakker, med litt anna syntax.
+
+Slik var det også sist, men slik jeg tolker [CRAN Task Viewet om analyse av romlige data](https://cran.r-project.org/web/views/Spatial.html), er de siste endringene kaaaanskje litt mer robuste? At den anbefalte pakka **sf** er vedlikehold og i tråd med en ekstern standard for åpen formidling av "simple features" lover i hvert fall noe. At Kartverket og mange andre tilbyr en haug med kart som åpne data på [Geonorge](https://kartkatalog.geonorge.no/) gjør også datatilgangen langt enklere. 
+
+Noe av utfordringa her er at innføringer og tutorials en finner, tar utgangspunkt i å forklare hvordan et spesifikt verktøy fungerer. Dermed blir en veldig sårbar for endringer i verktøyet, og innføringa av nye verktøy. En verktøy-agnostisk tilnærming er som vanlig best - men vil også være med tidkrevende. Det er mye enklere å få et par linjer kode som funker i dag, enn å måtte lære seg hvordan koordinatsystemer egentlig fungerer.
+
+## Hvilke pakker trengs nå da?
+
+Svaret er for meg så langt kort og greit: sf, med vignetter [her](https://r-spatial.github.io/sf/articles/). SF benytter fire viktige bakenforliggende biblioteker utenfor R: GDAL (i/o til en rekke typer geodata), PROJ (for CRS-transformasjon), GEOS (for planetær geometri) og S2 (sfærisk geometri).
+
+Dette er for vektor-data. terra er anbefalt for raster-data. Det finnes også en haug med pakker med diverse geografiske data - se Task Viewet over for lenker. spData er en slik pakke.
+
+```{r}
+#biblioteker
+library(sf)
+library(spData)
+library(tidyverse)
+library(tmap)
+```
+
+Det følgende er basert på Lovelace m.fl. sin eminente online-versjon av [Geocomputation with R](https://r.geocompx.org/), og div. pakke-vignetter for de brukte pakkene sf og tmap.
+
+## Hva er vektorer i denne sammenhengen?
+
+Vektor-data representerer verden med punkter, linjer eller polygoner. 
+
+- Vektor-data i denne sammenhengen må ikke forveksles med vektor-klassen i R : det første er en spesifikk data-modell, det andre er en data-klasse. Vektor-data kan representeres som vektor-objekter. 
+- Punktene kan representere ett sted (busstopp 172 i Bergen kommune), eller de kan knyttes sammen til linjer og polygoner (kommunegrensa til Bergen)
+- Punktene har et sett med koordinater som angir hvor i verden de befinner seg. Det er stort sett 2 datapunkter - x og y, men noen ganger z.
+- Disse koordinatene refererer til et referansesystem (coordinate reference system, CRS). Det finnes mange ulike CRS.
+
+Hvordan ser det ut i praksis?
+
+```{r}
+data(world)
+
+plot(world)
+```
+
+## Hvorfor sf?
+
+sf-objektene er data.frames med en spesiell geometri-variabel. Geometri-variabelen er "sticky", og blir med rundt selv om du manipulerer den. 
+
+```{r}
+norway = filter(world, name_long == "Norway") |> 
+  select(lifeExp)
+
+summary(norway)
+
+ggplot(data = norway) +
+  geom_sf()
+
+```
+Fordelen med sf-objektene er lette å se for meg som så vidt husker å ha brukt andre pakker tidligere: De kan behandles som data.frames, og kan benyttes i en tidyverse-arbeidsflyt.
+
+Sf støtter punkter, linjer, polygoner og en 15 andre geometri-typer. Med **sfheaders**-pakken kan en konvertere mellom sf-objekter og data.frame-objekter, f.eks. slik:
+
+```{r}
+temp = sfheaders::sf_to_df(norway, fill = TRUE)
+
+head(temp)
+```
+En får da ut x og y-koordinatene til alle punktene, sammen med ID-variabler, for det som i sf-objektet er ett multipolygon:
+
+```{r}
+head(norway)
+```
+
+## Jeg vil bare ha et pent bilde!
+
+Jeg har vist base og ggplot2 så langt. GGPLOT2 kan som vanlig stilles langt bedre inn, med mer kode:
+
+```{r}
+ggplot(data = norway) +
+  geom_sf() +
+  coord_sf(xlim = c(-2, 32), ylim = c(54, 72), expand = FALSE) +  
+  theme_void()
+```
+
+Geometrien her er i utgangspunktet svært grov - alle fjords er borte, her er det internasjonale linjer med kystgrense som gjelder. Det er også en rekke andre pakker som kan brukes til å plotte dette, som tmap (også kalt tm - men det er en anna pakke):
+
+```{r}
+tm_shape(norway) +
+  tm_polygons() +
+  tm_layout(frame = FALSE)
+```
+
