@@ -1,0 +1,166 @@
+---
+title: "Følt temperatur"
+description: |
+  Det er januar og kaldt. Men er det faktisk kaldere på kysten, selv om gradstokken viser både 10 og 20 kuldegrader mer på østlandet? Nei. Nei, det er det ikke - ta på deg en genser, vestlending.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-01-06
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+
+#settings
+theme_set(theme_minimal())
+
+#data
+df_temp <- read_delim("data/table.csv", 
+                      delim = ";", escape_double = FALSE, 
+                      col_types = cols(`Tid(norsk normaltid)` = col_datetime(format = "%d.%m.%Y %H:%M")),
+                      locale = locale(decimal_mark = ",", grouping_mark = "|"),
+                      na = "-",
+                      trim_ws = TRUE)
+
+
+```
+
+Det er januar, og kaldt. En kollega sa en dag at "Minus 10 i Bergen er kaldere enn minus 20 på Lillehammer". Dette tror jeg ikke noe på! Selv om det er litt forskjell på tørr og våt luft, ikke minst hvis det er vind, kan vel ikke det utgjøre så mye? Den gamle mannen i meg ønsker heller å tilskrive dette til at kalde dager er mer sjeldent, og at det er få som kler seg fornuftig med lue, stilongs og tjukkgenser i ull.
+
+Dette må sjekkes!
+
+# Vind er det viktigste når det er kaldt
+
+I følge [Store norske leksikon](https://snl.no/f%C3%B8lt_temperatur) er følt temperatur en måte å måle dette på. En justerer temperaturen som termometeret viser til å ta hensyn til kombinert effekt av vind og luftfuktighet, og sier noe om hvor mye varme menneskekroppen avgir til lufta (dvs. hvor kaldt det kjennes ut ute).
+
+Den samme leksikon-artikkelen viser at vind kan påvirke følt kulde, men at luftfuktighet har liten påvirkning på det:
+
+> Ved kuldegrader kan forskjellene i varmekapasitet og varmeledningsevne mellom tørr og fuktig luft maksimalt være i størrelsesorden noen promille. Disse egenskapene ved lufta kan derfor ikke forklare noen forskjell i følt kulde.
+
+Faktisk er det slik at høy luftfuktighet senker fordampingen fra kroppen - altså at du føler deg varmere. Det er det som gjør at å være varm og svett i høy luftfuktighet kan være mer ubehagelig, enn i tørre omgivelser. 
+
+Men: der vind og vann møtes (i et mektig kav, eller bare helt vanlig kyststripe-tilværelse), oppstår det lettere vind og trekk/turbulens, i følge denne [yr-artikkelen](https://www.yr.no/artikkel/foles-kulden-_kaldere_-ved-elva_-1.13335037).
+
+# Følt lufttemperatur kan beregnes!
+
+Så problemet er vind! Hvor stor er påvirkninga av vind på følt temperatur? Det bestemmes av en vindavkjølingsindeks: den temperaturen vi måtte hatt i vindstille forhold for å oppleve samme kulde som ved de eksisterende vind- og temperaturforhold.
+
+I følge wikipedia-artikkelen om dette er indeksen gyldig for temperaturer under 10 grader, og vind over 4.8 kilomter pr. time (fra ca. 1,5 meter pr. sekund). Den ser ca. slik ut: 
+
+```{r, echo = TRUE}
+#avkjølingsindeks w er en funksjon av temperatur t og vindhastighet km/t.
+
+#formelen tar km/t, ikke m/s.
+# svak vind er 1.5 meter pr. sekund, som er 5,4 km/t.
+
+v_ms = 1.0
+t = -25
+v = (v_ms*3600)/1000
+
+w = 13.12 + (0.621*t) - (11.37*(v^0.16)) + ((0.3965*t)*(v^0.16))
+```
+
+Hvis vi genererer noen data for denne, for litt ulike kombinasjoner:
+
+```{r, echo = TRUE}
+df = data.frame(
+  vind_ms = seq(from = 1.5, to = 24, by = 1.5),
+  temperatur = seq(5, -55, length.out = 16)
+)
+
+df = expand(df, vind_ms, temperatur)
+
+df = mutate(df,
+            vind_km = (vind_ms*3600)/1000,
+            indeks = 13.12 + (0.621*temperatur) - (11.37*(vind_km^0.16)) + ((0.3965*temperatur)*(vind_km^0.16))
+            )
+
+```
+
+Da kan vi plotte et heat-map. Eller kanskje det burde hete kulde-kart i dette tilfellet?
+
+```{r}
+ggplot(data = df, aes(x = temperatur, y = vind_ms, fill = indeks)) +
+  geom_tile() +
+  geom_text(aes(label = round(indeks, 0)), size = 3, colour = "white") +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  labs(x = "Temperatur", y = "Vind (m/s)")
+```
+
+Her ser vi at forskjellene kan bli ganske store for lave temperaturer og høy vind. Forskjellene er imidlertid mindre for mindre ekstreme temperaturer og middels vindstyrke. Et linjediagram burde få fram dette på en bedre måte:
+
+```{r}
+temp = filter(df, temperatur %in% c(1, -3, -11))
+
+ggplot(data = temp) +
+  geom_line(aes(x = vind_ms, y = indeks, colour = as.factor(temperatur), group = temperatur)) +
+  labs(colour = "Temperatur", x = "Vind (m/s)", y = "Følt temperatur")
+
+
+```
+
+Her ser vi hvordan 1 grad ved 1.5 meter pr. sekund blir til -1. Ved 7.5 meter pr. sekund føles det som -5. Selv i liten storm, 22,5 meter pr. sekund, synker ikke den følte temperaturen under -10. Mens hvis temperaturen derimot er -11, gjør  selv en liten vind at den følte temperaturen nærmer seg -15, og en laber bris (7,5 m/s) gir en følt temperatur under -20.
+
+# Sammenlikning av temperatur i Bergen, Hamar og Stavanger
+
+Hva betyr det i praksis for følt temperatur på et par steder? Fra [seklima.met.no](https://seklima.met.no/) henter jeg timevis minimumstemperatur (målt i ti meters høyde), høyeste middelvind siste time, og høyeste vindkast siste time (målt i to meters høyde), for de siste 30 dagene i Bergen, Sola og Hamar.
+
+```{r}
+ggplot(data = df_temp) +
+  geom_line(aes(x = `Tid(norsk normaltid)`, y = `Minimumstemperatur (1 t)`, colour = Navn))
+
+```
+
+Bergen og Sola ligger ganske tett, mens Hamar ligger et godt stykke under i hele perioden. Men det blåser vel en del mer i Bergen og Stavanger? Vinden er veldig variabel, så her legger jeg på en loess-smoother for å tydeligere få fram trenden. 
+
+```{r}
+ggplot(data = df_temp) +
+  geom_smooth(aes(x = `Tid(norsk normaltid)`, y = `Høyeste middelvind (1 t)`, colour = Navn))
+```
+
+Her ser vi at Stavanger jevnt over ligger langt over Bergen, som ligger et godt stykke over Hamar. 2,5 m/s er svak vind, mens 5 m/s er en lett bris. Sola var i perioder oppe i laber bris og over. 
+
+Hvordan påvirker dette følt temperatur?
+
+```{r}
+df_temp = mutate(df_temp,
+            middelvind_km = (`Høyeste middelvind (1 t)`*3600)/1000,
+            kastvind_km = (`Høyeste vindkast (1 t)`*3600)/1000,
+            indeks_middelvind = round(13.12 + (0.621*`Minimumstemperatur (1 t)`) - (11.37*(middelvind_km^0.16)) + ((0.3965*`Minimumstemperatur (1 t)`)*(middelvind_km^0.16)), 1),
+            indeks_vindkast = round(13.12 + (0.621*`Minimumstemperatur (1 t)`) - (11.37*(kastvind_km^0.16)) + ((0.3965*`Minimumstemperatur (1 t)`)*(kastvind_km^0.16)), 1)
+            )
+
+ggplot(data = df_temp) +
+  geom_line(aes(x = `Tid(norsk normaltid)`, y = indeks_middelvind, colour = Navn)) +
+  labs(y = "Følt temperatur")
+
+
+```
+
+Her blir forskjellene mindre, men Hamar er fortsatt kaldest - kanskje med unntak av et par tidspunkt hvor Sola kryper under. Men dette er med middeltemperaturen - hva hvis vi ser på kulden i vindkastene?
+
+```{r}
+ggplot(data = df_temp) +
+  geom_line(aes(x = `Tid(norsk normaltid)`, y = indeks_vindkast, colour = Navn)) +
+  labs(y = "Følt temperatur")
+```
+
+Det krymper avstanden ytterligere, men det ser ikke nevnverdig annerledes ut. Det blir tydeligere hvis vi ser temperaturen og følt temperatur oppimot hverandre på hvert enkelt sted.
+
+```{r}
+temp = select(df_temp, Navn, `Tid(norsk normaltid)`, indeks_vindkast, indeks_middelvind, `Minimumstemperatur (1 t)`) %>% 
+  pivot_longer(cols = c(indeks_vindkast, indeks_middelvind, `Minimumstemperatur (1 t)`))
+
+ggplot(data = temp) +
+  geom_line(aes(x = `Tid(norsk normaltid)`, y = value, colour = name)) +
+  facet_wrap(vars(Navn), nrow = 3, ncol = 1)
+```
+
+
