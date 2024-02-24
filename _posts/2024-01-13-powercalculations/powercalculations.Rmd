@@ -1,0 +1,150 @@
+---
+title: "Hvor stor effekt kan jeg finne i et lite ideelt (men veldig realistisk) eksperiment?"
+description: |
+  En rask kikk på hvordan en beregner teststyrke og mulig detekterbar effektstørrelse i R.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-01-13
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Si at du har gjennomført et eksperiment på den minst eksperiment-tilpassa måten som tenkes kan: 
+
+- du har kun administrert behandlingen til en 30-40 personer (få enheter), 
+- du har fordelt behandlinga på 5 ulike kontor (så du har litt clustring, dvs. at de som får behandling er like hverandre),
+- du har ikke trukket kontorene med eksperiment-behandlingen (eller deltakerne på disse kontorene) tilfeldig (så du har ikke randomisering)
+- heldigvis har du en kontrollgruppe med en annen behandling utført ved. ca. 35 kontorer, 
+
+Dette er veldig realistisk, men utfordrende hvis målet er å teste effekter Da hadde du trengt flere enheter, særlig ettersom det er clustring, og du hadde trengt randomisering av behandlingen. 
+
+Så hva gjør du når du ikke har noe av dette? Det korte svaret er at du først og fremst gjør en annen type undersøkelse enn en statistisk analyse. Du trenger mer data fra hver enkelt prosess, for å potensielt spore betydningen av behandlingen for den enkelte deltakeren, i den spesifikke settingen den er gitt. Men du må også se på datamaterialet - for hva gjør du hvis noen, f.eks. lederne ved de ulike kontorene, bruker de evt. svært høye resultatene de fikk som bevis på at behandlingen har stor positiv effekt? Grad av måloppnåelse og positive utfall har en stor magnetisk påvirkningskraft på alle, slik at tallene må undersøkes og evt. manglende effekter tydelig forklares. 
+
+Så hvordan gjør en det? I første omgang skal vi se på hvilken analyse en ville gjort, hvis behandlingen hadde vært randomisert og betydningen av clustringa minimal. Hvilken teststyrke haddde en fått, og hvor store må effektene være for at en skal kunne oppdage dem?
+
+```{r, include = FALSE}
+#biblioteker
+library(tidyverse)
+library(pwr)
+
+#settings
+set.seed(1106) #viktig å angi et seed når vi skal generere tilfeldige data
+theme_set(theme_minimal())
+
+```
+
+For å se på dette, genererer jeg noen simulerte data: 40 personer på 5 kontor har fått behandling, 360 personer fordelt på 40 kontor har ikke. Vi legger til grunn at behandlingen ikke har en effekt av noen særlig betydning. Utfallsvariabelen er dikotom, trukket fra en binomialfordeling med sannsynlig 70 % for utfall lik 1 i både behandlings- og kontrollgruppa. 
+
+```{r}
+df_behandling = data.frame(
+  person_nr = seq(1, 40, 1),
+  behandling = 1,
+  utfall = rbinom(40, 1, 0.7)
+)
+
+df_kontroll = data.frame(
+  person_nr = seq(41, 400, 1),
+  behandling = 0,
+  utfall = rbinom(360, 1, 0.7)
+)
+
+df = bind_rows(df_behandling, df_kontroll)
+
+```
+
+# Superenkel test av sammenheng - z-test (andelstest)
+
+I utgangspunktet skal det - hvis du har gjort alt riktig i designet av eksperimentet ditt - være mulig å sjekke utfallet av eksperimentet med noen av de mest grunnleggende testene i statistikken. Med en nominal avhengig variabel (ja eller nei), og en dikotom uavhengig variabel (behandling eller ikke behandling), blir de anbefalte testene enten kjikvadrat-test eller en proporsjonstest (z-test). Det vi tester er om utfallet er uavhengig av behandlingen, på et 5 % signifikansnivå.  
+
+```{r}
+#lager en krysstabell fra dataene
+krysstabell = table(df$behandling, df$utfall, dnn = c("behandling", "utfall"))
+
+krysstabell
+
+#z.test
+#kan ikke bare bruke krysstabellen her, må hente ut verdier manuelt.
+prop.test(x = c(krysstabell[2,2], krysstabell[1,2]), n = c(40, 360), alternative = "two.sided", correct = FALSE)
+
+#kjikvadrat-test - bruker chisq.test
+
+chisq.test(krysstabell, correct = FALSE)
+
+```
+P-verdien er over 0,05, og vi kan dermed ikke avvise nullhypotesen om at det ikke er sammenheng mellom behandling og utfall. Noe som gir mening, disse dataene er trukket fra den samme sannsynlighetsfordelinga. 
+
+Her ser vi også at når vi bare har to andeler på denne måten, blir z-testen og kjikvadrat-testene like. 
+
+Men hva hvis vi trekker fra to litt ulike sannsynlighetsfordelinger, der sannsynligheten for utfall i kontrollgruppa er 70 %, mens sannsynligheten for utfallet i eksperimentgruppa er lavere, kun 60 %? Klarer vi å detektere dette med en z-test da?
+
+```{r}
+df_behandling = data.frame(
+  person_nr = seq(1, 40, 1),
+  behandling = 1,
+  utfall = rbinom(40, 1, 0.6)
+)
+
+df_kontroll = data.frame(
+  person_nr = seq(41, 400, 1),
+  behandling = 0,
+  utfall = rbinom(360, 1, 0.7)
+)
+
+df = bind_rows(df_behandling, df_kontroll)
+
+#lager en krysstabell fra dataene
+krysstabell = table(df$behandling, df$utfall, dnn = c("behandling", "utfall"))
+
+krysstabell
+
+prop.test(x = c(krysstabell[2,2], krysstabell[1,2]), n = c(40, 360), correct = FALSE)
+```
+
+Sammenhengen er fortsatt ikke signifikant. 
+
+# Styrkeberegning
+
+Med formelen for styrkeberegning, kan en beregne [teststyrke](https://en.wikipedia.org/wiki/Power_of_a_test) - altså sannsynligheten for at en test avviser nullhypotesen når en spesifikk alternativ hypotese er sann. Dette er også kjent som sannsynligheten for en "falsk negativ" eller type 2-feil (der type 1 er en falsk positiv, dvs. avvise nullhypotesen på sviktende grunnlag). For å beregne dette, må en vite noe om hvor stor effekt-størrelsen sannsynligvis er (mer om det lenger ned), en må ha n og signifikans-nivået.
+
+Så hva hvis vi legger til grunn at effektstørrelsen tilsvarer en 5 prosentpoengs forskjell i måloppnåelse, for n1 40 og n2 = 360, og et standard signifikans-nivå på 5 %?
+
+```{r}
+effektstr = pwr.2p2n.test(h = ES.h(p1 = 0.75, p2 = 0.70), n1 = 40, n2 = 360, sig.level = 0.05)
+effektstr
+```
+
+I dette tilfellet er teststyrken 10 %. Sannsynligheten for å avvise nullhypotesen hvis hypotesen om 5 % større måloppnåelse i behandlingsgruppen er sann, er kun 10 %. Det er veldig lavt. Et vanlig nivå for ønska teststyrke er 80 % (det slår inn en trade-off mot sannsynligheten for en falsk positiv).
+
+Ved hjelp av formelen for teststyrke kan en også beregne den minimale effektstørrelsen som en kan finne, gitt en viss utvalgsstørrelse. Så hvor stor må forskjellen være mellom behandlingsgruppa og kontrollgruppa for at vi skal finne en signifikant effekt her, gitt 5 % signifikans-nivå og 80 % styrke?
+
+```{r}
+effektstr = pwr.2p2n.test(h = NULL, n1 = 40, n2 = 360, sig.level = 0.05, power = 0.8, alternative = "two.sided")
+effektstr
+
+```
+
+Her estimeres det at forskjellen må tilsvare Cohens h på 0,46. Hva betyr det, egentlig? Cohens h er et mål på forskjellen mellom to andeler, og hvorvidt forskjellen er meningsfull [Wikipedia](https://en.wikipedia.org/wiki/Cohen%27s_h). Tommelfinger-regelen anbefalt av Cohen er at 0,2 er liten, 0,5 er middels og og 0,8 stor. En h-verdi på 0,47 er dermed ganske så middels. Hvordan ser denne effektstørrelsen ut mellom en andel på 70 %, og en rekke andre andeler?
+
+```{r, echo = FALSE}
+temp = data.frame(p1 = rep(0.7, 100), 
+                  p2 = seq(from = 0.01, to = 1.00, by = 0.01)
+                  ) %>% 
+  mutate(
+    h = abs(ES.h(p1, p2))
+  )
+
+ggplot(data = temp) +
+  geom_point(aes(x = p2, y = h)) +
+  geom_hline(aes(yintercept = 0.46)) +
+  scale_x_continuous(breaks = c(seq(0, 1, 0.2))) +
+  labs(y = "Cohens h", x = "andel p2", title = "Cohens h etter p2, for p1 på 70 %")
+
+```
+
+Her er effektstørrelsen plottet for en andel på 70 %. En effektstørrelse på 0,46 tilsvarer at vi finner en andel i gruppe 1 på 70 %, og en andel i gruppe 2 på enten rett under 50 %, eller rett under 90 %. Altså ca. 20 prosentpoeng over eller under.
+
+Dvs. hvis vi kunne sett på data fra dette "eksperimentet" på den klassiske måten, og lagt til grunn at behandlingen var randomisert og at klyngeeffektene ikke hadde betydning, så ville det lave antallet deltakere fortsatt gjort at vi måtte opp i en forventa effektstørrelse på rundt 20 prosentpoeng for at analysen ville vært i stand til å bekrefte det. Hvis effekten er mindre - noe den antakelig er, effekter er gjerne små - så blir sannsynligheten for at vi får en falsk negativ stor.
+
+Men det er også utfordringer med randomisering. Kan disse løses? Mer om det en anna gang.
