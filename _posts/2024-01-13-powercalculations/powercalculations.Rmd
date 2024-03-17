@@ -22,7 +22,7 @@ Dette er veldig realistisk, men utfordrende hvis målet er å teste effekter Da 
 
 Så hva gjør du når du ikke har noe av dette? Det korte svaret er at du først og fremst gjør en annen type undersøkelse enn en statistisk analyse. Du trenger mer data fra hver enkelt prosess, for å potensielt spore betydningen av behandlingen for den enkelte deltakeren, i den spesifikke settingen den er gitt. Men du må også se på datamaterialet - for hva gjør du hvis noen, f.eks. lederne ved de ulike kontorene, bruker de evt. svært høye resultatene de fikk som bevis på at behandlingen har stor positiv effekt? Grad av måloppnåelse og positive utfall har en stor magnetisk påvirkningskraft på alle, slik at tallene må undersøkes og evt. manglende effekter tydelig forklares. 
 
-Så hvordan gjør en det? I første omgang skal vi se på hvilken analyse en ville gjort, hvis behandlingen hadde vært randomisert og betydningen av clustringa minimal. Hvilken teststyrke haddde en fått, og hvor store må effektene være for at en skal kunne oppdage dem?
+Så hvordan gjør en det? I første omgang skal vi se på hvilken analyse en ville gjort, hvis behandlingen hadde vært randomisert og betydningen av clustringa minimal. Hvilken teststyrke haddde en fått, og hvor store må effektene være for at en skal kunne oppdage dem? I den forbindelsen får jeg også brukt den flotte [pwr-pakka](https://cran.r-project.org/web/packages/pwr/vignettes/pwr-vignette.html).
 
 ```{r, include = FALSE}
 #biblioteker

@@ -88,38 +88,38 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-<title>Suppe og analyse: Hvor stor effekt kan jeg finne i et lite ideelt (men veldig realistisk) eksperiment?</title>
+<title>Suppe og analyse: Regresjon med små datasett</title>
 
-<meta property="description" itemprop="description" content="En rask kikk på hvordan en beregner teststyrke og mulig detekterbar effektstørrelse i R."/>
+<meta property="description" itemprop="description" content="Du har lite data. Hva skjer med regresjonen din da?"/>
 
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2024-02-24"/>
-<meta property="article:created" itemprop="dateCreated" content="2024-02-24"/>
+<meta property="article:published" itemprop="datePublished" content="2024-03-02"/>
+<meta property="article:created" itemprop="dateCreated" content="2024-03-02"/>
 <meta name="article:author" content="Eivind Hageberg"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Suppe og analyse: Hvor stor effekt kan jeg finne i et lite ideelt (men veldig realistisk) eksperiment?"/>
+<meta property="og:title" content="Suppe og analyse: Regresjon med små datasett"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="En rask kikk på hvordan en beregner teststyrke og mulig detekterbar effektstørrelse i R."/>
+<meta property="og:description" content="Du har lite data. Hva skjer med regresjonen din da?"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Suppe og analyse"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Suppe og analyse: Hvor stor effekt kan jeg finne i et lite ideelt (men veldig realistisk) eksperiment?"/>
-<meta property="twitter:description" content="En rask kikk på hvordan en beregner teststyrke og mulig detekterbar effektstørrelse i R."/>
+<meta property="twitter:title" content="Suppe og analyse: Regresjon med små datasett"/>
+<meta property="twitter:description" content="Du har lite data. Hva skjer med regresjonen din da?"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Hvor stor effekt kan jeg finne i et lite ideelt (men veldig realistisk) eksperiment?"]},{"type":"character","attributes":{},"value":["En rask kikk på hvordan en beregner teststyrke og mulig detekterbar effektstørrelse i R."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Eivind Hageberg"]},{"type":"character","attributes":{},"value":["https://suppe-og-analyse.netlify.app"]}]}]},{"type":"character","attributes":{},"value":["2024-02-24"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Regresjon med små datasett"]},{"type":"character","attributes":{},"value":["Du har lite data. Hva skjer med regresjonen din da?"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Eivind Hageberg"]},{"type":"character","attributes":{},"value":["https://suppe-og-analyse.netlify.app"]}]}]},{"type":"character","attributes":{},"value":["2024-03-02"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["powercalculations_files/anchor-4.2.2/anchor.min.js","powercalculations_files/bowser-1.9.3/bowser.min.js","powercalculations_files/distill-2.2.21/template.v2.js","powercalculations_files/figure-html5/unnamed-chunk-7-1.png","powercalculations_files/header-attrs-2.25/header-attrs.js","powercalculations_files/jquery-3.6.0/jquery-3.6.0.js","powercalculations_files/jquery-3.6.0/jquery-3.6.0.min.js","powercalculations_files/jquery-3.6.0/jquery-3.6.0.min.map","powercalculations_files/popper-2.6.0/popper.min.js","powercalculations_files/tippy-6.2.7/tippy-bundle.umd.min.js","powercalculations_files/tippy-6.2.7/tippy-light-border.css","powercalculations_files/tippy-6.2.7/tippy.css","powercalculations_files/tippy-6.2.7/tippy.umd.min.js","powercalculations_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["smallregression_files/anchor-4.2.2/anchor.min.js","smallregression_files/bowser-1.9.3/bowser.min.js","smallregression_files/distill-2.2.21/template.v2.js","smallregression_files/header-attrs-2.25/header-attrs.js","smallregression_files/jquery-3.6.0/jquery-3.6.0.js","smallregression_files/jquery-3.6.0/jquery-3.6.0.min.js","smallregression_files/jquery-3.6.0/jquery-3.6.0.min.map","smallregression_files/popper-2.6.0/popper.min.js","smallregression_files/tippy-6.2.7/tippy-bundle.umd.min.js","smallregression_files/tippy-6.2.7/tippy-light-border.css","smallregression_files/tippy-6.2.7/tippy.css","smallregression_files/tippy-6.2.7/tippy.umd.min.js","smallregression_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2439,7 +2439,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Hvor stor effekt kan jeg finne i et lite ideelt (men veldig realistisk) eksperiment?","description":"En rask kikk på hvordan en beregner teststyrke og mulig detekterbar effektstørrelse i R.","authors":[{"author":"Eivind Hageberg","authorURL":"https://suppe-og-analyse.netlify.app","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2024-02-24T00:00:00.000+01:00","citationText":"Hageberg, 2024"}
+{"title":"Regresjon med små datasett","description":"Du har lite data. Hva skjer med regresjonen din da?","authors":[{"author":"Eivind Hageberg","authorURL":"https://suppe-og-analyse.netlify.app","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2024-03-02T00:00:00.000+01:00","citationText":"Hageberg, 2024"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2468,181 +2468,292 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Hvor stor effekt kan jeg finne i et lite ideelt (men veldig realistisk) eksperiment?</h1>
+<h1>Regresjon med små datasett</h1>
 
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>En rask kikk på hvordan en beregner teststyrke og mulig detekterbar effektstørrelse i R.</p></p>
+<p><p>Du har lite data. Hva skjer med regresjonen din da?</p></p>
 </div>
 
 <div class="d-byline">
   Eivind Hageberg <a href="https://suppe-og-analyse.netlify.app" class="uri">https://suppe-og-analyse.netlify.app</a> 
   
-<br/>2024-02-24
+<br/>2024-03-02
 </div>
 
 <div class="d-article">
-<p>Si at du har gjennomført et eksperiment på den minst eksperiment-tilpassa måten som tenkes kan:</p>
-<ul>
-<li>du har kun administrert behandlingen til en 30-40 personer (få enheter),</li>
-<li>du har fordelt behandlinga på 5 ulike kontor (så du har litt clustring, dvs. at de som får behandling er like hverandre),</li>
-<li>du har ikke trukket kontorene med eksperiment-behandlingen (eller deltakerne på disse kontorene) tilfeldig (så du har ikke randomisering)</li>
-<li>heldigvis har du en kontrollgruppe med en annen behandling utført ved. ca. 35 kontorer,</li>
-</ul>
-<p>Dette er veldig realistisk, men utfordrende hvis målet er å teste effekter Da hadde du trengt flere enheter, særlig ettersom det er clustring, og du hadde trengt randomisering av behandlingen.</p>
-<p>Så hva gjør du når du ikke har noe av dette? Det korte svaret er at du først og fremst gjør en annen type undersøkelse enn en statistisk analyse. Du trenger mer data fra hver enkelt prosess, for å potensielt spore betydningen av behandlingen for den enkelte deltakeren, i den spesifikke settingen den er gitt. Men du må også se på datamaterialet - for hva gjør du hvis noen, f.eks. lederne ved de ulike kontorene, bruker de evt. svært høye resultatene de fikk som bevis på at behandlingen har stor positiv effekt? Grad av måloppnåelse og positive utfall har en stor magnetisk påvirkningskraft på alle, slik at tallene må undersøkes og evt. manglende effekter tydelig forklares.</p>
-<p>Så hvordan gjør en det? I første omgang skal vi se på hvilken analyse en ville gjort, hvis behandlingen hadde vært randomisert og betydningen av clustringa minimal. Hvilken teststyrke haddde en fått, og hvor store må effektene være for at en skal kunne oppdage dem? I den forbindelsen får jeg også brukt den flotte <a href="https://cran.r-project.org/web/packages/pwr/vignettes/pwr-vignette.html">pwr-pakka</a>.</p>
-<p>For å se på dette, genererer jeg noen simulerte data: 40 personer på 5 kontor har fått behandling, 360 personer fordelt på 40 kontor har ikke. Vi legger til grunn at behandlingen ikke har en effekt av noen særlig betydning. Utfallsvariabelen er dikotom, trukket fra en binomialfordeling med sannsynlig 70 % for utfall lik 1 i både behandlings- og kontrollgruppa.</p>
+<p>Regresjon er et sentralt verktøy i en samfunnsviters verktøykasse. Så hva gjør du når du har et lite datasett? Dette er en fortsettelse av en tidligere <a href="https://suppe-og-analyse.netlify.app/posts/2024-01-13-powercalculations/">diskusjon om styrkeberegning</a>. Jeg har latt meg inspirere av blant annet <a href="https://stirlingcodingclub.github.io/simulating_data/index.html#mvtnorm">Brad Duthie</a>, <a href="https://aosmith.rbind.io/2018/08/29/getting-started-simulating-data/#creating-datasets-with-quantiative-and-categorical-variables">verystatisticous</a> og <a href="https://www.franciscoyira.com/post/matching-in-r-part-1/">francisco yira’s blog</a>.</p>
+<p>Vi begynner med det samme datasettet som sist: 40 personer har fått en behandling som gir større sannsynlighet for et positivt utfall, 360 personer i en kontrollgruppe har ikke fått denne behandlinga. Forrige gang så vi hvordan det selv i en ordinær eksperiment-setting ville vært for få enheter i dette forsøket, til at eksperimentet kunne betegnes som å ha en tilfredsstillende styrke - altså sannsynlighet for å avvise nullhypotesen i tilfeller hvor den skal avvises. En måtte opp i en forskjell på rundt 20 prosentpoeng, for å være “vanlig” sikker på å finne den.</p>
+<p>Slik ser regresjonsresultatet ut for en slik sammenheng:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df_behandling</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
-<span>  person_nr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>40</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
-<span>  behandling <span class='op'>=</span> <span class='fl'>1</span>,</span>
-<span>  utfall <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span></span>
-<span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>df_kontroll</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
-<span>  person_nr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>41</span>, <span class='fl'>400</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
-<span>  behandling <span class='op'>=</span> <span class='fl'>0</span>,</span>
-<span>  utfall <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>360</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span></span>
-<span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>df_behandling</span>, <span class='va'>df_kontroll</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<h1 id="superenkel-test-av-sammenheng---z-test-andelstest">Superenkel test av sammenheng - z-test (andelstest)</h1>
-<p>I utgangspunktet skal det - hvis du har gjort alt riktig i designet av eksperimentet ditt - være mulig å sjekke utfallet av eksperimentet med noen av de mest grunnleggende testene i statistikken. Med en nominal avhengig variabel (ja eller nei), og en dikotom uavhengig variabel (behandling eller ikke behandling), blir de anbefalte testene enten kjikvadrat-test eller en proporsjonstest (z-test). Det vi tester er om utfallet er uavhengig av behandlingen, på et 5 % signifikansnivå.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#lager en krysstabell fra dataene</span></span>
-<span><span class='va'>krysstabell</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>behandling</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>utfall</span>, dnn <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"behandling"</span>, <span class='st'>"utfall"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>krysstabell</span></span></code></pre>
-</div>
-<pre><code>          utfall
-behandling   0   1
-         0 121 239
-         1  15  25</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#z.test</span></span>
-<span><span class='co'>#kan ikke bare bruke krysstabellen her, må hente ut verdier manuelt.</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/stats/prop.test.html'>prop.test</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>krysstabell</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>]</span>, <span class='va'>krysstabell</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>360</span><span class='op'>)</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span>, correct <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
-</div>
 <pre><code>
-    2-sample test for equality of proportions without continuity
-    correction
+Call:
+lm(formula = utfall ~ behandling, data = df)
 
-data:  c(krysstabell[2, 2], krysstabell[1, 2]) out of c(40, 360)
-X-squared = 0.24262, df = 1, p-value = 0.6223
-alternative hypothesis: two.sided
-95 percent confidence interval:
- -0.1966533  0.1188755
-sample estimates:
-   prop 1    prop 2 
-0.6250000 0.6638889 </code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#kjikvadrat-test - bruker chisq.test</span></span>
-<span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test</a></span><span class='op'>(</span><span class='va'>krysstabell</span>, correct <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>
-    Pearson&#39;s Chi-squared test
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.9250 -0.6639  0.3361  0.3361  0.3361 
 
-data:  krysstabell
-X-squared = 0.24262, df = 1, p-value = 0.6223</code></pre>
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.66389    0.02408  27.566  &lt; 2e-16 ***
+behandling   0.26111    0.07616   3.428  0.00067 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.457 on 398 degrees of freedom
+Multiple R-squared:  0.02869,   Adjusted R-squared:  0.02625 
+F-statistic: 11.75 on 1 and 398 DF,  p-value: 0.0006703</code></pre>
 </div>
-<p>P-verdien er over 0,05, og vi kan dermed ikke avvise nullhypotesen om at det ikke er sammenheng mellom behandling og utfall. Noe som gir mening, disse dataene er trukket fra den samme sannsynlighetsfordelinga.</p>
-<p>Her ser vi også at når vi bare har to andeler på denne måten, blir z-testen og kjikvadrat-testene like.</p>
-<p>Men hva hvis vi trekker fra to litt ulike sannsynlighetsfordelinger, der sannsynligheten for utfall i kontrollgruppa er 70 %, mens sannsynligheten for utfallet i eksperimentgruppa er lavere, kun 60 %? Klarer vi å detektere dette med en z-test da?</p>
+<p>Men som vi også nevnte, er ikke disse dataene henta fra en ordinær eksperiment-setting: behandlinga er ikke fordelt tilfeldig. Vi kan ikke anta at “antakelsen om uavhengighet” holder, ettersom det kan være korrelasjon mellom behandlinga og mulige utfall, forårsaket av systematiske forskjeller i deltakersammensetning eller egenskaper ved stedene som gjennomfører behandlingene, og stedene som ikke gjennomfører den.</p>
+<p>En må dermed kontrollere for bakgrunnsforhold, slik at en kan forsikre seg om at forskjellene i utfall ikke skyldes andre forhold. Si for eksempel at en høyere andel av personene som ble rekruttert til behandlings-gruppa, har høyere utdanning, mens en høyere andel i kontroll-gruppa har grunnskole. Utdanningsnivået har en positiv betydning for utfallet.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df_behandling</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
-<span>  person_nr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>40</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
-<span>  behandling <span class='op'>=</span> <span class='fl'>1</span>,</span>
-<span>  utfall <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>1</span>, <span class='fl'>0.6</span><span class='op'>)</span></span>
-<span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>df_kontroll</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
-<span>  person_nr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>41</span>, <span class='fl'>400</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
-<span>  behandling <span class='op'>=</span> <span class='fl'>0</span>,</span>
-<span>  utfall <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>360</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span></span>
-<span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>df_behandling</span>, <span class='va'>df_kontroll</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='co'>#lager en krysstabell fra dataene</span></span>
-<span><span class='va'>krysstabell</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>behandling</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>utfall</span>, dnn <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"behandling"</span>, <span class='st'>"utfall"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>krysstabell</span></span></code></pre>
-</div>
-<pre><code>          utfall
-behandling   0   1
-         0 117 243
-         1  15  25</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/prop.test.html'>prop.test</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>krysstabell</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>]</span>, <span class='va'>krysstabell</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>360</span><span class='op'>)</span>, correct <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
-</div>
 <pre><code>
-    2-sample test for equality of proportions without continuity
-    correction
+Call:
+lm(formula = utfall ~ behandling + utdanning, data = df)
 
-data:  c(krysstabell[2, 2], krysstabell[1, 2]) out of c(40, 360)
-X-squared = 0.40706, df = 1, p-value = 0.5235
-alternative hypothesis: two.sided
-95 percent confidence interval:
- -0.207637  0.107637
-sample estimates:
-prop 1 prop 2 
- 0.625  0.675 </code></pre>
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.9240 -0.6668  0.3332  0.3332  0.3718 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                0.66678    0.02503  26.638  &lt; 2e-16 ***
+behandling                 0.29579    0.11110   2.662  0.00807 ** 
+utdanninghøyere utdanning -0.03854    0.08979  -0.429  0.66804    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.4574 on 397 degrees of freedom
+Multiple R-squared:  0.02914,   Adjusted R-squared:  0.02425 
+F-statistic: 5.957 on 2 and 397 DF,  p-value: 0.002824</code></pre>
 </div>
-<p>Sammenhengen er fortsatt ikke signifikant.</p>
-<h1 id="styrkeberegning">Styrkeberegning</h1>
-<p>Med formelen for styrkeberegning, kan en beregne <a href="https://en.wikipedia.org/wiki/Power_of_a_test">teststyrke</a> - altså sannsynligheten for at en test avviser nullhypotesen når en spesifikk alternativ hypotese er sann. Dette er også kjent som sannsynligheten for en “falsk negativ” eller type 2-feil (der type 1 er en falsk positiv, dvs. avvise nullhypotesen på sviktende grunnlag). For å beregne dette, må en vite noe om hvor stor effekt-størrelsen sannsynligvis er (mer om det lenger ned), en må ha n og signifikans-nivået.</p>
-<p>Så hva hvis vi legger til grunn at effektstørrelsen tilsvarer en 5 prosentpoengs forskjell i måloppnåelse, for n1 40 og n2 = 360, og et standard signifikans-nivå på 5 %?</p>
+<p>Her får jeg veldig ustabile resultater for sammenhengen mellom behandling og utfall - vekselvis er det statistisk signifikant og ikke signifikant. Vi kan ikke lenger være sikre på om de gode utfallet skyldes behandlingen, eller utdanningen de har med seg. Som et minimum burde jeg kanskje brukt Bonferroni-korreksjoner her når jeg kjører analysene så mange ganger.</p>
+<p>I dette eksempelet var sammenhengen mellom utdanning og utfall ganske sterk. Hva hvis vi nedjusterer sammenhengen, men legger til et par andre variabler, som alder og landbakgrunn? Her er et slikt datasett:</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>effektstr</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pwr/man/pwr.2p2n.test.html'>pwr.2p2n.test</a></span><span class='op'>(</span>h <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pwr/man/ES.h.html'>ES.h</a></span><span class='op'>(</span>p1 <span class='op'>=</span> <span class='fl'>0.75</span>, p2 <span class='op'>=</span> <span class='fl'>0.70</span><span class='op'>)</span>, n1 <span class='op'>=</span> <span class='fl'>40</span>, n2 <span class='op'>=</span> <span class='fl'>360</span>, sig.level <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span></span>
-<span><span class='va'>effektstr</span></span></code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-3">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Piped data</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">400</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">behandling</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 12%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">behandling</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">utdanning</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">høy: 224, gru: 136</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">utdanning</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">høy: 30, gru: 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">landbakgrunn</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">A: 156, C: 114, B: 90</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">landbakgrunn</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">A: 18, B: 15, C: 7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 12%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 6%" />
+<col style="width: 5%" />
+<col style="width: 3%" />
+<col style="width: 6%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">behandling</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">utfall</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▃▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">utfall</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">alder</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">55.15</td>
+<td style="text-align: right;">7.15</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">50.75</td>
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: left;">▁▃▇▃▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">alder</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">26.18</td>
+<td style="text-align: right;">4.43</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">22.00</td>
+<td style="text-align: right;">27.5</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: left;">▇▃▇▃▁</td>
+</tr>
+</tbody>
+</table>
 </div>
+<p>Og her er regresjonsresultatene:</p>
+<div class="layout-chunk" data-layout="l-body">
 <pre><code>
-     difference of proportion power calculation for binomial distribution (arcsine transformation) 
+Call:
+lm(formula = utfall ~ behandling + utdanning + alder + landbakgrunn, 
+    data = df)
 
-              h = 0.1120819
-             n1 = 40
-             n2 = 360
-      sig.level = 0.05
-          power = 0.1032033
-    alternative = two.sided
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.9399 -0.6210  0.2517  0.3479  0.4156 
 
-NOTE: different sample sizes</code></pre>
-</div>
-<p>I dette tilfellet er teststyrken 10 %. Sannsynligheten for å avvise nullhypotesen hvis hypotesen om 5 % større måloppnåelse i behandlingsgruppen er sann, er kun 10 %. Det er veldig lavt. Et vanlig nivå for ønska teststyrke er 80 % (det slår inn en trade-off mot sannsynligheten for en falsk positiv).</p>
-<p>Ved hjelp av formelen for teststyrke kan en også beregne den minimale effektstørrelsen som en kan finne, gitt en viss utvalgsstørrelse. Så hvor stor må forskjellen være mellom behandlingsgruppa og kontrollgruppa for at vi skal finne en signifikant effekt her, gitt 5 % signifikans-nivå og 80 % styrke?</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>effektstr</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pwr/man/pwr.2p2n.test.html'>pwr.2p2n.test</a></span><span class='op'>(</span>h <span class='op'>=</span> <span class='cn'>NULL</span>, n1 <span class='op'>=</span> <span class='fl'>40</span>, n2 <span class='op'>=</span> <span class='fl'>360</span>, sig.level <span class='op'>=</span> <span class='fl'>0.05</span>, power <span class='op'>=</span> <span class='fl'>0.8</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span></span>
-<span><span class='va'>effektstr</span></span></code></pre>
-</div>
-<pre><code>
-     difference of proportion power calculation for binomial distribution (arcsine transformation) 
+Coefficients:
+                           Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                0.759460   0.188141   4.037 6.52e-05 ***
+behandling                 0.214250   0.122154   1.754   0.0802 .  
+utdanninghøyere utdanning  0.027042   0.047205   0.573   0.5671    
+alder                     -0.002537   0.003277  -0.774   0.4393    
+landbakgrunnB              0.116548   0.056042   2.080   0.0382 *  
+landbakgrunnC              0.021143   0.053735   0.393   0.6942    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-              h = 0.4669316
-             n1 = 40
-             n2 = 360
-      sig.level = 0.05
-          power = 0.8
-    alternative = two.sided
-
-NOTE: different sample sizes</code></pre>
+Residual standard error: 0.4485 on 394 degrees of freedom
+Multiple R-squared:  0.05181,   Adjusted R-squared:  0.03977 
+F-statistic: 4.305 on 5 and 394 DF,  p-value: 0.0007965</code></pre>
 </div>
-<p>Her estimeres det at forskjellen må tilsvare Cohens h på 0,46. Hva betyr det, egentlig? Cohens h er et mål på forskjellen mellom to andeler, og hvorvidt forskjellen er meningsfull <a href="https://en.wikipedia.org/wiki/Cohen%27s_h">Wikipedia</a>. Tommelfinger-regelen anbefalt av Cohen er at 0,2 er liten, 0,5 er middels og og 0,8 stor. En h-verdi på 0,47 er dermed ganske så middels. Hvordan ser denne effektstørrelsen ut mellom en andel på 70 %, og en rekke andre andeler?</p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="powercalculations_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
-</div>
-<p>Her er effektstørrelsen plottet for en andel på 70 %. En effektstørrelse på 0,46 tilsvarer at vi finner en andel i gruppe 1 på 70 %, og en andel i gruppe 2 på enten rett under 50 %, eller rett under 90 %. Altså ca. 20 prosentpoeng over eller under.</p>
-<p>Dvs. hvis vi kunne sett på data fra dette “eksperimentet” på den klassiske måten, og lagt til grunn at behandlingen var randomisert og at klyngeeffektene ikke hadde betydning, så ville det lave antallet deltakere fortsatt gjort at vi måtte opp i en forventa effektstørrelse på rundt 20 prosentpoeng for at analysen ville vært i stand til å bekrefte det. Hvis effekten er mindre - noe den antakelig er, effekter er gjerne små - så blir sannsynligheten for at vi får en falsk negativ stor.</p>
-<p>Men det er også utfordringer med randomisering. Kan disse løses? Mer om det en anna gang.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Her er, i en iterasjon, behandling ikke signifikant, mens landbakgrunn B er signifikant forbundet med bedre resultater enn landbakgrunn A. Det er en ren tilfeldighet, ettersom variabelen er helt tilfeldig uten noen relasjon til utfallsvariabelen.</p>
+<p>Dette er ikke optimalt - finnes det en måte å komme seg ut av dette?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

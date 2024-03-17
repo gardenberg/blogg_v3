@@ -1,0 +1,122 @@
+---
+title: "Regresjon med små datasett"
+description: |
+  Du har lite data. Hva skjer med regresjonen din da?
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-03-02
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Regresjon er et sentralt verktøy i en samfunnsviters verktøykasse. Så hva gjør du når du har et lite datasett? Dette er en fortsettelse av en tidligere [diskusjon om styrkeberegning](https://suppe-og-analyse.netlify.app/posts/2024-01-13-powercalculations/). Jeg har latt meg inspirere av blant annet [Brad Duthie](https://stirlingcodingclub.github.io/simulating_data/index.html#mvtnorm),  [verystatisticous](https://aosmith.rbind.io/2018/08/29/getting-started-simulating-data/#creating-datasets-with-quantiative-and-categorical-variables) og [francisco yira's blog](https://www.franciscoyira.com/post/matching-in-r-part-1/).
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(skimr)
+
+#settings
+set.seed(1106) #viktig å angi et seed når vi skal generere tilfeldige data
+theme_set(theme_minimal())
+
+```
+
+
+Vi begynner med det samme datasettet som sist: 40 personer har fått en behandling som gir større sannsynlighet for et positivt utfall, 360 personer i en kontrollgruppe har ikke fått denne behandlinga. Forrige gang så vi hvordan det selv i en ordinær eksperiment-setting ville vært for få enheter i dette forsøket, til at eksperimentet kunne betegnes som å ha en tilfredsstillende styrke - altså sannsynlighet for å avvise nullhypotesen i tilfeller hvor den skal avvises. En måtte opp i en forskjell på rundt 20 prosentpoeng, for å være "vanlig" sikker på å finne den. 
+
+Slik ser regresjonsresultatet ut for en slik sammenheng:
+
+```{r}
+df_behandling = data.frame(
+  person_nr = seq(1, 40, 1),
+  behandling = 1,
+  utfall = rbinom(40, 1, 0.9)
+)
+
+df_kontroll = data.frame(
+  person_nr = seq(41, 400, 1),
+  behandling = 0,
+  utfall = rbinom(360, 1, 0.7)
+)
+
+df = bind_rows(df_behandling, df_kontroll)
+
+regresjon = lm(utfall ~ behandling, data = df)
+
+summary(regresjon)
+
+```
+
+Men som vi også nevnte, er ikke disse dataene henta fra en ordinær eksperiment-setting: behandlinga er ikke fordelt tilfeldig. Vi kan ikke anta at "antakelsen om uavhengighet" holder, ettersom det kan være korrelasjon mellom behandlinga og mulige utfall, forårsaket av systematiske forskjeller i deltakersammensetning eller egenskaper ved stedene som gjennomfører behandlingene, og stedene som ikke gjennomfører den.
+
+En må dermed kontrollere for bakgrunnsforhold, slik at en kan forsikre seg om at forskjellene i utfall ikke skyldes andre forhold. Si for eksempel at en høyere andel av personene som ble rekruttert til behandlings-gruppa, har høyere utdanning, mens en høyere andel i kontroll-gruppa har grunnskole. Utdanningsnivået har en positiv betydning for utfallet.
+
+```{r}
+
+df = mutate(df,
+            utdanning = ifelse(behandling == 1, 
+                            sample(c("høyere utdanning", "grunnskole"), size = 40, replace = TRUE, prob = c(.95, .05)),
+                            sample(c("høyere utdanning", "grunnskole"), size = 360, replace = TRUE, prob = c(.05,.95))),
+            utdanning = as.factor(utdanning)
+            )
+
+regresjon = lm(utfall ~ behandling + utdanning, data = df)
+
+summary(regresjon)
+
+```
+
+Her får jeg veldig ustabile resultater for sammenhengen mellom behandling og utfall - vekselvis er det statistisk signifikant og ikke signifikant. Vi kan ikke lenger være sikre på om de gode utfallet skyldes behandlingen, eller utdanningen de har med seg. Som et minimum burde jeg kanskje brukt Bonferroni-korreksjoner her når jeg kjører analysene så mange ganger. 
+
+I dette eksempelet var sammenhengen mellom utdanning og utfall ganske sterk. Hva hvis vi nedjusterer sammenhengen, men legger til et par andre variabler, som alder og landbakgrunn? Her er et slikt datasett:
+
+```{r}
+df_behandling = data.frame(
+  person_nr = seq(1, 40, 1),
+  behandling = 1,
+  utfall = rbinom(40, 1, 0.9)
+)
+
+df_kontroll = data.frame(
+  person_nr = seq(41, 400, 1),
+  behandling = 0,
+  utfall = rbinom(360, 1, 0.7)
+)
+
+df = bind_rows(df_behandling, df_kontroll)
+
+df = mutate(df,
+            utdanning = ifelse(behandling == 1, 
+                            sample(c("høyere utdanning", "grunnskole"), size = 40, replace = TRUE, prob = c(.7, .3)),
+                            sample(c("høyere utdanning", "grunnskole"), size = 360, replace = TRUE, prob = c(.6,.4))),
+            utdanning = as.factor(utdanning),
+            alder = ifelse(behandling == 1, 
+                           rpois(40, 27),
+                           rpois(360, 55)),
+            landbakgrunn = ifelse(behandling == 1,
+                                  sample(LETTERS[1:3], size = 40, replace = TRUE, prob = c(0.4, 0.3, 0.3)),
+                                  sample(LETTERS[1:3], size = 360, replace = TRUE, prob = c(0.4, 0.3, 0.3))),
+            landbakgrunn = as.factor(landbakgrunn)
+            )
+
+
+df |> group_by(behandling) %>% 
+  skim(-person_nr)
+
+```
+
+Og her er regresjonsresultatene:
+
+```{r}
+regresjon = lm(utfall ~ behandling + utdanning + alder + landbakgrunn, data = df)
+
+summary(regresjon)
+```
+
+
+Her er, i en iterasjon, behandling ikke signifikant, mens landbakgrunn B er signifikant forbundet med bedre resultater enn landbakgrunn A. Det er en ren tilfeldighet, ettersom variabelen er helt tilfeldig uten noen relasjon til utfallsvariabelen. 
+
+Dette er ikke optimalt - finnes det en måte å komme seg ut av dette?
