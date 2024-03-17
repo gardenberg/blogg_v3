@@ -17,6 +17,7 @@ Regresjon er et sentralt verktøy i en samfunnsviters verktøykasse. Så hva gj�
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(skimr)
+library(stargazer)
 
 #settings
 set.seed(1106) #viktig å angi et seed når vi skal generere tilfeldige data
@@ -44,11 +45,13 @@ df_kontroll = data.frame(
 
 df = bind_rows(df_behandling, df_kontroll)
 
+```
+```{r, results="asis"}
 regresjon = lm(utfall ~ behandling, data = df)
 
-summary(regresjon)
-
+stargazer(regresjon, type = "html")
 ```
+
 
 Men som vi også nevnte, er ikke disse dataene henta fra en ordinær eksperiment-setting: behandlinga er ikke fordelt tilfeldig. Vi kan ikke anta at "antakelsen om uavhengighet" holder, ettersom det kan være korrelasjon mellom behandlinga og mulige utfall, forårsaket av systematiske forskjeller i deltakersammensetning eller egenskaper ved stedene som gjennomfører behandlingene, og stedene som ikke gjennomfører den.
 
@@ -65,9 +68,13 @@ df = mutate(df,
 
 regresjon = lm(utfall ~ behandling + utdanning, data = df)
 
-summary(regresjon)
-
 ```
+
+```{r, results="asis"}
+
+stargazer(regresjon, type = "html")
+```
+
 
 Her får jeg veldig ustabile resultater for sammenhengen mellom behandling og utfall - vekselvis er det statistisk signifikant og ikke signifikant. Vi kan ikke lenger være sikre på om de gode utfallet skyldes behandlingen, eller utdanningen de har med seg. Som et minimum burde jeg kanskje brukt Bonferroni-korreksjoner her når jeg kjører analysene så mange ganger. 
 
@@ -110,11 +117,12 @@ df |> group_by(behandling) %>%
 
 Og her er regresjonsresultatene:
 
-```{r}
+```{r, results="asis"}
 regresjon = lm(utfall ~ behandling + utdanning + alder + landbakgrunn, data = df)
 
-summary(regresjon)
+stargazer(regresjon, type = "html")
 ```
+
 
 
 Her er, i en iterasjon, behandling ikke signifikant, mens landbakgrunn B er signifikant forbundet med bedre resultater enn landbakgrunn A. Det er en ren tilfeldighet, ettersom variabelen er helt tilfeldig uten noen relasjon til utfallsvariabelen. 
