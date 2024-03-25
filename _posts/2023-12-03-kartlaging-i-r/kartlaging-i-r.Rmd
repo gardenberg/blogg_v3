@@ -66,6 +66,7 @@ ggplot(data = norway) +
   geom_sf()
 
 ```
+
 Fordelen med sf-objektene er lette å se for meg som så vidt husker å ha brukt andre pakker tidligere: De kan behandles som data.frames, og kan benyttes i en tidyverse-arbeidsflyt.
 
 Sf støtter punkter, linjer, polygoner og en 15 andre geometri-typer. Med **sfheaders**-pakken kan en konvertere mellom sf-objekter og data.frame-objekter, f.eks. slik:
@@ -75,6 +76,7 @@ temp = sfheaders::sf_to_df(norway, fill = TRUE)
 
 head(temp)
 ```
+
 En får da ut x og y-koordinatene til alle punktene, sammen med ID-variabler, for det som i sf-objektet er ett multipolygon:
 
 ```{r}

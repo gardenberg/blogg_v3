@@ -1,0 +1,174 @@
+---
+title: "Kloroplett og kartogram"
+description: |
+  Kan kartogrammet løse noen utfordringer med skravurkart?
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-03-23
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+#biblioteker
+library(sf)
+library(tidyverse)
+library(PxWebApiData)
+library(cartogram)
+library(stargazer)
+
+#settings
+set.seed(1106) 
+theme_set(theme_minimal())
+options(scipen = 999)
+
+#data
+kart = st_read("data/kommuner_2024.geojson")
+
+#gikk gjennom en runde med forenkling med rmapshaper
+#enklere_kart = rmapshaper::ms_simplify(kart)
+#st_write(enklere_kart, "kommuner_2024.geojson")
+
+```
+
+Så, du vil lage et kart over noen norske kommuner - og du vil ha med mer informasjon enn hvor kommunen ligger. I [denne tidligere posten](https://suppe-og-analyse.netlify.app/posts/2023-12-03-kartlaging-i-r/) gikk jeg gjennom en superenkel måte å få ut et kart på. Nå skal vi fargelegge litt, med kloroplett-kart/skravurkart/tematiske kart. 
+
+Vi skal også ta en kikk på om kartogrammer kan løse problemet med at de minste kommunene (arealmessig) kan ha de største verdiene på andre variabler, slik at koding i farger konkurrerer med koding i størrelser. En anna måte å si det på - hvordan løser vi ["dimensjonsproblemet" med kart](https://junkcharts.typepad.com/junk_charts/2024/03/the-curse-of-dimensions.html), når to av de vanlige dimensjonene allerede er opptatt med geografisk informasjon?
+
+Kartdataene er "Norske fylker og kommuner illustrasjonsdata 2024 (klippet etter kyst)", henta fra [Geonorge](https://kartkatalog.geonorge.no/metadata/norske-fylker-og-kommuner-illustrasjonsdata-2024-klippet-etter-kyst/a9c64d66-f484-4a8f-a7b4-723fdaa578d3). Jeg har forenkla geometrien i geojson-fila fra 178 MB til 10 MB med [rmapshaper-pakka](https://cran.r-project.org/web/packages/rmapshaper/vignettes/rmapshaper.html).
+
+La oss hente litt data fra SSB, og fargelegge noen kommuner! Denne gangen henter jeg noe så enkelt som befolkningstall pr. 1.1.2024. Ved en senere anledning får jeg se på data som i tillegg til å ha en dårlig korrelasjon mellom areal og verdi, har en dårlig korrelasjon mellom verdi og befolkningstetthet, slik at vi får sett hvor [dårlig absolutte tall](https://handsondataviz.org/normalize-choropleth.html) gjør seg i kart også.
+
+Siden befolkningstallene er ekstremt skjeive (13 % av Norges befolkning bor i Oslo), deler jeg kommunene inn i kvintiler, like femtedeler med de hhv. 70 minste, 70 nest-minste, osv.
+
+```{r}
+ssb_data = ApiData("https://data.ssb.no/api/v0/no/table/07459",
+             Region = TRUE,
+             Kjonn = FALSE,
+             Alder = FALSE,
+             ContentsCode = "Personer1",
+             Tid = "2024"
+             ) 
+
+df = ssb_data$dataset 
+
+df = filter(df, nchar(Region) == 4, value > 0) |> 
+  mutate(Region = parse_number(Region)) |> 
+  select(kommunenummer = Region, antall_personer = value)
+
+df = mutate(df,
+            antall_personer_kvintil = cut(antall_personer, 
+                                          breaks = quantile(df$antall_personer, probs = seq(0, 1, by = 0.2)), 
+                                          labels = c("Svært små kommuner", "Små kommuner", "Mellomstore kommuner", "Store kommuner", "Største kommuner"),
+            include.lowest = TRUE)
+            )
+
+kart = left_join(kart, df, by = c("nummer" = "kommunenummer"))
+
+
+```
+
+For å visualisere dette som et klassisk skravur-kart kan vi bruke geom_sf fra ggplot2.
+
+```{r}
+ggplot(data = kart) +
+  geom_sf(aes(fill = antall_personer_kvintil), colour = NA) +
+  scale_fill_brewer(type = "seq", palette = "BuGn") +
+  labs(title = "Norske kommuners befolkningsstørrelse", subtitle = "Fem grupper etter folketall pr. 1.1.2024", caption = "Kilde: SSBs statistikkbank og Geonorge", fill = "Kommunestørrelse") + 
+  theme_void()
+```
+
+Vi ser at de største kommunene er spredt langs kysten og i ulike regioner, og at det er mye stort på østlandet. De minste kommunene ligger i fjellregionene, og med jevne mellomrom nordover. Men størrelsen på kommunene i areal - som er det vi lettere legger merke til enn fargetonene - henger ikke sammen med befolkningsstørrelse. Faktisk er kommuner som Oslo forsvinnende små. Som en grafen under viser.
+
+
+```{r, echo = FALSE}
+ssb_data = ApiData("https://data.ssb.no/api/v0/no/table/11342",
+             Region = TRUE,
+             ContentsCode = "ArealKm2",
+             Tid = "2024"
+             )
+
+temp = ssb_data$dataset 
+
+temp = filter(temp, nchar(Region) == 4, value > 0) |> 
+  mutate(Region = parse_number(Region)) |> 
+  select(kommunenummer = Region, areal_km2 = value)
+
+#legger til areal-kolonna på kartet
+kart = left_join(kart, temp, by = c("nummer" = "kommunenummer"))
+#og i data-settet
+df = left_join(df, temp, by = "kommunenummer")
+
+ggplot(data = df, aes(x = areal_km2, y = antall_personer)) +
+  geom_point() +
+  geom_smooth() +
+  labs(x = "Areal i km2", y = "Antall personer", title = "Ingen sammenheng mellom areal og befolkningstørrelse", caption = "Kilde: SSB")
+
+```
+
+```{r, results="asis"}
+modell = lm(data = df, antall_personer ~ areal_km2 + I(areal_km2^2))
+
+stargazer(modell, type = "html")
+```
+
+En kan til en viss grad korrigere for noe av dette ved å beregne variabelen relativt til arealet - f.eks. befolkning pr. km2. Men det kan heller ikke gjøres uten å tenke nøye gjennom skalaen:
+
+```{r, echo = FALSE}
+kart = mutate(kart,
+              personer_km2 = antall_personer/areal_km2
+              )
+
+ggplot(data = kart) +
+  geom_sf(aes(fill = personer_km2), colour = NA) +
+  labs(title = "Befolkning per kvadratkilomter, 2024", subtitle = "Ikke lett å se mer enn at Oslo er tettpakka...", caption = "Kilde: SSB statistikkbank", fill = "Personer pr. km2") +
+  theme_void()
+```
+
+Et kjent grep for å fikse dette er et kartogram, der en skalerer det geografiske området til å representere variabelen en ønsker å fremstille. Dette kan en gjøre med [cartogram-pakka](https://sjewo.github.io/cartogram/). Den støtter mange ulike framgangsmåter - her er en:
+
+```{r}
+#dette lages ved å omkonstruere sf-objektet
+kart_kartogram1 = cartogram_cont(kart, weight = "antall_personer")
+
+p1 = ggplot(data = kart_kartogram1) +
+  geom_sf(aes(fill = antall_personer_kvintil), colour = NA) +
+  scale_fill_brewer(type = "seq", palette = "BuGn") +
+  labs(title = "Norske kommuners befolkningsstørrelse (kartogram)", subtitle = "Fem grupper etter folketall pr. 1.1.2024", caption = "Kilde: SSBs statistikkbank og Geonorge", fill = "Kommunestørrelse") + 
+  theme_void()
+
+p1
+```
+
+Ble dette bra nok? Tja. En ser hvordan de befolkningsrike kommunene spiser opp befolkningen i de mindre kommunene rundt seg. Fjellregionene og de lange regionene i Nord-Norge med lite folk forsvinner mellom store befolkningsmette sentre. Det er jo kanskje av og til et riktig poeng? Men formene blir veldig snåle. Det er i utgangspunktet vanskelig å kjenne igjen sin egen kommune på formen, og her er de helt forvridde - men tungden av befolkninga i Sør-Norge blir veldig tydelig. Dorling-plottet er kanskje vel så bra?
+
+```{r}
+#sett inn Dorling-variant her.
+kart_kartogram2 = cartogram_dorling(kart, weight = "antall_personer")
+
+p2 = ggplot(data = kart_kartogram2) +
+  geom_sf(aes(fill = antall_personer_kvintil), colour = NA) +
+  scale_fill_brewer(type = "seq", palette = "BuGn") +
+  labs(title = "Norske kommuners befolkningsstørrelse (Dorling)", subtitle = "Fem grupper etter folketall pr. 1.1.2024", caption = "Kilde: SSBs statistikkbank og Geonorge", fill = "Kommunestørrelse") + 
+  theme_void()
+
+p2
+
+```
+
+Ikke egentlig. Jeg antar at den store sirkelen er Oslo - men hvorfor er Tigerstaden på vei over til Sverige? Det er fiffig, men fordi boblene ikke skal overlappe, får vi litt samme effekt som i en ballbinge med baller som presser hverandre ut. Gøy en liten stund, men kanskje ikke så informativt.
+
+```{r, include = FALSE}
+#prøvde å ombinerer dem med [gridExtra::grid.arrange](https://medium.com/@pawanjangra1198/combining-plots-in-ggplot2-9699acaa2942).
+#men det ble særs dårlig
+#gridExtra::grid.arrange(p1, p2)
+```
+
+Det hadde vært bedre med noe som standardiserte størrelsen på kommunene, men beholdt formen og landet sånn noenlunde. Et hexbin-kart hadde vært kult - men jeg har ikke klart å finne en måte å plassere ut hex-formene korrekt på. [sugarbag::geom_sugarbag](https://github.com/srkobakian/sugarbag) har en variant, men det er ikke akkurat det jeg ser etter. Å kjøre algoritmen gir også forferdelig mye detaljer som foreslår å bruke 1 million GB (altså 1000 terrabyte, eller 1 petabyte) av minne for å kalkulere et fungerende grid. 
+
+*Så kan kartogram løse utfordringer med skravurkartet?* Nei, ikke egentlig. Noen ting egner seg dårligere for kart-visualiseringer enn andre. Kart er dermed akkurat som andre visualiseringer, det har sine fordeler og ulemper. Kanskje det kan løses med litt interaktivitet, slik at du kan hovre over de store enhetene, og se hvem som spiser opp de andre?
