@@ -11,12 +11,16 @@
 
 #poster
 
+#kart - flere tematiske kart med data som er egna for slike framstillinger
+#classint - sammenlikning av oppdelingsalgoritmen
+
 # oppdatering av strømdashboard.
 # kart - geocoding
 # kart - kartogram for Norge?
 
 # rapporter 
 
+#ARBKVAL-rapportene?
 #Norskopplæringsrapportene?
 
 # presentasjoner og kronikker
