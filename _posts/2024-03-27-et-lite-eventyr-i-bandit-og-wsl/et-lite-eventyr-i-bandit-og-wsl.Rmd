@@ -5,6 +5,7 @@ description: |
 author:
   - name: Eivind Hageberg
     url: https://suppe-og-analyse.netlify.app
+preview: ikke_den_bandit.png
 date: 2024-03-27
 output:
   distill::distill_article:

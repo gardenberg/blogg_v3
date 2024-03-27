@@ -12,8 +12,8 @@
     "date": "2024-03-27",
     "categories": [],
     "contents": "\r\nEtter anbefaling fra Bob Rudis (AKA hrbrmstr) sitt daily drop-nyhetsbrev, har jeg prøvd meg litt på OverTheWires Bandit-spill.\r\nBandit HeelerSpillet er et intro-spill til såkalte wargames, men egentlig på et såpass grunnleggende nivå at det er et introspill til bruk av konsollet. Spillet består av 30 nivåer, der første utfordring er å i det hele tatt koble seg på game-serveren.\r\nFørste gang jeg prøvde meg på det, brukte jeg en hel kveld før jeg skjønte at jeg hadde skrevet portnummeret feil. Instruksjonen om å lese instruksjonen nøye virker definitivt fornuftig. But one day, I got in!\r\nbilde av innloggingDe er forståelig nok ikke glade i at folk deler løsninger og slikt. Men å dokumentere reisen inn i det virker lurt.\r\nHer er noe av det jeg har plukka opp så langt:\r\nNoe av det første jeg lærte var at windows sin ledetekst (cmd/windows command shell) eller PowerShell kan brukes her, og det samme kan det å sette opp Windows Subsystem for Linux, og bruke Bash som CLI/terminal/shellderifra.\r\nBeslekta: command line, terminal og shell brukes om hverandre, men virker teknisk også litt ulike?\r\nWSL2 er definitivt et eventyr i seg selv! Artig med litt linux i livet. Nevnte nyhetsbrev fra hrbrmstr kommer jevnlig med tips til CLI-verktøy og programmer som kjøres best fra Linux, eller krever kjennskap til Linux eller shell-basert arbeid. Microsoft sitt grunnkurs i bruken av WSL og å navigere mellom filsystemene ligger her.\r\nSSH: Secure shell, brukes til å logge seg på applikasjoner på en remote server, med gitte rettigheter knytta til sin bruker.\r\nDet er mange kommandoer.\r\n\r\n\r\n\r\n",
-    "preview": {},
-    "last_modified": "2024-03-27T21:40:31+01:00",
+    "preview": "posts/2024-03-27-et-lite-eventyr-i-bandit-og-wsl/ikke_den_bandit.png",
+    "last_modified": "2024-03-27T22:01:39+01:00",
     "input_file": "et-lite-eventyr-i-bandit-og-wsl.knit.md"
   },
   {
