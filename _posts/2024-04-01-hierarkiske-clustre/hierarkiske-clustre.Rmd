@@ -1,0 +1,366 @@
+---
+title: "Hierarkiske cluster-analyse"
+description: |
+  En liten kikk på hierarkisk klyngeanalyse i R.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-04-01
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+#libraries
+library(tidyverse)
+library(cluster)
+library(fpc)
+
+#settings
+set.seed(1106)
+knitr::opts_chunk$set(echo = FALSE)
+theme_set(theme_minimal())
+
+```
+
+Hva gjør du hvis du vil finne likhetstrekk mellom grupper i dataene dine? En mulig tilnærming er klyngeanalyse eller klusteranalyse. [Klusteranalyse](https://en.wikipedia.org/wiki/Cluster_analysis) er en måte å finne likhetstrekk mellom klynger eller clustre i datasettet ditt, på en slik måte at avstanden innad i en klynge blir minimert, mens avstanden til andre klynger blir maksimert. 
+
+Intuisjonen bak er relativt enkel: du beregner avstandene mellom alle datapunktene dine, velger en cluster-metode og analyserer om clustrene er gode nok. Ettersom dette er en veletablert teknikk, er det gode muligheter til å grave seg ned i alle mulige teknikaliteter på veien. 
+
+I maskinlæringsverden klassifiseres det som en såkalt "unsupervised learning", fordi en ikke har en utfallsvariabel. Siden en ikke har en utfallsvariabel som en kan måle prediksjoner opp imot, må det en god del skjønn til for å velge riktig kriterium for å måle vellykkethet.
+
+De aller fleste eksemplene en snubler over om klyngeanalyser tar utgangspunkt i kontinuerlige variabler. Det betyr at en kan regne euklidianske distanser, og bruke en algoritme som k-means. Men eksempelet jeg ønsker å starte med, er der du har nominelle eller ordinale variabler - variabler der euklidiansk avstand ikke gir mening. 
+
+Det finnes MANGE tutorials og kode-eksempler der ute. Jeg synes at Reusovas blog om [Hierarchical Clustering on Categorical Data in R](https://towardsdatascience.com/hierarchical-clustering-on-categorical-data-in-r-a27e578f2995), [Hastie m.fl. (2008) The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/printings/ESLII_print12_toc.pdf), og [Singhs "Clustering Made Easy"](https://medium.com/geekculture/clustering-made-easy-1fe01dd8048f) var gode kilder. Her kommer jammen meg en kilde til!
+
+Som et første enkelt datasett bruker jeg datasettet fra [ggplot2movies](https://cran.r-project.org/web/packages/ggplot2movies/index.html) - altså IMDb-data for filmer. Dette består i utgangspunktet av 24 variabler om 58 788 filmer, inkludert lengde, budsjett (for noen, rating, stemmer, noe som kanskje er del-ratings, aldersvurdering, og sjangerplassering som dikotome variabler. 
+
+```{r}
+df = ggplot2movies::movies 
+
+glimpse(df)
+
+#legger også tittel-variabelen som rownames, for å få det med i dendrogrammet. Usikker på om det har konsekvenser seinere?
+
+df = select(df, title, Action:Short) |> 
+  slice_sample(n = 100) |> 
+  column_to_rownames(var = "title")
+```
+
+I dette eksempelet skal jeg begynne med å se på de 7 dikotome variablene som oppgir sjangeren. Merk at hver film kan ha flere sjangere - så hvilke klynger av sjangermikser er det vi har her, som beskriver datasettet på en god måte? Da kan vi gjøre klynge-analyse.
+
+Hierarkisk klynge-analysen består av tre steg:
+
+1. Måle avstanden mellom observasjonene med en (dis)similaritetsmatrise. Men hvordan måler vi avstanden her?
+2. Velge kluster-metode.
+3. Vurder hva som gir en god klyngestruktur.
+
+I tillegg kommer det som vanlig et steg 0: forberede dataene, tenke på betydningen av missing-verdier, m.m. Her slipper vi unna det, ettersom filmdatasettet oppfører seg pent.
+
+# Steg 1: Hvor stor avstand er det mellom observasjonene?
+
+Så, hvor stor avstand er det mellom datapunktene? Det finnes en rekke ulike måter å måle det på, og hva en lander på kan (vil?) være helt avgjørende for hva en finner. 
+
+- Den klassiske er euclidian, som er den dagligdagse avstanden. Den egner seg imidlertid best for kontinuerlige data. 
+- Hamming for kategoriske data
+- Manhattan (kvartalsavstander - jeg forstår fortsatt ikke helt når du vil ha denne? På Manhattan?)
+- Canberra for diskrete telleverdier
+- Jaccard eller binære avstander - tenk setteori og Venn-diagram (I dokumentasjonen for stats::dist er det spesifisert at de implementerer en versjon av binær avstand der datapunkt med bare 0-verdier vil ha avstand 0 i deres implementering, mens i tradisjonell Jaccard-implementering vil det gi en NaN-feil)
+
+Det finnes en rekke flere, bl.a. Gower for blandede datatyper, når du har både kategoriske og kontinuerlige data. Du kan også bruke korrelasjonskoeffisienter. 
+
+Hastie m.fl. påpeker at selv om euclidian avstand og lik vekting av variablene er det vanlige (noe som kan gi ikke-trivielle sideeffekter, f.eks. i form av at variabler med større variasjon får større betydning), så bør en også tenke på vekting mellom variablene, og hvorvidt missing-verdier er meningsfulle kategorier.
+
+Vi bruker binær avstand her, og beregner avstanden mellom alle 100 observasjoner en gang (dvs. 4950 verdier).
+
+```{r, echo = TRUE}
+binary_dist = dist(df, method = "binary")
+
+str(binary_dist)
+```
+
+# Steg 2. Hvordan klustrer vi dette?
+
+Når vi nå har beregna avstander mellom observasjonene våre, så bruker vi denne matrisen til å finne clustre. Først må vi velge om vi ønsker å ta utgangspunkt i agglomerativ (nedenfra-og-opp) eller divisiv (ovenfra-og-ned) tilnærming: Agglomorativ begynner med å se på hver observasjon som en gruppe, og finner så likheter. Divisiv begynner med å se på alle observasjonene som en gruppe, og finner forskjeller. Agglomorativ finner mindre clustre (og er vanligst i bruk), mens divisiv finner større clustre. Her går vi for den enkle, agglomerative tilnærmingen.
+
+Vi må også bestemme hva vi mener med likhet. [Singh har fine illustrasjoner](https://medium.com/geekculture/clustering-made-easy-1fe01dd8048f) av ulike typer mål på likhet mellom clustre, for å bestemme hvilke klynger som slås sammen til nye klynger i neste steg. 
+
+- Single linkage: Avstanden mellom to klynger måles ved avstanden mellom de nærmeste punktene. Bedre på å identifisere uteliggere som i liten grad passer sammen med andre klynger.
+- Complete linkage: Avstanden måles ved avstanden mellom de to punktene lengst unna hverandre. Lager nærmere clustre.
+- Average linkage: Gjennomsnittlig avstand mellom alle punkt. Ligner på complete, men tar inn litt flere uteliggere.
+- Centroid linkage: Avstand måles ved avstand mellom sentroidene i de to klyngene. Funker for data med færre likheter.
+- Wards linkage / Wards D: Bruker sum of squares for å minimere varians innad i en klynge. Lager mer kompakte clustre.
+- Wards D2: Kvadrerte sum of squares. Gir større vekt til forskjeller (fordi de kvadreres)
+
+Det generelle tipset er å prøve seg fram, og se på hva som gir mest meningsfulle clustre for dine data.
+
+```{r, echo = TRUE}
+
+fit1 = hclust(binary_dist, method = "complete")
+fit2 = hclust(binary_dist, method = "ward.D2")
+
+```
+
+# Steg 3. Hva er en god klyngestruktur?
+
+Den klassiske måten å vurdere klyngestrukturen på, er med dendrogram. Her kan en også legge på litt farge etter hvor en ønsker å kutte treet - dvs. antallet klustre.
+
+```{r, fig.height=10}
+plot(fit1)
+rect.hclust(fit1, k = 8)
+
+plot(fit2)
+rect.hclust(fit2, k = 8)
+```
+
+Jeg synes ikke disse nødvendigvis er så lette å lese når vi har 100 observasjoner. Med 10 observasjoner blir det enklere:
+
+```{r, fig.height=9}
+temp = slice_sample(df, n = 10)
+temp_dist = dist(temp, method = "binary")
+temp_fit = hclust(temp_dist, method = "ward.D2")
+
+plot(temp_fit)
+```
+
+I stedet for den grafiske framstillinga, så kan en også se på andre oppsummeringer av clustrene. Etter hva jeg kan se er det (minst) to oppsummerende statistikken en kan bruke til å vurdere hvor passende klustrene er:
+
+- Elbow: Ser på likheter innad i grupper.
+- Silhouette: Et mål på hvor nærme punktene i en gruppe er til punktene i andre grupper. 
+
+I praksis må en bruke dømmekraft her, ulike antall klustre vil være bedre på det ene målet enn det andre.
+
+## Silhouette
+
+Silhouette-målet er en indeks mellom -1 og +1, der +1 viser god indre konsistens og stor avstand til andre grupper, og -1 er en dårlig konsistens. En er dermed ute etter et antall clustre som gir høyest mulig silhouette-verdi. Disse må dermed beregnes for ulike antall clustre.
+
+```{r}
+#for en med 5 clustre
+stats = cluster.stats(d = binary_dist, clustering = cutree(fit1, k = 5))
+```
+
+
+```{r}
+tabell = data.frame()
+
+#lager en loop som beregner gjennomsnittlig silhouette-verdi for 2 til 20 clustre
+for(i in 2:20){
+  temp = cluster.stats(d = binary_dist, clustering = cutree(fit1, k = i))$avg.silwidth
+  tabell = bind_rows(tabell, data.frame(k = i, avg.silwidth = temp))
+}
+
+#visualiserer
+
+ggplot(data = tabell, aes(x = k, y = avg.silwidth)) +
+  geom_line() +
+  labs(title = "Binary distance, complete linkage")
+
+tabell = data.frame()
+
+#lager en loop som beregner gjennomsnittlig silhouette-verdi for 1 til 10 clustre
+for(i in 2:20){
+  temp = cluster.stats(d = binary_dist, clustering = cutree(fit2, k = i))$avg.silwidth
+  tabell = bind_rows(tabell, data.frame(k = i, avg.silwidth = temp))
+}
+
+#visualiserer
+
+ggplot(data = tabell, aes(x = k, y = avg.silwidth)) +
+  geom_line() +
+  labs(title = "Binary distance, ward D2")
+
+
+```
+
+Her skjer det noe ved 6/7 inndelinger som fører til et fall, og så skal en opp i 11-12 grupper før en får en videre økning i silhouetten. For Ward D2 for å beregne likhet er økninga mer jevn, den får seg en knekk først ved ca. 18 grupper.
+
+
+## Elbow
+
+Denne indikatoren ser på likheter innad i grupper. Den viser "within sum of squares". Jo lavere den er, jo likere er observasjonene innad i gruppa. Ideelt sett ser vi etter en knekk - eller albue - i en graf, der en ytterligere økning i antallet grupper kun gir liten gevinst i reduksjon i sum of squares.
+
+```{r}
+#for en med 5 clustre
+stats = cluster.stats(d = binary_dist, clustering = cutree(fit1, k = 5))
+```
+
+
+```{r}
+
+tabell = data.frame()
+
+#lager en loop som beregner within.cluster.ss-verdi for 2 til 20 clustre
+for(i in 2:20){
+  temp = cluster.stats(d = binary_dist, clustering = cutree(fit1, k = i))$within.cluster.ss
+  tabell = bind_rows(tabell, data.frame(k = i, within.cluster.ss = temp))
+}
+
+#visualiserer
+
+ggplot(data = tabell, aes(x = k, y = within.cluster.ss)) +
+  geom_line() +
+  labs(title = "Binary distance, complete linkage")
+
+tabell = data.frame()
+
+#lager en loop som beregner within.cluster.ss-verdi for 2 til 20 clustre
+for(i in 2:20){
+  temp = cluster.stats(d = binary_dist, clustering = cutree(fit2, k = i))$within.cluster.ss
+  tabell = bind_rows(tabell, data.frame(k = i, within.cluster.ss = temp))
+}
+
+#visualiserer
+
+ggplot(data = tabell, aes(x = k, y = within.cluster.ss)) +
+  geom_line() +
+  labs(title = "Binary distance, ward D2")
+```
+
+Her indikerer grafene både for complete linkage og Ward D2 at ca. 7 grupper er passende. 
+
+## Heatmap
+
+Hvordan ser denne grupperinga ut for filmene? Jeg trooor jeg kan ta cutree-output direkte som en ny kolonne i datasettet?
+
+```{r}
+
+df = mutate(df,
+            clustering_k7_complete = cutree(fit1, k = 7),
+            clustering_k7_ward2 = cutree(fit2, k = 7),
+            )
+
+#beregner antall og andel filmer som hører til hver sjanger, innad i hvert cluster
+clustre = pivot_longer(df, Action:Short, names_to = "sjanger", values_to = "verdi") |> 
+  group_by(clustering_k7_complete, sjanger) |> 
+  summarise(
+    filmer_i_sjanger = sum(verdi)
+  ) |> 
+  mutate(
+    andel_i_sjanger = filmer_i_sjanger/sum(filmer_i_sjanger)
+  )
+
+ggplot(data = clustre, aes(x = clustering_k7_complete, y = sjanger)) +
+  geom_tile(aes(fill = andel_i_sjanger)) +
+  scale_fill_gradient(low = "#d8b365", high = "#5ab4ac", labels = scales::label_percent()) +
+  geom_text(aes(label = scales::label_percent()(andel_i_sjanger)))
+  
+
+#beregner antall og andel filmer som hører til hver sjanger, innad i hvert cluster
+clustre = pivot_longer(df, Action:Short, names_to = "sjanger", values_to = "verdi") |> 
+  group_by(clustering_k7_ward2, sjanger) |> 
+  summarise(
+    filmer_i_sjanger = sum(verdi)
+  ) |> 
+  mutate(
+    andel_i_sjanger = filmer_i_sjanger/sum(filmer_i_sjanger)
+  )
+
+ggplot(data = clustre, aes(x = clustering_k7_ward2, y = sjanger)) +
+  geom_tile(aes(fill = andel_i_sjanger)) +
+  scale_fill_gradient(low = "#d8b365", high = "#5ab4ac", labels = scales::label_percent()) +
+  geom_text(aes(label = scales::label_percent()(andel_i_sjanger)))
+
+```
+
+Med complete linkage og 7 grupper av filmer får vi en action-drama-gruppe, en mer ren drama med innslag av romanse, en for ukategoriserte filmer, en for korte filmer (som gjerne er dokumentar og komedier, en for blanda korte animerte komedier (tegnefilm for barn?), en for komedier, og en for dokumentarer.)
+
+Med ward D2 får vi også action-drama, drama, kategoriløse, komedier, og korte animerte komedier, drama-romanse blir en egen kategori, korte dokumentarer.
+
+Hvilken av disse gir mest mening? Her vil det nok f.eks. gi mening å se nærmere på de tilfellene som kategoriseres ulikt. 
+
+# Et siste spørsmål: hva hvis flere variabler?
+
+For å raskt demonstrere, kjører jeg et enkelt eksempel der jeg finner en klynge som inkluderer både sjangerne, gjennomsnittlig rating og lengde på filmen. Hvilke klynger av film gir mening da? 
+
+```{r, fig.width=7}
+df = ggplot2movies::movies 
+
+#henter ut noen flere data 
+df = select(df, title, length, rating, Action:Short) |> 
+  slice_sample(n = 100) |> 
+  column_to_rownames(var = "title")
+
+#gower distance
+gower_dist = daisy(df, metric = "gower")
+
+#clustrer med ward.D2
+fit_gower = hclust(gower_dist, method = "ward.D2")
+
+#silhouette
+tabell = data.frame()
+
+#lager en loop som beregner gjennomsnittlig silhouette-verdi for 2 til 20 clustre
+for(i in 2:20){
+  temp = cluster.stats(d = gower_dist, clustering = cutree(fit_gower, k = i))$avg.silwidth
+  tabell = bind_rows(tabell, data.frame(k = i, avg.silwidth = temp))
+}
+
+#visualiserer
+
+ggplot(data = tabell, aes(x = k, y = avg.silwidth)) +
+  geom_line() +
+  labs(title = "Silhouette, gower distance")
+
+#elbow
+tabell = data.frame()
+
+#lager en loop som beregner within.cluster.ss-verdi for 2 til 20 clustre
+for(i in 2:20){
+  temp = cluster.stats(d = gower_dist, clustering = cutree(fit_gower, k = i))$within.cluster.ss
+  tabell = bind_rows(tabell, data.frame(k = i, within.cluster.ss = temp))
+}
+
+#visualiserer
+
+ggplot(data = tabell, aes(x = k, y = within.cluster.ss)) +
+  geom_line() +
+  labs(title = "Elbow, gower distance")
+
+#Prøver med 5 clustre her?
+df = mutate(df,
+            clustering_gower = cutree(fit_gower, k = 5)
+            )
+
+clusplot(df, cutree(fit_gower, k = 5), color = TRUE, shade = TRUE, labels = 4, lines = 0, main = "Bivariat clusterplot")
+
+ggplot(data = df) +
+  geom_point(aes(x = length, y = rating, colour = as.factor(clustering_gower))) +
+  labs(title = "Scatterplot for lengde og rating", subtitle = "Etter klyngetilhørighet", colour = "Cluster")
+
+#beregner antall og andel filmer som hører til hver sjanger, innad i hvert cluster
+clustre = pivot_longer(df, Action:Short, names_to = "sjanger", values_to = "verdi") |> 
+  group_by(clustering_gower, sjanger) |> 
+  summarise(
+    filmer_i_sjanger = sum(verdi)
+  ) |> 
+  mutate(
+    andel_i_sjanger = filmer_i_sjanger/sum(filmer_i_sjanger)
+  )
+
+ggplot(data = clustre, aes(x = clustering_gower, y = sjanger)) +
+  geom_tile(aes(fill = andel_i_sjanger)) +
+  scale_fill_gradient(low = "#d8b365", high = "#5ab4ac", labels = scales::label_percent()) +
+  geom_text(aes(label = scales::label_percent()(andel_i_sjanger))) +
+  labs(title = "Heatmap for de dikotome variablene", subtitle = "Etter hierarkisk clustring med gower-distanse")
+
+# clustre = pivot_longer(df, Action:Short, names_to = "sjanger", values_to = "verdi") |> 
+#   group_by(clustering_k7_ward2, sjanger) |> 
+#   summarise(
+#     filmer_i_sjanger = sum(verdi)
+#   ) |> 
+#   mutate(
+#     andel_i_sjanger = filmer_i_sjanger/sum(filmer_i_sjanger)
+#   )
+# 
+# ggplot(data = clustre, aes(x = clustering_k7_ward2, y = sjanger)) +
+#   geom_tile(aes(fill = andel_i_sjanger)) +
+#   scale_fill_gradient(low = "#d8b365", high = "#5ab4ac", labels = scales::label_percent()) +
+#   geom_text(aes(label = scales::label_percent()(andel_i_sjanger)))
+
+#les Les https://dpmartin42.github.io/posts/r/cluster-mixed-types.
+
+```
+
+Fornuftige visualiseringer av dette må vi komme tilbake til i en neste post.
+

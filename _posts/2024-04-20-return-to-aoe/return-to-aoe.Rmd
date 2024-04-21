@@ -1,0 +1,150 @@
+---
+title: "Age of Empires 2 - en ny kikk på statistikken"
+description: |
+  Vi ser på en ny datakilde til Age of Empires 2-statistikk.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-04-20
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+For ca. to år siden lagde jeg et lite dashboard for [Age of Empires 2-spilling](https://suppe-og-analyse.netlify.app/posts/2022-04-09-dashboard-for-age-of-empires-2/) gjennom pandemien. Datakildene var imidlertid temmelig spredte. Nå har jeg funnet en ny kilde i [aoestats.io](https://aoestats.io/api-info/), og vil ta en kikk på den for å se om jeg kan bruke den.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+#library
+library(httr2)
+library(tidyverse)
+library(arrow)
+
+#våre player ID-s fra AOE-insights.
+player_id = c(2176509, 4250835, 4361967)
+
+```
+
+Datasettet funker slik at det er laget et API-endepunkt til en tabell som lister opp alle tilgjengelige filer på aoestats.io/api/db_dumps. Datasettene er laget som Parquet-filer. 
+
+Først skaffer jeg ei liste over hvilke data-dumper som er tilgjengelige:
+
+```{r, echo = FALSE}
+req = request("https://aoestats.io/api/db_dumps")
+req
+
+resp = req_perform(req)
+
+#hvilket innhold er dette?
+resp |> 
+  resp_content_type()
+
+#gikk spørringa i orden?
+resp |> 
+  resp_status_desc()
+  
+#henter ut dataene
+data = resp |> 
+  resp_body_json()
+
+```
+
+Her får jeg ut ei liste med totalt antall matcher som er registert, totalt antall spillere, og p.t. en liste med 85 lister med 8 elementer. Disse pakker jeg ut. Overraskende nok funker dplyr::bind_rows som utpakker.
+
+```{r}
+#df = as.data.frame(do.call(rbind, data$db_dumps))
+#ov
+df_dumps = bind_rows(data$db_dumps)
+
+df_dumps = mutate(df_dumps, 
+            start_date = as_date(start_date),
+            end_date = as_date(end_date)
+            )
+
+glimpse(df_dumps)
+
+ggplot(data = df_dumps) +
+  geom_col(aes(x = start_date, y = num_matches))
+
+ggplot(data = df_dumps) +
+  geom_col(aes(x = start_date, y = num_players))
+
+```
+
+Her vises ukentlige datadumper fra 28. august 2022 til skrivende stund (7. april 2024).Innholdet i dumpene øker betraktelig i mars/april 2023, så det kan være noe annerledes med dataene fra de første periodene. 
+
+Så ser jeg på hvordan filene ser ut. Dette er parquet-filer, som kan leses med arrow::read_parquet()
+
+```{r}
+df_players = data.frame()
+df_matches = data.frame()
+
+#henter ut for første uke 
+
+#players
+url_players = paste0("https://aoestats.io", df_dumps[1, 6])
+
+temp = read_parquet(url_players) |> 
+  filter(profile_id %in% player_id)
+
+df_players = bind_rows(df_players, temp)
+
+#matches
+url_matches = paste0("https://aoestats.io", df_dumps[1, 5])
+temp = read_parquet(url_matches) |> 
+  filter(game_id %in% df_players$game_id)
+
+df_matches = bind_rows(df_matches, temp)
+
+#andre uke
+url_players = paste0("https://aoestats.io", df_dumps[2, 6])
+
+temp = read_parquet(url_players) |> 
+  filter(profile_id %in% player_id)
+
+df_players = bind_rows(df_players, temp)
+
+#matches
+url_matches = paste0("https://aoestats.io", df_dumps[2, 5])
+temp = read_parquet(url_matches) |> 
+  filter(game_id %in% df_players$game_id)
+
+df_matches = bind_rows(df_matches, temp)
+
+```
+
+Det er veldig mye data her, slik at en uthenting av flere data-dumps må slette ting fra minnet mellom hver nedlasting.
+
+```{r}
+#lager en for-looop
+
+df_players = data.frame()
+df_matches = data.frame()
+
+for(i in 1:nrow(df_dumps)){
+  #players
+  url_players = paste0("https://aoestats.io", df_dumps[i, 6])
+  temp = read_parquet(url_players) |> 
+    filter(profile_id %in% player_id)
+  
+  df_players = bind_rows(df_players, temp)
+
+#matches
+url_matches = paste0("https://aoestats.io", df_dumps[i, 5])
+
+temp = read_parquet(url_matches) |> 
+  filter(game_id %in% df_players$game_id)
+
+df_matches = bind_rows(df_matches, temp)
+
+Sys.sleep(10)
+}
+
+#write_excel_csv2(df_matches, "data/matches.csv")
+
+#faila på https://aoestats.io/media/db_dumps/date_range%3D2023-04-30_2023-05-06/players.parquet
+
+```
+
