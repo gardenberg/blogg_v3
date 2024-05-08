@@ -1,7 +1,7 @@
 ---
 title: "Age of Empires 2 - en ny kikk på statistikken"
 description: |
-  Vi ser på en ny datakilde til Age of Empires 2-statistikk.
+  Vi ser på en aoestats.io som kilde til Age of Empires 2-statistikk.
 author:
   - name: Eivind Hageberg
     url: https://suppe-og-analyse.netlify.app
@@ -11,27 +11,39 @@ output:
     self_contained: false
 ---
 
-For ca. to år siden lagde jeg et lite dashboard for [Age of Empires 2-spilling](https://suppe-og-analyse.netlify.app/posts/2022-04-09-dashboard-for-age-of-empires-2/) gjennom pandemien. Datakildene var imidlertid temmelig spredte. Nå har jeg funnet en ny kilde i [aoestats.io](https://aoestats.io/api-info/), og vil ta en kikk på den for å se om jeg kan bruke den.
+For ca. to år siden lagde jeg et lite dashboard for [Age of Empires 2-spilling](https://suppe-og-analyse.netlify.app/posts/2022-04-09-dashboard-for-age-of-empires-2/) gjennom pandemien. Datakildene var imidlertid temmelig spredte, noe som gjorde det tidkrevende å oppdatere dashboardet med nye data. Nå har jeg funnet en ny kilde i [aoestats.io](https://aoestats.io/api-info/), og vil ta en kikk på den for å se om jeg kan bruke den.
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-
 #library
 library(httr2)
 library(tidyverse)
 library(arrow)
+library(readr)
+
+#settings
+set.seed(1106)
+theme_set(theme_minimal())
+knitr::opts_chunk$set(echo = FALSE)
+options(scipen = 999)
 
 #våre player ID-s fra AOE-insights.
 player_id = c(2176509, 4250835, 4361967)
 
+player_lookup = data.frame(
+  id = c(2176509, 4250835, 4361967),
+  name = c("Birds", "Hufsa", "Worldbuilder")
+)
+
 ```
 
-Datasettet funker slik at det er laget et API-endepunkt til en tabell som lister opp alle tilgjengelige filer på aoestats.io/api/db_dumps. Datasettene er laget som Parquet-filer. 
+# Aoestats.io som datakilde
+
+Datasettet funker slik at det er laget et API-endepunkt til en tabell som lister opp alle tilgjengelige filer på aoestats.io/api/db_dumps. Datasettene er laget som Parquet-filer som kan lastes direkte.
 
 Først skaffer jeg ei liste over hvilke data-dumper som er tilgjengelige:
 
-```{r, echo = FALSE}
+```{r, echo = TRUE}
 req = request("https://aoestats.io/api/db_dumps")
 req
 
@@ -51,11 +63,9 @@ data = resp |>
 
 ```
 
-Her får jeg ut ei liste med totalt antall matcher som er registert, totalt antall spillere, og p.t. en liste med 85 lister med 8 elementer. Disse pakker jeg ut. Overraskende nok funker dplyr::bind_rows som utpakker.
+Her får jeg ut ei liste med totalt antall matcher som er registert, totalt antall spillere, og p.t. en liste med 87 lister med 8 elementer. Disse pakker jeg ut. Overraskende nok funker dplyr::bind_rows som utpakker.
 
 ```{r}
-#df = as.data.frame(do.call(rbind, data$db_dumps))
-#ov
 df_dumps = bind_rows(data$db_dumps)
 
 df_dumps = mutate(df_dumps, 
@@ -66,10 +76,8 @@ df_dumps = mutate(df_dumps,
 glimpse(df_dumps)
 
 ggplot(data = df_dumps) +
-  geom_col(aes(x = start_date, y = num_matches))
-
-ggplot(data = df_dumps) +
-  geom_col(aes(x = start_date, y = num_players))
+  geom_col(aes(x = start_date, y = num_matches)) +
+  labs(title = "Antall matcher i datasettet etter dato", subtitle = "august 2022 - april 2024")
 
 ```
 
@@ -77,7 +85,9 @@ Her vises ukentlige datadumper fra 28. august 2022 til skrivende stund (7. april
 
 Så ser jeg på hvordan filene ser ut. Dette er parquet-filer, som kan leses med arrow::read_parquet()
 
-```{r}
+# Hvordan ser dataene ut?
+
+```{r, echo = FALSE}
 df_players = data.frame()
 df_matches = data.frame()
 
@@ -98,53 +108,239 @@ temp = read_parquet(url_matches) |>
 
 df_matches = bind_rows(df_matches, temp)
 
-#andre uke
-url_players = paste0("https://aoestats.io", df_dumps[2, 6])
-
-temp = read_parquet(url_players) |> 
-  filter(profile_id %in% player_id)
-
-df_players = bind_rows(df_players, temp)
-
-#matches
-url_matches = paste0("https://aoestats.io", df_dumps[2, 5])
-temp = read_parquet(url_matches) |> 
-  filter(game_id %in% df_players$game_id)
-
-df_matches = bind_rows(df_matches, temp)
-
 ```
 
-Det er veldig mye data her, slik at en uthenting av flere data-dumps må slette ting fra minnet mellom hver nedlasting.
+Det er veldig mye data her, slik at en uthenting av flere data-dumps må slette ting fra minnet mellom hver nedlasting. For å hente alle tilgjengelige data og lagre disse lokalt, lager jeg en for-loop. 
 
-```{r}
+```{r, echo = TRUE}
 #lager en for-looop
 
-df_players = data.frame()
-df_matches = data.frame()
-
-for(i in 1:nrow(df_dumps)){
-  #players
-  url_players = paste0("https://aoestats.io", df_dumps[i, 6])
-  temp = read_parquet(url_players) |> 
-    filter(profile_id %in% player_id)
-  
-  df_players = bind_rows(df_players, temp)
-
-#matches
-url_matches = paste0("https://aoestats.io", df_dumps[i, 5])
-
-temp = read_parquet(url_matches) |> 
-  filter(game_id %in% df_players$game_id)
-
-df_matches = bind_rows(df_matches, temp)
-
-Sys.sleep(10)
-}
-
-#write_excel_csv2(df_matches, "data/matches.csv")
-
-#faila på https://aoestats.io/media/db_dumps/date_range%3D2023-04-30_2023-05-06/players.parquet
+# df_players = data.frame()
+# df_matches = data.frame()
+# 
+# for(i in 1:nrow(df_dumps)){
+#   #players
+#   url_players = paste0("https://aoestats.io", df_dumps[i, 6])
+#   temp = read_parquet(url_players) |> 
+#     filter(profile_id %in% player_id)
+#   
+#   df_players = bind_rows(df_players, temp)
+# 
+# #matches
+# url_matches = paste0("https://aoestats.io", df_dumps[i, 5])
+# 
+# temp = read_parquet(url_matches) |> 
+#   filter(game_id %in% df_players$game_id)
+# 
+# df_matches = bind_rows(df_matches, temp)
+# 
+# Sys.sleep(10)
+# }
 
 ```
+
+Denne failer litt her og der, og for å unngå å laste ned disse filene hver gang, men heller kunne oppdatere datasettet med nye matcher, lagrer jeg en lokal fil som jeg kan sjekke om trenger oppdateringer.
+
+```{r, echo = TRUE}
+matches <- read_delim("data/matches.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,
+                      col_types = cols(started_timestamp = col_datetime(format = "%Y/%m/%d %H:%M:%S"))) |> 
+  arrange(desc(started_timestamp))
+
+players <- read_delim("data/players.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+#sjekken kan f.eks. se slik ut:
+
+#last_match_played = date(slice_head(matches, n = 1)$started_timestamp)
+#last_match_in_dump = max(df_dumps$end_date)
+
+#if(last_match_played < last_match_in_dump){
+#  df_dumps_new = filter(end_date > last_match_played)
+  #legg til uthenting her hvis behov
+#}
+```
+
+Her sitter jeg da med to filer, en med spiller-informasjon og en med match-informasjon. Jeg har filtrert vekk alleobservasjoner for spillere som ikke er meg og mine to med-spillere. 
+
+Dataene er dokumentert hos [aoestats.io](https://aoestats.io/api-info/).
+
+# Litt om våre matcher
+
+```{r}
+#finner matcher som vi tre har spilt sammen
+
+checksum = sum(player_id)
+
+#hvilke games har tre spillere med id-er som summerer til checksummen?
+our_games = group_by(players, game_id) |> 
+  summarise(
+    id_sum = sum(profile_id)
+  ) |> 
+  filter(id_sum == checksum)
+
+#filtrerer meg fram til matchene vi har felles    
+matches = filter(matches, game_id %in% our_games$game_id)
+players = filter(players, game_id %in% our_games$game_id)
+
+```
+
+## Hvor mange matcher har vi spilt, og har vi vunnet?
+
+```{r}
+#totalt antall spill og resultatene av dem
+temp = distinct(players, game_id, winner) |> 
+  summarise(
+    antall_matcher = n(),
+    antall_vunnet = sum(winner)
+  ) |> 
+  mutate(
+    vinnnprosent = round(antall_vunnet/antall_matcher*100, 0)
+  )
+
+knitr::kable(temp)
+
+```
+
+### Når har vi spilt?
+
+```{r}
+temp = mutate(matches,
+              month_played = lubridate::floor_date(started_timestamp, "month")
+              ) |> 
+  group_by(month_played) |> 
+  summarise(
+    antall_matcher = n()
+  )
+
+ggplot(data = temp) +
+  geom_line(aes(x = month_played, y = antall_matcher))
+
+```
+
+### Hvilke baner har vi spilt - og hvor vinner vi?
+
+```{r}
+
+temp = distinct(players, game_id, winner) |> 
+  left_join(select(matches, game_id, map_played = map)) |> 
+  group_by(map_played, winner) |> 
+  summarise(
+    antall = n()
+  ) |> 
+  ungroup() |> 
+  complete(winner, map_played) |> 
+  group_by(map_played) |> 
+  mutate(
+    antall = ifelse(is.na(antall) == TRUE, 0, antall),
+    antall_bane_n = sum(antall)
+  )
+
+ggplot(temp) +
+  geom_col(aes(x = fct_reorder(map_played, antall_bane_n), y = antall, fill = winner)) +
+  labs(x = "Kart", y = "Antall kamper", fill  = "Resultat") +
+  coord_flip()
+```
+
+### Hvilke sivilisasjoner liker vi å spille?
+
+```{r}
+
+temp = group_by(players, profile_id, civ) %>%
+  summarise(antall = n())
+
+ggplot(data = temp) +
+  geom_col(aes(x = tidytext::reorder_within(civ, antall, profile_id), y = antall)) +
+  coord_flip() +
+  tidytext::scale_x_reordered() +
+  facet_wrap(vars(profile_id), scales = "free_y") +
+  labs(x = "Sivilisasjoner", y = "Antall")
+```
+
+### Hvilke sivilisasjoner har vi ikke spilt?
+
+```{r}
+#trenger en liste over alle civs i spillet
+all_civs = read_parquet(url_players) |> 
+  distinct(civ)
+
+temp = group_by(players, profile_id, civ) |> 
+  summarise(antall = n())
+
+temp = full_join(temp, all_civs) |> 
+  mutate(
+    antall = ifelse(is.na(antall) == TRUE, 0, antall),
+    profile_id = as.character(ifelse(is.na(profile_id) == TRUE, 4361967, profile_id))
+  ) |> 
+  ungroup() |> 
+  complete(civ, profile_id) |> 
+  mutate(
+    antall = ifelse(is.na(antall) == TRUE, 0, antall),
+    har_spilt = ifelse(antall > 0, 1, 0)
+  )
+
+ggplot(data = temp) +
+  geom_tile(aes(x = profile_id, y = civ, fill = as.factor(har_spilt))) +
+  labs(x = "Spiller", y = "Sivilisasjon", fill = "Har vi spilt den?")
+```
+
+### Hvor lenge varer spillene?
+
+```{r}
+
+temp = select(matches, game_id, duration) |> 
+  mutate(
+    duration_ingame_mins = duration/60,
+    duration_ingame_cats = cut(duration_ingame_mins,
+      breaks = c(0, 15, 25, 30, 40, 60, 2000), 
+      labels = c("dark age", "feudal age", "early castle", "late castle", "imp", "late imp")
+      )
+  )
+
+ggplot(data = temp, aes(x = duration_ingame_mins)) +
+  geom_histogram(binwidth = 5)
+
+ggplot(data = temp) +
+  geom_bar(aes(x = duration_ingame_cats))
+```
+
+### Når går vi opp i age?
+
+```{r}
+temp = filter(players, is.na(feudal_age_uptime) == FALSE) |> 
+  select(profile_id, contains("uptime")) |> 
+  mutate(
+    feudal_age_uptime = feudal_age_uptime/(1000000*60),
+    castle_age_uptime = castle_age_uptime/(1000000*60),
+    imperial_age_uptime = imperial_age_uptime/(1000000*60),
+  ) |> 
+  pivot_longer(contains("uptime"), names_to = "age", values_to = "uptime") |> 
+  group_by(profile_id, age) |> 
+  summarise(
+    mean = round(mean(uptime, na.rm = TRUE), 1),
+    median = round(median(uptime, na.rm = TRUE), 1)
+  ) |> 
+  pivot_wider(names_from = "age", values_from = c("mean", "median"))
+
+knitr::kable(temp)
+
+```
+
+
+### Blir vi bedre over tid?
+
+
+```{r}
+
+temp = group_by(players, game_id) |> 
+  summarise(
+    average_team_elo = mean(new_rating)
+  ) |> 
+  left_join(select(matches, game_id, started_timestamp))
+
+ggplot(data = temp, aes(x = lubridate::date(started_timestamp), y = average_team_elo)) +
+  geom_jitter() +
+  geom_smooth() +
+  scale_x_date(date_breaks = "12 weeks", limits = c(as.Date("2022-09-01"), as.Date("2024-05-01"))) +
+  labs(x = "Dato", y = "Gjennomsnittlig ELO")
+```
+
 
