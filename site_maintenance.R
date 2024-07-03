@@ -6,10 +6,10 @@
 #Æ, ø, å kan ikke brukes i tittelen her, men kan brukes i selve artikkelen etterpå
 #mulig det skyldes slug, men lettere å la den settes automatisk
 distill::create_post(
-  title = "Hva kan en bruke LLM til",
+  title = "Lokal LLM med Ollama",
   collection = "posts",
   author = "auto",
-  date = as.Date("2024-06-09")
+  date = as.Date("2024-07-04")
   )
 
 #skriv eller rediger posten

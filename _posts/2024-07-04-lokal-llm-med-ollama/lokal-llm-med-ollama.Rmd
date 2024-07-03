@@ -1,0 +1,90 @@
+---
+title: "Lokal LLM med Ollama"
+description: |
+  Ved hjelp av Ollama kan en kjøre LLM-er lokalt.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-07-04
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+
+#library
+library(tidyverse)
+library(httr2)
+
+#settings
+knitr::opts_chunk$set(echo = TRUE)
+old = theme_set(theme_minimal())
+
+#data
+
+```
+
+
+For [en tid tilbake](https://suppe-og-analyse.netlify.app/posts/2024-06-09-hva-kan-en-bruke-llm-til/) skrev jeg om språkmodeller, noen mulige bruksområder (fra mitt perspektiv), og konkluderte med at muligheten til å kjøre modellene lokalt, uten å måtte bruke OpenAI, Google eller Microsoft sine APIer, ville vært flott. 
+
+Etter litt undersøkelser har jeg nå funnet ut av to måter en kan gjøre dette på:
+
+- [Llamafile](https://github.com/Mozilla-Ocho/llamafile), fra Mozilla, som pakker sammen en språkmodell til en enkelt kjørbar fil. Nedsida er at en del av filene er svært store, langt større enn det en har mulighet til å kjøre i Windows.
+- [Ollama](https://github.com/ollama/ollama), et open source-prosjekt, som åpner for lokal kjøring av språkmodeller. En må ha separate installasjoner av et grensesnitt (med CLI og API) og de ulike modellene, men det virker veldig overkommelig. En god introduksjon finner du på github-dokumentasjonen, men også f.eks. i denne [Medium-artikkelen](https://medium.com/@1kg/ollama-what-is-ollama-9f73f3eafa8b) fra mai 2024.
+
+Ollama virker så langt som det mest lovende for meg, med Windows-oppsett. Det er et enkelt program som en starter, og som da gir en mulighet til å kjøre ollama-kommandoer i CLI, f.eks. PowerShell. Her får en da mulighet til å laste ned og kjøre et bredt utvalg av kommandoer. Ollama lover bl.a. å gjøre intelligente valg for statusflagg og ressursallokering, noe som er helt avgjørende for å kunne kjøre noe så ressurskrevende som en språkmodell med flere milliarder parametre på en PC som ellers brukes til å skrive og spille Age of Empires 2. 
+
+En annen fordel med Ollama er at de setter opp et standardisert API-grensesnitt til modellene, slik at du kan bruke lik syntaks, men bytte og teste ulike modeller. Prosjektets Github-side lenker til en rekke ulike applikasjoner som benytter seg av dette API-et, og ett av dem er [Hause Lins ollamar](https://hauselin.github.io/ollama-r/). Dette er en innpakning av en rekke ulike httr2-kall mot API-et. Ettersom et kjerne-elemenet i å kjøre en LLM lokalt er å ha kontroll over koden, tar jeg meg den frihet det er å reimplementere noe av Ollamar-koden selv.
+
+```{r, echo = TRUE}
+#standard lokalt endepunkt er  http://localhost:11434
+
+url =  "http://localhost:11434"
+req = request(url)
+resp = req_perform(req)
+
+#er status OK? Kjører serveren lokalt?
+resp_status_desc(resp)
+
+#hvilken form er det på innholdet?
+resp_content_type(resp)
+
+#hva er innholdet?
+resp_body_string(resp)
+
+
+```
+
+Det finnes en god del funksjonalitet i APIet her, som dokumentert i [dokumentasjonen](https://github.com/ollama/ollama/blob/main/docs/api.md). Kan jeg få den til å generere en tekstrespons som beskrevet [her](https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion)? 
+
+Dette vil antakelig ta en god stund å kjøre, ettersom Ollama må starte opp modellen. Det ser ut til at modellen får en /bye etter endt request.
+
+```{r}
+#req = create_request("http://localhost:11434/api/generate")
+
+req = request("http://localhost:11434/api/generate")
+req = req_method(req, "POST")
+
+#selve requesten
+body_json = list(model = "llama3",
+                  stream = FALSE,
+                  prompt = "Bak skyene er himmelen alltid ..."
+                  )
+
+req = req_body_json(req, body_json)
+
+resp = req_perform(req)
+
+```
+
+Hvordan ser så svaret ut? Dette api/generate-endepunktet er "strømmende", dvs. at den printer ut ord-for-ord i fullføringa. Det er en god påminnelse av at modellen kun er en måte å estimere det neste ordet på, men i mange sammenhenger er det overflødig å få alt.
+
+```{r}
+json_body = resp_body_json(resp)
+
+json_body$response
+
+```
+
+Dette ser faktisk ut til å funke. Ikke verst. Gleder meg til å teste dette mer.
