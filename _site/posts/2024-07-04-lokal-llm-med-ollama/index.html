@@ -119,7 +119,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"NULL"}
+  {"type":"character","attributes":{},"value":["lokal-llm-med-ollama_files/anchor-4.2.2/anchor.min.js","lokal-llm-med-ollama_files/bowser-1.9.3/bowser.min.js","lokal-llm-med-ollama_files/distill-2.2.21/template.v2.js","lokal-llm-med-ollama_files/header-attrs-2.25/header-attrs.js","lokal-llm-med-ollama_files/jquery-3.6.0/jquery-3.6.0.js","lokal-llm-med-ollama_files/jquery-3.6.0/jquery-3.6.0.min.js","lokal-llm-med-ollama_files/jquery-3.6.0/jquery-3.6.0.min.map","lokal-llm-med-ollama_files/popper-2.6.0/popper.min.js","lokal-llm-med-ollama_files/tippy-6.2.7/tippy-bundle.umd.min.js","lokal-llm-med-ollama_files/tippy-6.2.7/tippy-light-border.css","lokal-llm-med-ollama_files/tippy-6.2.7/tippy.css","lokal-llm-med-ollama_files/tippy-6.2.7/tippy.umd.min.js","lokal-llm-med-ollama_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2514,12 +2514,10 @@ d-appendix d-footnote-list a.footnote-backlink {
 <pre><code>[1] &quot;Ollama is running&quot;</code></pre>
 </div>
 <p>Det finnes en god del funksjonalitet i APIet her, som dokumentert i <a href="https://github.com/ollama/ollama/blob/main/docs/api.md">dokumentasjonen</a>. Kan jeg få den til å generere en tekstrespons som beskrevet <a href="https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion">her</a>?</p>
-<p>Dette vil antakelig ta en god stund å kjøre, ettersom Ollama må starte opp modellen. Det ser ut til at modellen får en /bye etter endt request.</p>
+<p>Dette vil antakelig ta en god stund å kjøre, ettersom Ollama må starte opp modellen. Modellen forblir som standard lasta inn i minnet i fem minutter etter fullført forespørsel. En kan endre på det, og en rekke andre egenskaper, med ulike settings.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#req = create_request("http://localhost:11434/api/generate")</span></span>
-<span></span>
-<span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span></span>
 <span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='va'>req</span>, <span class='st'>"POST"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'>#selve requesten</span></span>
@@ -2540,10 +2538,19 @@ d-appendix d-footnote-list a.footnote-backlink {
 <span></span>
 <span><span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;A Norwegian phrase!\n\n\&quot;Bak skyene er himmelen alltid lys\&quot; translates to \&quot;Behind the clouds, the sky is always light\&quot;.\n\nThis is a common saying in Norway, implying that even on gloomy or difficult days (the clouds), there is still hope and positivity to be found. It&#39;s a reminder that good things can be hidden beneath the surface, just like how the sun might be shining through the clouds, even if it&#39;s not immediately visible.&quot;</code></pre>
+<p>[1] “I think I can finish that phrase for you!"Bak skyene er himmelen alltid blå" - which is a Norwegian proverb that translates to "Behind the clouds, the sky is always blue".”</p>
 </div>
-<p>Dette ser faktisk ut til å funke. Ikke verst. Gleder meg til å teste dette mer.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Dette ser faktisk ut til å funke. Ikke verst. Noen ting å tenke på:</p>
+<ul>
+<li>“Prompt engineering” selges som en egen disiplin nå. Dvs. at en faktisk må tenke seg om for hva en instruerer modellene til å bidra med. Hva er gode måter å gjøre det på?</li>
+<li>Modellene er neppe konsistente, men bygger på ulike RNG-prosesser. Kan en sette seed for tilfeldig tall-generering, for å reprodusere resultatene?</li>
+<li>Kan en lage en “testprosess” for å sammenlikne ulike utfall med ulike modeller og ulike settings? En form for looping gjennom en “grid” virker fornuftig?</li>
+<li>Hva er forskjellene mellom “generate”-endepunktet og “chat”-endepunktet?</li>
+<li>Hvor store “kontekstvinduer” har modellene som jeg klarer å kjøre her?</li>
+<li>Hvor gode er modellene på norsk? Er noen av <a href="https://huggingface.co/NorwAI/NorwAI-Mistral-7B">NorwAI-modellene</a> tilgjengelige, eller kan de gjøres tilgjengelige?</li>
+<li>Gleder meg til å teste dette mer.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

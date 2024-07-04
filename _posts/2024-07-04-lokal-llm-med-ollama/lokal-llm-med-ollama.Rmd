@@ -58,11 +58,9 @@ resp_body_string(resp)
 
 Det finnes en god del funksjonalitet i APIet her, som dokumentert i [dokumentasjonen](https://github.com/ollama/ollama/blob/main/docs/api.md). Kan jeg få den til å generere en tekstrespons som beskrevet [her](https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-completion)? 
 
-Dette vil antakelig ta en god stund å kjøre, ettersom Ollama må starte opp modellen. Det ser ut til at modellen får en /bye etter endt request.
+Dette vil antakelig ta en god stund å kjøre, ettersom Ollama må starte opp modellen. Modellen forblir som standard lasta inn i minnet i fem minutter etter fullført forespørsel. En kan endre på det, og en rekke andre egenskaper, med ulike settings.
 
 ```{r}
-#req = create_request("http://localhost:11434/api/generate")
-
 req = request("http://localhost:11434/api/generate")
 req = req_method(req, "POST")
 
@@ -80,11 +78,19 @@ resp = req_perform(req)
 
 Hvordan ser så svaret ut? Dette api/generate-endepunktet er "strømmende", dvs. at den printer ut ord-for-ord i fullføringa. Det er en god påminnelse av at modellen kun er en måte å estimere det neste ordet på, men i mange sammenhenger er det overflødig å få alt.
 
-```{r}
+```{r, results='asis'}
 json_body = resp_body_json(resp)
 
 json_body$response
 
 ```
 
-Dette ser faktisk ut til å funke. Ikke verst. Gleder meg til å teste dette mer.
+Dette ser faktisk ut til å funke. Ikke verst. Noen ting å tenke på:
+
+- "Prompt engineering" selges som en egen disiplin nå. Dvs. at en faktisk må tenke seg om for hva en instruerer modellene til å bidra med. Hva er gode måter å gjøre det på?
+- Modellene er neppe konsistente, men bygger på ulike RNG-prosesser. Kan en sette seed for tilfeldig tall-generering, for å reprodusere resultatene?
+- Kan en lage en "testprosess" for å sammenlikne ulike utfall med ulike modeller og ulike settings? En form for looping gjennom en "grid" virker fornuftig?
+- Hva er forskjellene mellom "generate"-endepunktet og "chat"-endepunktet? 
+- Hvor store "kontekstvinduer" har modellene som jeg klarer å kjøre her?
+- Hvor gode er modellene på norsk? Er noen av [NorwAI-modellene](https://huggingface.co/NorwAI/NorwAI-Mistral-7B) tilgjengelige, eller kan de gjøres tilgjengelige?
+- Gleder meg til å teste dette mer.
