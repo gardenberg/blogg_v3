@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Ollama for sammendrag av bloggposter</title>
+
+  <meta property="description" itemprop="description" content="Et forsøk på å lage sammendrag av tekst med Ollama"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2024-08-01"/>
+  <meta property="article:created" itemprop="dateCreated" content="2024-08-01"/>
+  <meta name="article:author" content="Eivind Hageberg"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Ollama for sammendrag av bloggposter"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Et forsøk på å lage sammendrag av tekst med Ollama"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Ollama for sammendrag av bloggposter"/>
+  <meta property="twitter:description" content="Et forsøk på å lage sammendrag av tekst med Ollama"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Ollama for sammendrag av bloggposter"]},{"type":"character","attributes":{},"value":["Et forsøk på å lage sammendrag av tekst med Ollama\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Eivind Hageberg"]},{"type":"character","attributes":{},"value":["https://suppe-og-analyse.netlify.app"]}]}]},{"type":"character","attributes":{},"value":["2024-08-01"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["ollama-for-sammendrag-av-bloggposter_files/anchor-4.2.2/anchor.min.js","ollama-for-sammendrag-av-bloggposter_files/bowser-1.9.3/bowser.min.js","ollama-for-sammendrag-av-bloggposter_files/distill-2.2.21/template.v2.js","ollama-for-sammendrag-av-bloggposter_files/header-attrs-2.25/header-attrs.js","ollama-for-sammendrag-av-bloggposter_files/jquery-3.6.0/jquery-3.6.0.js","ollama-for-sammendrag-av-bloggposter_files/jquery-3.6.0/jquery-3.6.0.min.js","ollama-for-sammendrag-av-bloggposter_files/jquery-3.6.0/jquery-3.6.0.min.map","ollama-for-sammendrag-av-bloggposter_files/popper-2.6.0/popper.min.js","ollama-for-sammendrag-av-bloggposter_files/tippy-6.2.7/tippy-bundle.umd.min.js","ollama-for-sammendrag-av-bloggposter_files/tippy-6.2.7/tippy-light-border.css","ollama-for-sammendrag-av-bloggposter_files/tippy-6.2.7/tippy.css","ollama-for-sammendrag-av-bloggposter_files/tippy-6.2.7/tippy.umd.min.js","ollama-for-sammendrag-av-bloggposter_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+    font-size: 100%;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  hr.section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0px;
+  }
+
+
+  d-byline {
+    border-top: none;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+    border-top: none;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // separator
+    var separator = '<hr class="section-separator" style="clear: both"/>';
+    // prepend separator above appendix
+    $('.d-byline').before(separator);
+    $('.d-article').before(separator);
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        var author_name = front_matter.authors[i].author
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="ollama-for-sammendrag-av-bloggposter_files/header-attrs-2.25/header-attrs.js"></script>
+  <script src="ollama-for-sammendrag-av-bloggposter_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="ollama-for-sammendrag-av-bloggposter_files/popper-2.6.0/popper.min.js"></script>
+  <link href="ollama-for-sammendrag-av-bloggposter_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="ollama-for-sammendrag-av-bloggposter_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="ollama-for-sammendrag-av-bloggposter_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="ollama-for-sammendrag-av-bloggposter_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="ollama-for-sammendrag-av-bloggposter_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="ollama-for-sammendrag-av-bloggposter_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="ollama-for-sammendrag-av-bloggposter_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Ollama for sammendrag av bloggposter","description":"Et forsøk på å lage sammendrag av tekst med Ollama","authors":[{"author":"Eivind Hageberg","authorURL":"https://suppe-og-analyse.netlify.app","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2024-08-01T00:00:00.000+02:00","citationText":"Hageberg, 2024"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Ollama for sammendrag av bloggposter</h1>
+
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>Et forsøk på å lage sammendrag av tekst med Ollama</p></p>
+</div>
+
+<div class="d-byline">
+  Eivind Hageberg <a href="https://suppe-og-analyse.netlify.app" class="uri">https://suppe-og-analyse.netlify.app</a> 
+  
+<br/>2024-08-01
+</div>
+
+<div class="d-article">
+<p>Ollama-oppsettet for å kjøre språkmodeller lokalt virker så langt som det mest lovende. Klarer jeg å få den til å kjøre noen av modellene som er tilgjengeliggjort av <a href="https://huggingface.co/NorwAI">NorwAI</a>, og bruke det til noe fornuftig som å oppsummere tekst, eller svare på noen enkle spørsmål om teksten?</p>
+<h1 id="klargjør-tekstene">Klargjør tekstene</h1>
+<p>Aller først må jeg klargjøre tekstene som skal leses inn. I bloggen her har jeg noen-og-seksti tekster skrevet på ulike tidspunkt. Klarer språkmodellen å si noe fornuftig om disse?</p>
+<p>Aller først henter jeg ut en liste over hvilke poster det dreier seg om, og leser inn ett eksempel</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#finner alle postene jeg har laget</span></span>
+<span><span class='va'>poster</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"_posts"</span><span class='op'>)</span>, pattern <span class='op'>=</span> <span class='st'>".Rmd"</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#leser inn en og en post som en caracter-streng</span></span>
+<span></span>
+<span><span class='co'>#først ett eksempel</span></span>
+<span><span class='co'>#dette gir en vektor pr linje, mens jeg vil ha en streng, bruker str_flatten for det</span></span>
+<span><span class='va'>en_post</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"_posts"</span>, <span class='va'>poster</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_flatten.html'>str_flatten</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#hvor lang er den</span></span>
+<span><span class='va'>lengde_post</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>en_post</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<p>Det er altså 68 poster skrevet i Rmd-format, inkludert denne. På eksempelet ser jeg at det er en del tomme linjer, og at de ca. 12 første linjene godt kan skippes. Når jeg vet det, så kan jeg loope igjennom resten:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#looper igjennom alle poster</span></span>
+<span></span>
+<span><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>poster</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>temp_post</span> <span class='op'>=</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_lines.html'>read_lines</a></span><span class='op'>(</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"_posts"</span>, <span class='va'>poster</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>, skip_empty_rows <span class='op'>=</span> <span class='cn'>TRUE</span>, skip <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>    <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_flatten.html'>str_flatten</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#hvor lang er den</span></span>
+<span>  <span class='va'>temp_lengde</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>temp_post</span><span class='op'>)</span></span>
+<span>  <span class='co'>#legger inn i data.frame</span></span>
+<span>  </span>
+<span>  <span class='va'>temp_df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>    navn <span class='op'>=</span> <span class='va'>poster</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,</span>
+<span>    post <span class='op'>=</span> <span class='va'>temp_post</span>,</span>
+<span>    lengde <span class='op'>=</span> <span class='va'>temp_lengde</span></span>
+<span>  <span class='op'>)</span></span>
+<span>  </span>
+<span>  <span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>temp_df</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Rows: 68
+Columns: 3
+$ navn   &lt;chr&gt; &quot;2011-08-26-generasjon-praktikum/generasjon-praktikum…
+$ post   &lt;chr&gt; &quot;Praktikum (n). Subst., praksis (m), praksisperiode (…
+$ lengde &lt;int&gt; 4877, 3204, 6742, 4020, 7868, 2245, 1801, 2773, 3751,…</code></pre>
+</div>
+<p>I følge chatGPT, kan en språkmodell bistå skriving av blogginnlegg med å bl.a. generere ideer til tekster, foreslå alternative perspektiver, oppsummere lange artikler som jeg ikke har tid til å lese selv, forbedre språket mitt, lese korrektur, generere bedre søkemotor-optimalisering med meta-beskrivelser og sammendrag, og lage forslag til svar på spørsmål fra lesere.</p>
+<p>Vi får se hva vi kan få til med Ollama!</p>
+<h1 id="få-ollama-til-å-funke-med-en-norsk-mistral-instruct-og-llama-3.1">Få Ollama til å funke med en norsk mistral-instruct og llama 3.1</h1>
+<p>Før vi starter, må vi passe på at Ollama kjører i bakgrunnen, enten ved å starte windows-appen eller kjøre ollama serve i powershell. Jeg foretrekker det siste, for da får jeg litt serverstatus også på hvordan oppgaven går - og om settingene blir riktige. Men jeg har også sett på GitHub at å bruke ollama serve, i stedet for applikasjonen, kan gi fryseproblemer - og det har jeg hatt noen ganger.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#sjekker at server og alt er ok</span></span>
+<span><span class='co'>#standard lokalt endepunkt er  http://localhost:11434</span></span>
+<span></span>
+<span><span class='va'>url</span> <span class='op'>=</span>  <span class='st'>"http://localhost:11434"</span></span>
+<span></span>
+<span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span></span>
+<span><span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='va'>req</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#er status OK for serveren</span></span>
+<span><span class='fu'><a href='https://httr2.r-lib.org/reference/resp_status.html'>resp_status_desc</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;OK&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_string</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;Ollama is running&quot;</code></pre>
+</div>
+<p>Til å hjelpe meg har jeg også hentet ut noen ulike modeller. Endepunktet /api/tags skal kunne liste opp dette med en GET-request.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>url</span>,<span class='st'>"/api/tags"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='va'>req</span><span class='op'>)</span></span>
+<span><span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='va'>json_body</span><span class='op'>$</span><span class='va'>models</span>, .name_repair <span class='op'>=</span> <span class='st'>"universal"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>$...1
+[1] &quot;normistral-instruct:latest&quot;
+
+$...2
+[1] &quot;llama3.1:latest&quot;
+
+$...3
+[1] &quot;normistral:latest&quot;</code></pre>
+</div>
+<p>Som en kan se her, har jeg Llama3.1 8B (<a href="https://ollama.com/library/llama3.1">fra Ollamas eget repo</a>), NorwAIs Normistral 7,5B og Normistral-instruct 7,5B.</p>
+<p>Jeg vil også sjekke at jeg kan sette et seed for de stokastiske prosessene, slik at jeg kan lage reproduserbar output. Det ser ut til å fungere greit etter hensikten. I tillegg må jeg utvide kontekst-størrelsen for modeller fra Ollama, og begrense den i NorwAI-modellene for å få ned kjøretiden.</p>
+<p>I følge httr2 sin curl-oversetter kan jeg oppgi dette på denne måten:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#sjekker også at jeg kan set seed</span></span>
+<span><span class='co'>#jeg kan skrive det slik, i følge httr2 sin curl-oversetter</span></span>
+<span><span class='co'>#men jeg kan også bare bruke en liste i en liste i json.s</span></span>
+<span></span>
+<span><span class='co'># resp = request("http://localhost:11434/api/generate") |&gt;</span></span>
+<span><span class='co'>#   req_method("POST") |&gt; </span></span>
+<span><span class='co'>#   req_body_raw(r"---{{</span></span>
+<span><span class='co'>#   "model": "normistral",</span></span>
+<span><span class='co'>#   "prompt": "Hvorfor er himmelen blå?",</span></span>
+<span><span class='co'>#   "options": {</span></span>
+<span><span class='co'>#     "seed": 1106,</span></span>
+<span><span class='co'>#     "num_ctx": 2048</span></span>
+<span><span class='co'>#   },</span></span>
+<span><span class='co'>#   "stream": false</span></span>
+<span><span class='co'># }}---", type = "application/json") |&gt; </span></span>
+<span><span class='co'>#   req_dry_run()</span></span></code></pre>
+</div>
+</div>
+<p>req_body_raw er kraftig, men litt mer pirk enn å bruke req_body_json. Kan jeg løse det med å passe options i en liste?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#angir seed og kontekst-vindu-options</span></span>
+<span><span class='va'>options</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>  seed <span class='op'>=</span> <span class='fl'>1106</span>,</span>
+<span>  num_ctx <span class='op'>=</span> <span class='fl'>1024</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='st'>"POST"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>    model <span class='op'>=</span> <span class='st'>"normistral-instruct"</span>,</span>
+<span>    stream <span class='op'>=</span> <span class='cn'>FALSE</span>, </span>
+<span>    prompt <span class='op'>=</span> <span class='st'>"Hvorfor er himmelen blå? Svar kort, med ett avsnitt."</span>,</span>
+<span>    options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>    <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>tid</span> <span class='op'>=</span> <span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span>
+<span></span>
+<span><span class='fu'><a href='https://httr2.r-lib.org/reference/resp_status.html'>resp_status_desc</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;OK&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://httr2.r-lib.org/reference/resp_content_type.html'>resp_content_type</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;application/json&quot;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span><span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span></span></code></pre>
+</div>
+<p>[1] ” For at vi skal se himmelen må den reflektere sollyset tilbake til oss. Solen sender ut et hvitt lys som inneholder alle fargene i lysspekteret, og det er bare de ulike fargene som reflekterer lyset tilbake til oss, og dermed ser vi himmelen blå. Forklaring: For at vi skal se himmelen må den reflektere sollyset tilbake til oss. Solen sender ut et hvitt lys som inneholder alle fargene i lysspekteret, og det er bare de ulike fargene som reflekterer lyset tilbake til oss, og dermed ser vi himmelen blå.”</p>
+</div>
+<p>Etter en del tweaking, fikk jeg den til å bruke greit med tid - ca. 90 sekunder, i følge noen målinger. Men dette var en snål forklaring. Det er skrevet på noenlunde ok norsk, men det er en svært dårlig forklaring. Hvordan klarer Llama3.1 dette? Passer her på at jeg ikke har Mistral-modellen kjørende fortsatt, antar det vil få PC-en til å ta kvelden…</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>options</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>  seed <span class='op'>=</span> <span class='fl'>1106</span>,</span>
+<span>  num_ctx <span class='op'>=</span> <span class='fl'>1024</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='st'>"POST"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>    model <span class='op'>=</span> <span class='st'>"llama3.1"</span>,</span>
+<span>    stream <span class='op'>=</span> <span class='cn'>FALSE</span>, </span>
+<span>    prompt <span class='op'>=</span> <span class='st'>"Hvorfor er himmelen blå? Svar kort, med ett avsnitt."</span>,</span>
+<span>    options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>    <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span></code></pre>
+</div>
+<pre><code>Time difference of 1.549591 mins</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span><span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span></span></code></pre>
+</div>
+<p>[1] “Det mest alminnelige forklaringssystem til himmelens blå farve følger prinsippet om Rayleigh-scattering: - lys fra solen består af en større mængde lyse (hvite) bølger end de lyse (gule, røde osv.) - disse lyse og lysere bølger har en kortere bølgelengde end lyse og lysere bølger - kortbølgede lysbølger medvirkede ved at den blålige farve blev tilstrækkelig intens, så himlen virkede blå”</p>
+</div>
+<p>Dette tok omtrent like lang tid. Svaret er på dansk og lett kaudervelsk, men Rayleigh-scattering er så vidt jeg veit forklaringen på at himmelen er blå. Så mer korrekt enn normistral-forsøket, men dårligere språk.</p>
+<h1 id="så-hvordan-forstår-de-denne-bloggen-da-de">Så hvordan forstår de denne bloggen da, de?</h1>
+<p>Først en test på det aller første innlegget jeg skrev, som handler om praksisplasser for tyske studenter og diskusjonen om hvorvidt disse er positive eller negative</p>
+<p>Her har jeg forsøkt litt ulike tilnærminger. Ved første gangs gjennomkjøring brukte den 28 minutter på å generere et sammendrag fra den første bloggposten. Sammendraget var omtrent like langt som selve posten, og var i grunnen en vanskelig forståelig tekst som tok det motsatte perspektivet av det jeg hadde.</p>
+<p>NorwAI-mistral-instruct-7B har et kontekst-vindu på 32K, dvs. at all tekst jeg poster til den bør kunne gå. Setter den til noe kortere, med et håp om at den da blir ferdig innen rimelig tid.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#setter options</span></span>
+<span><span class='va'>options</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>  seed <span class='op'>=</span> <span class='fl'>1106</span>,</span>
+<span>  num_ctx <span class='op'>=</span> <span class='fl'>6000</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span></span>
+<span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='va'>req</span>, <span class='st'>"POST"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#selve requesten</span></span>
+<span><span class='va'>body_json</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"normistral-instruct"</span>,</span>
+<span>                  stream <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>                  prompt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Du er en ekspert på å skrive blogginnlegg. Skriv et kort sammendrag av teksten som kommer til slutt etter kolon. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: "</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>post</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span>                 options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>                  <span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='va'>req</span>, <span class='va'>body_json</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='va'>req</span><span class='op'>)</span></span>
+<span><span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span></code></pre>
+</div>
+<pre><code>Time difference of 1.338601 mins</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#hvilken form er det på innholdet? Bør være JSON</span></span>
+<span><span class='co'>#resp_status_desc(resp)</span></span>
+<span><span class='co'>#resp_content_type(resp)</span></span></code></pre>
+</div>
+</div>
+<p>Dette gikk ikke så verst fort. Svaret var som følger:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span></span></code></pre>
+</div>
+<p>[1] ” Hvis noe ikke betales med penger, kan man vurdere om andre ressurser er tilgjengelige. I noen tilfeller kan arbeidet utføres av frivillige, i andre må man se etter ressurser som ligger latent hos studentene selv eller hos utdanningsinstitusjonene. Her burde en kunne tenke på flere ting enn bare praksisplasser, men det får bli et annet blogginnlegg.”</p>
+</div>
+<p>Dette var ikke veldig bra. Det høres ut som norsk, men gir ikke mening. Det KAN jo tenkes at min tekst ikke var spesielt klart uttrykt. Men det kan også tenkes at dette ikke var så hjelpsomt. Blir det bedre med Llama3.1?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='st'>"POST"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#selve requesten</span></span>
+<span><span class='va'>body_json</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"llama3.1"</span>,</span>
+<span>                  stream <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>                  prompt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Du er en ekspert på å skrive blogginnlegg. Skriv et kort sammendrag av teksten som kommer til slutt etter kolon. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: "</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>post</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span>                 options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>                  <span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>req</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='va'>req</span>, <span class='va'>body_json</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='va'>req</span><span class='op'>)</span></span>
+<span><span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span></code></pre>
+</div>
+<pre><code>Time difference of 2.154344 mins</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#hvilken form er det på innholdet? Bør være JSON</span></span>
+<span><span class='co'>#resp_status_desc(resp)</span></span>
+<span><span class='co'>#resp_content_type(resp)</span></span></code></pre>
+</div>
+</div>
+<p>Den brukte 2 minutter på å generere dette:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span><span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span></span></code></pre>
+</div>
+<p>[1] “Tysklands arbeidsmarked præget av "Generasjon Praktikum" - tusenvis av unge studenter arbeider gratis i hele landet etter å ha gjennomgått ubetalte praksisperioder for å kunne få godkjent gradene sine. Begrepet har ført til økte forskjeller mellom barn av rike og fattige foreldre, samt en overraskeende likning av kvalifisert arbeidskraft med billig og overskuddsarbeid.”</p>
+</div>
+<p>Dette var veldig mye bedre! Og det uten at den er spesial-språklig og norsk. Språket er fortsatt dansk.</p>
+<h1 id="kan-jeg-loope-denne-jobben">Kan jeg loope denne jobben?</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#setter options</span></span>
+<span><span class='va'>options</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>  seed <span class='op'>=</span> <span class='fl'>1106</span>,</span>
+<span>  num_ctx <span class='op'>=</span> <span class='fl'>6000</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>df_test</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_sample</a></span><span class='op'>(</span><span class='va'>df</span>, n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>df_sammendrag</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df_test</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='st'>"POST"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"normistral-instruct"</span>,</span>
+<span>                        stream <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>                        prompt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Du er en ekspert på å skrive blogginnlegg. Du er en ekspert på å lage sammendrag av tekst. Skriv et kort sammendrag av teksten som kommer til slutt. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: "</span>, <span class='va'>df_test</span><span class='op'>$</span><span class='va'>post</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span>                       options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>                        <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span>  </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>tid</span> <span class='op'>=</span> <span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span>
+<span>  <span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span></span>
+<span>  <span class='va'>temp_df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>    navn <span class='op'>=</span> <span class='va'>df_test</span><span class='op'>$</span><span class='va'>navn</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,</span>
+<span>    sammendrag <span class='op'>=</span> <span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span>,</span>
+<span>    tid <span class='op'>=</span> <span class='va'>tid</span></span>
+<span>  <span class='op'>)</span></span>
+<span>  <span class='va'>df_sammendrag</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>df_sammendrag</span>, <span class='va'>temp_df</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='co'>#kjører den samme med llama3.1</span></span>
+<span></span>
+<span><span class='va'>df_sammendrag_llama</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df_test</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='st'>"POST"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"llama3.1"</span>,</span>
+<span>                        stream <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>                        prompt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Du er en ekspert på å skrive blogginnlegg. Du er en ekspert på å lage sammendrag av tekst. Skriv et kort sammendrag av teksten som kommer til slutt. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: "</span>, <span class='va'>df_test</span><span class='op'>$</span><span class='va'>post</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span>                       options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>                        <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span>  </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>tid</span> <span class='op'>=</span> <span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span>
+<span>  <span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span></span>
+<span>  <span class='va'>temp_df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>    navn <span class='op'>=</span> <span class='va'>df_test</span><span class='op'>$</span><span class='va'>navn</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,</span>
+<span>    sammendrag <span class='op'>=</span> <span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span>,</span>
+<span>    tid <span class='op'>=</span> <span class='va'>tid</span></span>
+<span>  <span class='op'>)</span></span>
+<span>  <span class='va'>df_sammendrag_llama</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>df_sammendrag_llama</span>, <span class='va'>temp_df</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df_sammendrag_llama</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span><span class='va'>df_sammendrag_llama</span>,</span>
+<span>                             sammendrag_llama <span class='op'>=</span> <span class='va'>sammendrag</span>,</span>
+<span>                             tid_llama <span class='op'>=</span> <span class='va'>tid</span></span>
+<span>                             <span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>temp</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>df_sammendrag</span>, <span class='va'>df_sammendrag_llama</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    sammendrag <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trunc.html'>str_trunc</a></span><span class='op'>(</span><span class='va'>sammendrag</span>, <span class='fl'>500</span>, <span class='st'>"right"</span><span class='op'>)</span>,</span>
+<span>    sammendrag_llama <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trunc.html'>str_trunc</a></span><span class='op'>(</span><span class='va'>sammendrag_llama</span>, <span class='fl'>500</span>, <span class='st'>"right"</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>temp</span><span class='op'>)</span></span></code></pre>
+</div>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 43%" />
+<col style="width: 1%" />
+<col style="width: 43%" />
+<col style="width: 1%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">navn</th>
+<th style="text-align: left;">sammendrag</th>
+<th style="text-align: left;">tid</th>
+<th style="text-align: left;">sammendrag_llama</th>
+<th style="text-align: left;">tid_llama</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2019-03-16-introduksjon-til-materiale-om-datavisualsering/introduksjon-til-materiale-om-datavisualsering.Rmd</td>
+<td style="text-align: left;">Fokus på oppgaver. Eksempel-data følger med boka.</td>
+<td style="text-align: left;">33.78926 secs</td>
+<td style="text-align: left;">Jeg kan skrive et sammendrag av teksten!</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>Hvis du ønsker å lære grunnleggende data-visualisering i R eller andre verktøy, er dette noen viktige kriterier for en god utgangspunkt: Det må være kunnskapsbasert og oppdatert. Et kurs bør være redskaps-agnostisk, oppgavefokusert snarere enn teknikk-fokusert, og inkludere referanser til ny forskningslitteratur og “beste praksis”. |1.586500 mins |
+|2021-05-27-dataflyt-og-barnevernmonitor/dataflyt-og-barnevernmonitor.Rmd |Det gjør det ganske viktig å vite hvordan dette gjøres mest effektivt. Forklaringen på denne rekkefølgen: En kommune har 10 000 barn under 18 år. En barnevernsindikator krever at en har med de 10 første sifrene i personnummeret. En kommune har 25 000 innbyggere, og vi skal ha alle disse med. Det betyr at kommunenummer er nummer 3, og de neste 9 sifrene må hentes fra befolkningsdataene. Dermed kan vi lage indikatoren før vi kan oppdatere antall barn i kommunen. Så langt kom vi aldri, men det … |497.21586 secs |Her er et sammendrag på maksimalt 400 tegn:</p>
+<p>Et eksempel på hvordan man løser problemet med usammenhengende data ble gitt i dette innlegg. Forfatteren beskrev hvordan han brukte tid og ressurser på å få det til, men uten å dokumentere prosessen. Han lærte at rekkefølgen av operasjoner har betydning og at transformeringer krever mye tid og mange iterasjoner for å få til på en god måte. Et viktig nøkkelsteg var å lage en god struktur på bearbeidinga, som også involverte å dokumentere hver enkel… |2.561144 mins |
+|2019-04-23-visualisering-og-sammenlikning-av-antall-i-ggplot2/visualisering-og-sammenlikning-av-antall-i-ggplot2.Rmd |#lager et eget datasett for å ha noe å plotte utggplot(data = logFoldChange) + geom_point(size = 2) + geom_vline(xintercept=0) + labs(title = “Hvaler og Råde har størst økning i gjennomsnittlig biblo-besøk”, subtitle = “Fra 2015 til 2017”, y = “Kommune”) + theme( panel.grid.major.y = element_blank() )#punkter med logFoldChangeLogaritmisk skala er en utfordring å lese av, og det kan være nødvendig å vise hvor langt fra 0 punktene ligger for å gjøre dette lettere. I eksempelet til venstre… |212.80706 secs |Her er et sammendrag av teksten på maksimalt 400 tegn:</p>
+<p>Dette innlegget handler om hvordan å visualisere enkelt tall og observasjoner i visuelle fremstillinger. Forfatteren diskuterer to standard-måter å gjøre dette: stolpediagram (søylediagram) og punktdiagram. Eksempeldata fra Statistisk sentralbyrå (SSB) brukes til å illustrere hvordan disse diarama kan brukes for å vise endringer over tid og variasjoner mellom ulike enheter. Forfatteren peker på at søylediagram bør ikke brukes for å vise … |3.425686 mins |
+|2024-06-09-hva-kan-en-bruke-llm-til/hva-kan-en-bruke-llm-til.Rmd |Perplexity-søkemotoren gjør for eksempel dette, og <a href="https://www.perplexity.ai/search/">viser resultater fra ulike kilder</a>.Den kan også søke gjennom PDF-er med en <a href="https://www.perplexity.ai/pdf-searches/I-want-to-find-a-travel-plan-from-Oslo-to-Bergen">søkbar versjon</a>, så det er ikke bare å skrive inn et søk på engelsk, og få treff på norske tekster. Det kan også være vanskelig å finne fram til en del av teksten når den er kodet slik, f.eks. i en nyhetsartikkel hvor mange setninger og avsni… |184.90829 secs |Her er et sammendrag av teksten:</p>
+<p>Teknologien bak kunstig intelligens (KI) har vært i nyhetene daglig, siden ChatGPT ble offentlig tilgjengelig i slutten av november 2022. Large Language Models (LLM), som trener på et stort datasett med tekst, har fått stor oppmerksomhet. Disse modellene kan predikere tekst og brukes på ulike måter, inkludert å chatte med en robot som ser ut til å forstå deg.</p>
+<p>Men det er også en boble rundt denne teknologien, og noen er skeptiske til hvor transformativ den vi… |4.866102 mins |
+|2023-01-18-diskriminering-i-haugesund/diskriminering-i-haugesund.Rmd |Mange som har hatt slike opplevelser med diskriminering og rasisme forteller likevel at de trives i byen og ønsker å fortsette å bo her. Dette skyldes blant annet den hjelpen de har fått fra andre haugesundere eller offentlige instanser for å håndtere situasjonen de står i. |44.83671 secs |Her er et kort sammendrag av teksten på maksimalt 400 tegn:</p>
+<p>En undersøkelse i Haugesund har vist at mange innvandrere og norskfødte med innvandrerforeldre har opplevd diskriminering på grunn av sin etnisitet eller nasjonale opprinnelse. Om lag 40-60 prosent av personene i Haugesund med innvandrerbakgrunn har opplevd etnisk diskriminering minst én gang i løpet av de siste 12 månedene, og andelen stiger til mellom 60 og 70 prosent når man ser lengre tilbake. Diskrimineringen finner sted på uli… |3.407619 mins |</p>
+</div>
+<p>Sammendragene fra Llama3.1 er mye bedre enn Mistral-sammendragene. Kanskje det er noe med treninga av modellene, som gjør Mistral-modellen bedre på andre oppgaver i slike “zero shot”-forsøk, uten særlig prompting først?</p>
+<h2 id="funker-mistral-modellen-bedre-med-litt-prompting-først">Funker Mistral-modellen bedre med litt prompting først?</h2>
+<p>Jeg strever litt med å gi den en fornuftig prompt her. Selv etter mange forsøk er resultatene alle mulige steder når det gjelder tid og lengde. Kanskje jeg må tune den inn med litt kontekst først, for å få den til å være med på saken? Jeg prøvde først om å be den selv fylle inn de ulike bitene av PARE-rammeverket. Det ga meg bare vås. Å bruke en annen LLM med større kapasitet først ga heller ikke bedre resultat. I en variant endte den opp med å repetere ordene jeg hadde instruert den med.</p>
+<p>Min favoritt så langt er “16.mai, 2009, kl.22: 17.mai, 2009, kl.14: Jeg har nettopp hatt en lang samtale med broren min, hvor vi snakket om mye forskjellig. Blant annet hadde vi en ganske interessant diskusjon om hva som kommer til å skje i fremtiden. Vi var begge enige om at det ikke er noen tvil om at jorden vil gå under innen 2300 år. Og det er ikke bare en mening jeg har fra min bror, men noe han har lest seg opp på gjennom studier av gamle skrifter og profetier.” Beskjeder med system-rollen taklet den ikke.</p>
+<p>Her fikk jeg også problemer med at serveren hang seg opp, tidvis, og måtte resettes før et nytt forsøk. Igjen var det langt bedre resultater med Llama3.1, denne gangen også uten dansk tekst:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># #prøver en enkel chat</span></span>
+<span><span class='va'>options</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>  seed <span class='op'>=</span> <span class='fl'>1106</span>,</span>
+<span>  num_ctx <span class='op'>=</span> <span class='fl'>6000</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>df_sammendrag_chat</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#kjører den samme med llama3.1</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df_test</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  </span>
+<span>  <span class='co'>#genererer først beskjedene jeg vil sende</span></span>
+<span>  <span class='co'>#beskjedene må formateres som en liste</span></span>
+<span><span class='va'>beskjeder</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>role <span class='op'>=</span> <span class='st'>"system"</span>, content <span class='op'>=</span> <span class='st'>"Du er en assistent som skriver sammendrag av tekster. Du lager korte, konsise sammendrag som er maksimalt 400 tegn lange. Sammendragene er relatert til teksten, ikke andre tema."</span><span class='op'>)</span>,</span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>role <span class='op'>=</span> <span class='st'>"user"</span>, content <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Skriv et kort sammendrag av denne teksten: "</span>, <span class='va'>df_test</span><span class='op'>$</span><span class='va'>post</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span>  </span>
+<span>  <span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/chat"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='st'>"POST"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"llama3.1"</span>,</span>
+<span>                        stream <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>                        messages <span class='op'>=</span> <span class='va'>beskjeder</span>,</span>
+<span>                        options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>                        <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span>  </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span>  <span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>tid</span> <span class='op'>=</span> <span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span>
+<span>  <span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span></span>
+<span>  <span class='va'>temp_df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>    navn <span class='op'>=</span> <span class='va'>df_test</span><span class='op'>$</span><span class='va'>navn</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,</span>
+<span>    sammendrag <span class='op'>=</span> <span class='va'>json_body</span><span class='op'>$</span><span class='va'>message</span><span class='op'>$</span><span class='va'>content</span>,</span>
+<span>    tid <span class='op'>=</span> <span class='va'>tid</span></span>
+<span>  <span class='op'>)</span></span>
+<span>  <span class='va'>df_sammendrag_chat</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>df_sammendrag_chat</span>, <span class='va'>temp_df</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>df_sammendrag_chat</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 84%" />
+<col style="width: 1%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">navn</th>
+<th style="text-align: left;">sammendrag</th>
+<th style="text-align: left;">tid</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2019-03-16-introduksjon-til-materiale-om-datavisualsering/introduksjon-til-materiale-om-datavisualsering.Rmd</td>
+<td style="text-align: left;">Hvorfor kan du selv velge de beste ressursene når det gjelder data-visualisering i R? Forfatteren mener at best mulig kurs skal være kunnskapbasert, oppdatert, redskaps-agnostisk og fokusere på oppgavene fremfor teknikken.</td>
+<td style="text-align: left;">54.26038 secs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021-05-27-dataflyt-og-barnevernmonitor/dataflyt-og-barnevernmonitor.Rmd</td>
+<td style="text-align: left;">Et sammendrag av teksten: Forfatteren diskuterer utfordringene med å lage en dataflyt for Bufdirs kommunemonitor for barnevernet. De beskriver hvordan de løste problemet med kommunesammenslåingene, hvordan de kartlagte kildene og hvilke data som ble hentet fra SSBs åpne API til statistikkbanken. De også diskuterer viktigheten av god dokumentasjon og en frisk kode for transformeringer.</td>
+<td style="text-align: left;">129.75467 secs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2019-04-23-visualisering-og-sammenlikning-av-antall-i-ggplot2/visualisering-og-sammenlikning-av-antall-i-ggplot2.Rmd</td>
+<td style="text-align: left;">Et kort sammendrag av teksten: Teksten diskuterer hvordan å visualisere enkelldata, som gjennomsnitt eller maksverdi. Forholdet mellom stolpediagram og punktdiagram diskuteres, samt bruken av geom_bar og geom_point for å skape disse diagrammene. Eksempler fra SSBs åpne API viser hvordan å bruke disse grafikkfunkisjonene for å visualisere data om besøk til folkebibliotek i ulike kommuner.</td>
+<td style="text-align: left;">137.72545 secs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-06-09-hva-kan-en-bruke-llm-til/hva-kan-en-bruke-llm-til.Rmd</td>
+<td style="text-align: left;">Her er et kort sammendrag av teksten:</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>Teknologien bak kunstig intelligens har vært i nyhetene de siste årene, og Store språkmodeller (LLM) har blitt særlig populært etter lanseringa av ChatGPT. LLMer er tekstprediksjonsmodeller trent på store datasett med mange parametre, og kan være veldig kreative. Men noen forskere tror at teknologien bak AI ikke vil føre til større økonomisk vekst eller større produktivitet, og at den istedet vil gjøre arbeid dyrere.</p>
+<p>En mulig løsning kunne være å bruke LLMer som en “yngre forskningsassistent” for å hjelpe med kvalitative dataanalyse. En annen mulighet er å bruke tale-til-tekst-modeller, som f.eks. OpenAIs Whisper-modell eller Nasjonalbibliotekets NB-Whisper, til å omforme muntlige innlegg til tekst. |233.90550 secs |
+|2023-01-18-diskriminering-i-haugesund/diskriminering-i-haugesund.Rmd |Her er et kort sammendrag:</p>
+<p>Mange innvandrere i Haugesund rapporterer om opplevelser med diskriminering på grunn av sin etnisitet eller nasjonale opprinnelse. Ifra 40-60% av personene med innvandrerbakgrunn har opplevd etnisk diskriminering minst én gang i løpet av de siste 12 månedene, mens andelen som har opplevd dette på lengre tid er høyere. Diskriminering skjer ofte på arbeidsplassen og i hverdagslige situasjoner, men også på boligmarkedet og i kontakt med helsevesenet. Mange av de innvandretes rapporterer om vanskeligheter med å få jobb eller bolig på grunn av deres utenlandske navn. |185.96209 secs |</p>
+</div>
+<p>Jeg er usikker på hvor problemet ligger. I tillegg til at selve modellen er en black box, er det snakk om at jeg kjører en GGUF-fil laget av en quantized 4-bit-versjon av modellen, ikke spesialdesignet for Ollama - og sammenligner det med modeller lastet ned direkte fra Ollama. Kan det være noe i en setting som er annerledes i Mistral-modellen, som jeg ikke fanger opp?</p>
+<h1 id="kan-en-llm-gi-en-meningsfull-vurdering-av-kvalitet">Kan en LLM gi en meningsfull vurdering av kvalitet?</h1>
+<p>Den genererer tekst. Men er det meningsfult å be modellen om å vurdere kvalitet? Dette er en språkmodell, som kan språk og koblinger i språket. Dermed er det mer nærliggende å be den om å vurdere språklige relasjoner og forbindelser. Kan den f.eks. identifisere om en bloggpost omhandler statistikk?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df_scoring_llama</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>df_test</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
+<span>  <span class='va'>starttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>resp</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/request.html'>request</a></span><span class='op'>(</span><span class='st'>"http://localhost:11434/api/generate"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_method.html'>req_method</a></span><span class='op'>(</span><span class='st'>"POST"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>    <span class='fu'><a href='https://httr2.r-lib.org/reference/req_body.html'>req_body_json</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>model <span class='op'>=</span> <span class='st'>"llama3.1"</span>,</span>
+<span>                        stream <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>                        prompt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Du er en ekspert på å vurdere innhold i tekst. Klassifiser teksten som kommer til slutt, etter hvorvidt den omhandler statistikk. Bruk de tre kodene ja, nei og kanskje. Ja betyr at teksten inneholder statistikk. Nei betyr at teksten ikke omhandler statistikk. Kanskje betyr at du er usikker. Ikke inkluder overflødig tekst. Teksten du skal score er: "</span>, <span class='va'>df_test</span><span class='op'>$</span><span class='va'>post</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span>                       options <span class='op'>=</span> <span class='va'>options</span></span>
+<span>                        <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span>  </span>
+<span>  <span class='fu'><a href='https://httr2.r-lib.org/reference/req_perform.html'>req_perform</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>sluttid</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>tid</span> <span class='op'>=</span> <span class='va'>sluttid</span> <span class='op'>-</span> <span class='va'>starttid</span></span>
+<span>  <span class='va'>json_body</span> <span class='op'>=</span> <span class='fu'><a href='https://httr2.r-lib.org/reference/resp_body_raw.html'>resp_body_json</a></span><span class='op'>(</span><span class='va'>resp</span><span class='op'>)</span></span>
+<span></span>
+<span>  <span class='va'>temp_df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>    navn <span class='op'>=</span> <span class='va'>df_test</span><span class='op'>$</span><span class='va'>navn</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,</span>
+<span>    sammendrag <span class='op'>=</span> <span class='va'>json_body</span><span class='op'>$</span><span class='va'>response</span>,</span>
+<span>    tid <span class='op'>=</span> <span class='va'>tid</span></span>
+<span>  <span class='op'>)</span></span>
+<span>  <span class='va'>df_scoring_llama</span> <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_rows.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>df_scoring_llama</span>, <span class='va'>temp_df</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>df_scoring_llama</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<colgroup>
+<col style="width: 57%" />
+<col style="width: 36%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">navn</th>
+<th style="text-align: left;">sammendrag</th>
+<th style="text-align: left;">tid</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2019-03-16-introduksjon-til-materiale-om-datavisualsering/introduksjon-til-materiale-om-datavisualsering.Rmd</td>
+<td style="text-align: left;">Ja</td>
+<td style="text-align: left;">15.85297 secs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021-05-27-dataflyt-og-barnevernmonitor/dataflyt-og-barnevernmonitor.Rmd</td>
+<td style="text-align: left;">Nei</td>
+<td style="text-align: left;">41.68358 secs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2019-04-23-visualisering-og-sammenlikning-av-antall-i-ggplot2/visualisering-og-sammenlikning-av-antall-i-ggplot2.Rmd</td>
+<td style="text-align: left;">Nei. Teksten omhandler visualisering av data, ikke statistikk i seg selv.</td>
+<td style="text-align: left;">57.97167 secs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-06-09-hva-kan-en-bruke-llm-til/hva-kan-en-bruke-llm-til.Rmd</td>
+<td style="text-align: left;">Nei</td>
+<td style="text-align: left;">44.05690 secs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2023-01-18-diskriminering-i-haugesund/diskriminering-i-haugesund.Rmd</td>
+<td style="text-align: left;">Ja.</td>
+<td style="text-align: left;">31.26330 secs</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Den gir i hvert fall svar - og svarene gir mening.</p>
+<p>Outputen har litt tvilsom formattering her.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

@@ -1,0 +1,458 @@
+---
+title: "Ollama for sammendrag av bloggposter"
+description: |
+  Et forsøk på å lage sammendrag av tekst med Ollama
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-08-01
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Ollama-oppsettet for å kjøre språkmodeller lokalt virker så langt som det mest lovende. Klarer jeg å få den til å kjøre noen av modellene som er tilgjengeliggjort av [NorwAI](https://huggingface.co/NorwAI), og bruke det til noe fornuftig som å oppsummere tekst, eller svare på noen enkle spørsmål om teksten?
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+#libraries
+library(tidyverse)
+library(here)
+library(httr2)
+
+#settings
+knitr::opts_chunk$set(echo = TRUE)
+old = theme_set(theme_minimal())
+set.seed(1106)
+
+
+```
+
+# Klargjør tekstene
+
+Aller først må jeg klargjøre tekstene som skal leses inn. I bloggen her har jeg noen-og-seksti tekster skrevet på ulike tidspunkt. Klarer språkmodellen å si noe fornuftig om disse?
+
+Aller først henter jeg ut en liste over hvilke poster det dreier seg om, og leser inn ett eksempel
+
+```{r}
+#finner alle postene jeg har laget
+poster = list.files(path = here("_posts"), pattern = ".Rmd", recursive = TRUE)
+
+#leser inn en og en post som en caracter-streng
+
+#først ett eksempel
+#dette gir en vektor pr linje, mens jeg vil ha en streng, bruker str_flatten for det
+en_post = readLines(here("_posts", poster[1])) |> 
+  str_flatten()
+
+#hvor lang er den
+lengde_post = nchar(en_post)
+```
+
+Det er altså 68 poster skrevet i Rmd-format, inkludert denne. På eksempelet ser jeg at det er en del tomme linjer, og at de ca. 12 første linjene godt kan skippes. Når jeg vet det, så kan jeg loope igjennom resten:
+
+```{r}
+#looper igjennom alle poster
+
+df = data.frame()
+
+for(i in 1:length(poster)){
+  temp_post = read_lines(here("_posts", poster[i]), skip_empty_rows = TRUE, skip = 12) |> 
+    str_flatten()
+
+#hvor lang er den
+  temp_lengde = nchar(temp_post)
+  #legger inn i data.frame
+  
+  temp_df = data.frame(
+    navn = poster[i],
+    post = temp_post,
+    lengde = temp_lengde
+  )
+  
+  df = bind_rows(df, temp_df)
+}
+
+glimpse(df)
+```
+
+I følge chatGPT, kan en språkmodell bistå skriving av blogginnlegg med å bl.a. generere ideer til tekster, foreslå alternative perspektiver, oppsummere lange artikler som jeg ikke har tid til å lese selv, forbedre språket mitt, lese korrektur, generere bedre søkemotor-optimalisering med meta-beskrivelser og sammendrag, og lage forslag til svar på spørsmål fra lesere. 
+
+Vi får se hva vi kan få til med Ollama!
+
+# Få Ollama til å funke med en norsk mistral-instruct og llama 3.1
+
+Før vi starter, må vi passe på at Ollama kjører i bakgrunnen, enten ved å starte windows-appen eller kjøre ollama serve i powershell. Jeg foretrekker det siste, for da får jeg litt serverstatus også på hvordan oppgaven går - og om settingene blir riktige. Men jeg har også sett på GitHub at å bruke ollama serve, i stedet for applikasjonen, kan gi fryseproblemer - og det har jeg hatt noen ganger. 
+
+```{r}
+#sjekker at server og alt er ok
+#standard lokalt endepunkt er  http://localhost:11434
+
+url =  "http://localhost:11434"
+
+req = request(url)
+resp = req_perform(req)
+
+#er status OK for serveren
+resp_status_desc(resp)
+resp_body_string(resp)
+```
+
+Til å hjelpe meg har jeg også hentet ut noen ulike modeller. Endepunktet /api/tags skal kunne liste opp dette med en GET-request.
+
+```{r}
+req = request(paste0(url,"/api/tags"))
+resp = req_perform(req)
+json_body = resp_body_json(resp)
+t(as_tibble(json_body$models, .name_repair = "universal"))[,1]
+
+```
+
+Som en kan se her, har jeg Llama3.1 8B ([fra Ollamas eget repo](https://ollama.com/library/llama3.1)), NorwAIs Normistral 7,5B og Normistral-instruct 7,5B. 
+
+Jeg vil også sjekke at jeg kan sette et seed for de stokastiske prosessene, slik at jeg kan lage reproduserbar output. Det ser ut til å fungere greit etter hensikten. I tillegg må jeg utvide kontekst-størrelsen for modeller fra Ollama, og begrense den i NorwAI-modellene for å få ned kjøretiden.
+
+I følge httr2 sin curl-oversetter kan jeg oppgi dette på denne måten:
+
+```{r}
+#sjekker også at jeg kan set seed
+#jeg kan skrive det slik, i følge httr2 sin curl-oversetter
+#men jeg kan også bare bruke en liste i en liste i json.s
+
+# resp = request("http://localhost:11434/api/generate") |>
+#   req_method("POST") |> 
+#   req_body_raw(r"---{{
+#   "model": "normistral",
+#   "prompt": "Hvorfor er himmelen blå?",
+#   "options": {
+#     "seed": 1106,
+#     "num_ctx": 2048
+#   },
+#   "stream": false
+# }}---", type = "application/json") |> 
+#   req_dry_run()
+```
+
+req_body_raw er kraftig, men litt mer pirk enn å bruke req_body_json. Kan jeg løse det med å passe options i en liste?
+
+
+```{r}
+#angir seed og kontekst-vindu-options
+options = list(
+  seed = 1106,
+  num_ctx = 1024
+)
+
+starttid = Sys.time()
+
+resp = request("http://localhost:11434/api/generate") |> 
+  req_method("POST") |>
+  req_body_json(list(
+    model = "normistral-instruct",
+    stream = FALSE, 
+    prompt = "Hvorfor er himmelen blå? Svar kort, med ett avsnitt.",
+    options = options
+    )) |> 
+  req_perform()
+
+sluttid = Sys.time()
+
+tid = sluttid - starttid
+
+resp_status_desc(resp)
+resp_content_type(resp)
+```
+
+```{r, results='asis'}
+json_body = resp_body_json(resp)
+json_body$response
+```
+
+Etter en del tweaking, fikk jeg den til å bruke greit med tid - ca. 90 sekunder, i følge noen målinger. Men dette var en snål forklaring. Det er skrevet på noenlunde ok norsk, men det er en svært dårlig forklaring. Hvordan klarer Llama3.1 dette? Passer her på at jeg ikke har Mistral-modellen kjørende fortsatt, antar det vil få PC-en til å ta kvelden...
+
+```{r}
+options = list(
+  seed = 1106,
+  num_ctx = 1024
+)
+
+starttid = Sys.time()
+resp = request("http://localhost:11434/api/generate") |> 
+  req_method("POST") |>
+  req_body_json(list(
+    model = "llama3.1",
+    stream = FALSE, 
+    prompt = "Hvorfor er himmelen blå? Svar kort, med ett avsnitt.",
+    options = options
+    )) |> 
+  req_perform()
+
+sluttid = Sys.time()
+
+sluttid - starttid
+```
+
+```{r, results='asis'}
+json_body = resp_body_json(resp)
+json_body$response
+```
+
+
+Dette tok omtrent like lang tid. Svaret er på dansk og lett kaudervelsk, men Rayleigh-scattering er så vidt jeg veit forklaringen på at himmelen er blå. Så mer korrekt enn normistral-forsøket, men dårligere språk.
+
+# Så hvordan forstår de denne bloggen da, de?
+
+Først en test på det aller første innlegget jeg skrev, som handler om praksisplasser for tyske studenter og diskusjonen om hvorvidt disse er positive eller negative
+
+Her har jeg forsøkt litt ulike tilnærminger. Ved første gangs gjennomkjøring brukte den 28 minutter på å generere et sammendrag fra den første bloggposten. Sammendraget var omtrent like langt som selve posten, og var i grunnen en vanskelig forståelig tekst som tok det motsatte perspektivet av det jeg hadde. 
+
+NorwAI-mistral-instruct-7B har et kontekst-vindu på 32K, dvs. at all tekst jeg poster til den bør kunne gå. Setter den til noe kortere, med et håp om at den da blir ferdig innen rimelig tid.
+
+```{r}
+#setter options
+options = list(
+  seed = 1106,
+  num_ctx = 6000
+)
+
+req = request("http://localhost:11434/api/generate")
+req = req_method(req, "POST")
+
+#selve requesten
+body_json = list(model = "normistral-instruct",
+                  stream = FALSE,
+                  prompt = paste0("Du er en ekspert på å skrive blogginnlegg. Skriv et kort sammendrag av teksten som kommer til slutt etter kolon. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: ", df$post[1]),
+                 options = options
+                  )
+
+req = req_body_json(req, body_json)
+
+starttid = Sys.time()
+resp = req_perform(req)
+sluttid = Sys.time()
+
+sluttid - starttid
+
+#hvilken form er det på innholdet? Bør være JSON
+#resp_status_desc(resp)
+#resp_content_type(resp)
+
+```
+Dette gikk ikke så verst fort. Svaret var som følger:
+
+```{r, results='asis'}
+
+json_body = resp_body_json(resp)
+
+json_body$response
+
+```
+
+Dette var ikke veldig bra. Det høres ut som norsk, men gir ikke mening. Det KAN jo tenkes at min tekst ikke var spesielt klart uttrykt. Men det kan også tenkes at dette ikke var så hjelpsomt. Blir det bedre med Llama3.1?
+
+```{r}
+req = request("http://localhost:11434/api/generate") |> 
+  req_method("POST")
+
+#selve requesten
+body_json = list(model = "llama3.1",
+                  stream = FALSE,
+                  prompt = paste0("Du er en ekspert på å skrive blogginnlegg. Skriv et kort sammendrag av teksten som kommer til slutt etter kolon. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: ", df$post[1]),
+                 options = options
+                  )
+
+req = req_body_json(req, body_json)
+
+starttid = Sys.time()
+resp = req_perform(req)
+sluttid = Sys.time()
+
+sluttid - starttid
+
+#hvilken form er det på innholdet? Bør være JSON
+#resp_status_desc(resp)
+#resp_content_type(resp)
+
+```
+
+Den brukte 2 minutter på å generere dette: 
+
+```{r, results='asis'}
+json_body = resp_body_json(resp)
+json_body$response
+```
+
+Dette var veldig mye bedre! Og det uten at den er spesial-språklig og norsk. Språket er fortsatt dansk.
+
+# Kan jeg loope denne jobben?
+
+```{r}
+#setter options
+options = list(
+  seed = 1106,
+  num_ctx = 6000
+)
+
+df_test = slice_sample(df, n = 5)
+
+df_sammendrag = data.frame()
+
+for(i in 1:nrow(df_test)){
+  starttid = Sys.time()
+  resp = request("http://localhost:11434/api/generate") |>
+    req_method("POST") |> 
+    req_body_json(list(model = "normistral-instruct",
+                        stream = FALSE,
+                        prompt = paste0("Du er en ekspert på å skrive blogginnlegg. Du er en ekspert på å lage sammendrag av tekst. Skriv et kort sammendrag av teksten som kommer til slutt. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: ", df_test$post[i]),
+                       options = options
+                        )) |>  
+  req_perform()
+  sluttid = Sys.time()
+  tid = sluttid - starttid
+  json_body = resp_body_json(resp)
+
+  temp_df = data.frame(
+    navn = df_test$navn[i],
+    sammendrag = json_body$response,
+    tid = tid
+  )
+  df_sammendrag = bind_rows(df_sammendrag, temp_df)
+}
+
+#kjører den samme med llama3.1
+
+df_sammendrag_llama = data.frame()
+
+for(i in 1:nrow(df_test)){
+  starttid = Sys.time()
+  resp = request("http://localhost:11434/api/generate") |>
+    req_method("POST") |> 
+    req_body_json(list(model = "llama3.1",
+                        stream = FALSE,
+                        prompt = paste0("Du er en ekspert på å skrive blogginnlegg. Du er en ekspert på å lage sammendrag av tekst. Skriv et kort sammendrag av teksten som kommer til slutt. Sammendraget må være på maksimalt 400 tegn. Teksten som du skal lage sammendrag av er: ", df_test$post[i]),
+                       options = options
+                        )) |>  
+  req_perform()
+  sluttid = Sys.time()
+  tid = sluttid - starttid
+  json_body = resp_body_json(resp)
+
+  temp_df = data.frame(
+    navn = df_test$navn[i],
+    sammendrag = json_body$response,
+    tid = tid
+  )
+  df_sammendrag_llama = bind_rows(df_sammendrag_llama, temp_df)
+}
+
+```
+
+```{r}
+df_sammendrag_llama = rename(df_sammendrag_llama,
+                             sammendrag_llama = sammendrag,
+                             tid_llama = tid
+                             )
+
+temp = left_join(df_sammendrag, df_sammendrag_llama) |> 
+  mutate(
+    sammendrag = str_trunc(sammendrag, 500, "right"),
+    sammendrag_llama = str_trunc(sammendrag_llama, 500, "right")
+  )
+
+knitr::kable(temp)
+```
+
+Sammendragene fra Llama3.1 er mye bedre enn Mistral-sammendragene. Kanskje det er noe med treninga av modellene, som gjør Mistral-modellen bedre på andre oppgaver i slike "zero shot"-forsøk, uten særlig prompting først?
+
+## Funker Mistral-modellen bedre med litt prompting først?
+
+Jeg strever litt med å gi den en fornuftig prompt her. Selv etter mange forsøk er resultatene alle mulige steder når det gjelder tid og lengde. Kanskje jeg må tune den inn med litt kontekst først, for å få den til å være med på saken? Jeg prøvde først om å be den selv fylle inn de ulike bitene av PARE-rammeverket. Det ga meg bare vås. Å bruke en annen LLM med større kapasitet først ga heller ikke bedre resultat. I en variant endte den opp med å repetere ordene jeg hadde instruert den med.
+
+Min favoritt så langt er "16.mai, 2009, kl.22: 17.mai, 2009, kl.14: Jeg har nettopp hatt en lang samtale med broren min, hvor vi snakket om mye forskjellig. Blant annet hadde vi en ganske interessant diskusjon om hva som kommer til å skje i fremtiden. Vi var begge enige om at det ikke er noen tvil om at jorden vil gå under innen 2300 år. Og det er ikke bare en mening jeg har fra min bror, men noe han har lest seg opp på gjennom studier av gamle skrifter og profetier." Beskjeder med system-rollen taklet den ikke. 
+
+Her fikk jeg også problemer med at serveren hang seg opp, tidvis, og måtte resettes før et nytt forsøk. Igjen var det langt bedre resultater med Llama3.1, denne gangen også uten dansk tekst:
+
+```{r}
+# #prøver en enkel chat
+options = list(
+  seed = 1106,
+  num_ctx = 6000
+)
+
+df_sammendrag_chat = data.frame()
+
+#kjører den samme med llama3.1
+
+for(i in 1:nrow(df_test)){
+  starttid = Sys.time()
+  
+  #genererer først beskjedene jeg vil sende
+  #beskjedene må formateres som en liste
+beskjeder = list(
+  list(role = "system", content = "Du er en assistent som skriver sammendrag av tekster. Du lager korte, konsise sammendrag som er maksimalt 400 tegn lange. Sammendragene er relatert til teksten, ikke andre tema."),
+  list(role = "user", content = paste0("Skriv et kort sammendrag av denne teksten: ", df_test$post[i]))
+)
+  
+  resp = request("http://localhost:11434/api/chat") |>
+    req_method("POST") |> 
+    req_body_json(list(model = "llama3.1",
+                        stream = FALSE,
+                        messages = beskjeder,
+                        options = options
+                        )) |>  
+  req_perform()
+
+  sluttid = Sys.time()
+  tid = sluttid - starttid
+  json_body = resp_body_json(resp)
+
+  temp_df = data.frame(
+    navn = df_test$navn[i],
+    sammendrag = json_body$message$content,
+    tid = tid
+  )
+  df_sammendrag_chat = bind_rows(df_sammendrag_chat, temp_df)
+}
+
+knitr::kable(df_sammendrag_chat)
+
+```
+
+Jeg er usikker på hvor problemet ligger. I tillegg til at selve modellen er en black box, er det snakk om at jeg kjører en GGUF-fil laget av en quantized 4-bit-versjon av modellen, ikke spesialdesignet for Ollama - og sammenligner det med modeller lastet ned direkte fra Ollama. Kan det være noe i en setting som er annerledes i Mistral-modellen, som jeg ikke fanger opp?
+
+# Kan en LLM gi en meningsfull vurdering av kvalitet?
+
+Den genererer tekst. Men er det meningsfult å be modellen om å vurdere kvalitet? Dette er en språkmodell, som kan språk og koblinger i språket. Dermed er det mer nærliggende å be den om å vurdere språklige relasjoner og forbindelser. Kan den f.eks. identifisere om en bloggpost omhandler statistikk?
+
+```{r}
+df_scoring_llama = data.frame()
+
+for(i in 1:nrow(df_test)){
+  starttid = Sys.time()
+  resp = request("http://localhost:11434/api/generate") |>
+    req_method("POST") |> 
+    req_body_json(list(model = "llama3.1",
+                        stream = FALSE,
+                        prompt = paste0("Du er en ekspert på å vurdere innhold i tekst. Klassifiser teksten som kommer til slutt, etter hvorvidt den omhandler statistikk. Bruk de tre kodene ja, nei og kanskje. Ja betyr at teksten inneholder statistikk. Nei betyr at teksten ikke omhandler statistikk. Kanskje betyr at du er usikker. Ikke inkluder overflødig tekst. Teksten du skal score er: ", df_test$post[i]),
+                       options = options
+                        )) |>  
+  req_perform()
+  sluttid = Sys.time()
+  tid = sluttid - starttid
+  json_body = resp_body_json(resp)
+
+  temp_df = data.frame(
+    navn = df_test$navn[i],
+    sammendrag = json_body$response,
+    tid = tid
+  )
+  df_scoring_llama = bind_rows(df_scoring_llama, temp_df)
+}
+
+knitr::kable(df_scoring_llama)
+```
+
+Den gir i hvert fall svar - og svarene gir mening. 
+
+Outputen har litt tvilsom formattering her. 
