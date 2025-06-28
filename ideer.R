@@ -18,7 +18,13 @@
 # kart - geocoding
 # kart - kartogram for Norge?
 
+# indikatorer for integrering - løsningen jeg egentlig drømte om?
+# bosettingsalgoritmer - hva kan en få til med treffsikker bosetting?
+
 # rapporter 
+
+#Noe om Jobbsjansen
+#Distriktssenter-rapporten
 
 #ARBKVAL-rapportene?
 #Norskopplæringsrapportene?

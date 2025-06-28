@@ -1,0 +1,182 @@
+---
+title: "Hvordan går det egentlig med integreringa?"
+description: |
+  En kort gjennomgang av sentrale indikatorer for integrering.
+author:
+  - name: Eivind Hageberg
+    url: https://suppe-og-analyse.netlify.app
+date: 2024-10-30
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r, include = FALSE}
+#biblioteker
+library(tidyverse)
+library(PxWebApiData)
+
+#settings
+set.seed(1106)
+theme_set(theme_minimal())
+knitr::opts_chunk$set(echo = FALSE)
+options(scipen = 999)
+```
+
+
+Jeg har jobba med analyser knytta til integreringsfeltet i over 10 år nå. Ett av de vanligste spørsmålene jeg får, er "men hvordan går det egentlig med integreringa da?". 
+
+Hva man svarer på dette spørsmålet, avhenger i stor grad av hvor man står: hva er det du tenker er viktig med samfunnet? 
+
+Det er laget flere gjennomganger av dette. [Barstad og Molstad (2020)](https://www.ssb.no/befolkning/artikler-og-publikasjoner/_attachment/438053?_ts=175daec55f8) har en fin oppsummering av mye, fra et SSBsk perspektiv. [Ager og Strang (2008)](https://www.researchgate.net/profile/Alison-Strang/publication/31174952_Understanding_Integration_A_Conceptual_Framework/links/550aa8da0cf265693ced726b/Understanding-Integration-A-Conceptual-Framework.pdf) er også veldig lesverdig.
+
+# Hva er integrering?
+
+Dersom du er opptatt av resultatene, kunne du kanskje tatt utgangspunkt i noe slikt som at vellykket integrering skjer "dersom urimelige og ikke-selvvalgte forskjeller mellom minoritet og majoritet minker, over tid og mellom generasjoner" (Østbye, 2016). Så kunne du målt disse forskjellene på de viktigste områdene for deg, som arbeidsmarked, bolig, eller i utdanningssystemet. 
+
+Men du kan også være mer opptatt av at mulighetene skal være like, enn resultatene. Da kan du ta utgangspunkt i at vellykket integrering er "muligheten innvandrere har til å oppnå de samme sosiale og økonomiske resultatene som innfødte, bakgrunnskjennetegnene deres tatt i betraktning" (OECD, Settling In: Indicators of Immigrant Integration). Så måtte en da målt disse mulighetene, gjennom f.eks. gjennomganger av de jure og/eller de facto tilgang til utdanning og språkopplæring, slik f.eks. [MIPEX](https://www.mipex.eu/) og [IPL Integration Index](https://immigrationlab.org/ipl-integration-index/) legger opp til.  
+
+Det er fullt mulig å innvende at begge disse perspektivene er veldig en-veis, og kanskje nærmere en form for assimiliering. Da kan du heller se for deg at integrering er "en to-veis prosess av gjensidig tilpasning mellom innvandrere og samfunnet som de lever i, gjennom hvilket innvandrerne blir inkorporert i det sosiale, økonomiske, kulturelle og politiske livet i mottagersamfunnet" [IOM](https://www.iom.int/sites/g/files/tmzbdl486/files/2018-07/IOM-Thematic-Paper-Integration-and-Social-Cohesion.pdf). En operasjonalisering av dette må innebære en nærmere definisjon av hva gjensidig tilpasning betyr, noe IOM selv peker på kan variere med hvordan landet plasserer seg på en skala fra assimiliering til multikulturalisme. Slik jeg husker Kymlicka, en multikulturalisme-teoretiker, er det sentrale her at mottakernasjonen lar tilflyttere få del i økonomi og politikk, uten å gi slipp på sine sentrale kultur-kjennetegn.   
+
+Jeg har sansen for å ta utgangspunkt i resultatlikhet. Sjanselikhet høres fint ut, men er i praksis svært vanskelig å måle, særlig de facto - faktisk likhet. Og hvordan skal du og din familie ha reellt samme sjanser som andre, hvis du f.eks. har større økonomiske bekymringer, bor trangere, og har et mindre sosialt nettverk? 
+
+# På hvilke områder skal en se på integrering?
+
+En må også velge seg ut hvilke områder og hvilke nivåer en skal se på. Eggebø og Brekke har en enkel og grei variant av dette, som skiller mellom systemintegrasjon (arbeid, bolig, utdanning, rettigheter og muligheter til politisk deltakelse), sosial integrasjon (sosiale nettverk, frivillighet, tilhørighet) og verdiintegrering (kjerneverdier, kulturell tilpasning, identitet). Her kombineres en rekke områder som tradisjonelt hører til i måling av levekår (se f.eks. [OECDs Better Life-indeks](https://www.oecdbetterlifeindex.org/#/11111111111)), med målinger av gruppesamkvem og holdninger til samfunnet som helhet.
+
+At integreringa kan gå i ulike retninger, på ulike områder, 
+
+Jeg har særlig sansen for målinger av levekår. Det er noe tiltalende og enkelt med å se på integrering som en prosess som påvirker levekårene til ulike grupper. Levekår omhandler tradisjonelt tilgangen til ressurser av forskjellige slag, som penger, kunnskap, god helse, og tilgang til relevante arenaer for å skaffe seg dette - arbeid, utdanning og offentlige tjenester ([Barstad mfl. 2023](https://www.ssb.no/sosiale-forhold-og-kriminalitet/levekar/artikler/forslag-til-et-rammeverk-for-maling-av-livskvalitet-i-norge/_/attachment/inline/73aa4f91-eefa-46a1-b57d-b9d6acd7bd91:e9139570887b7b85d0f52885101fcbe1dc5a0188/RAPP2023-51.pdf)). Oppnår personer med innvandrerbakgrunn samme levekår som personer uten innvandrerbakgrunn, når vi tar hensyn til personenes bakgrunnskjennetegn? Og kan vi se at en reduksjon i forskjeller i levekår mellom innvandrere og ikke-innvandrere, over tid og mellom generasjoner? I så fall har vi vellykka integrering. 
+
+# Så, hvordan måler vi det?
+
+Jo, en kan se på noen indikatorer for integrering. Grovt sett er vi interessert i økonomisk integrering, utdanning, sosial integrering og politisk integrering
+
+## Økonomisk integrering
+
+Helt sentralt for økonomisk integrering i samfunnet er sysselsetting:
+
+```{r}
+
+data_sysselsetting = ApiData("https://data.ssb.no/api/v0/no/table/09837", 
+                             LandBakgr = c("abc", "0aa"),
+                             Kjonn = "0",
+                             Alder = "15-74",
+                             ContentsCode = "SysselsatteProsent",
+                             Tid = TRUE
+                             )
+
+df_sysselsetting = data_sysselsetting$`09837: Sysselsatte. 4. kvartal, etter landbakgrunn, kjønn, alder, statistikkvariabel og år` |> 
+  select(år, landbakgrunn, verdi = value)
+
+ggplot(data = df_sysselsetting) + 
+  geom_line(aes(x = år, y = verdi, colour = landbakgrunn, group = landbakgrunn))
+
+#beregner og plotter differanse direkte
+
+diff_sysselsetting = pivot_wider(df_sysselsetting, 
+                                 names_from = landbakgrunn, 
+                                 values_from = verdi) |> 
+  mutate(
+    differanse = `Befolkningen eksklusive innvandrere` - `Innvandrere i alt`
+  )
+
+ggplot(data = diff_sysselsetting) + 
+  geom_line(aes(x = år, y = differanse, group = 1))
+
+```
+
+Utfallet av dette er inntekt. Medianinntekt:
+
+## Utdanning
+
+Andel med fullført videregående opplæring.
+
+Alder avgrenses til personer som er 24 år og eldre. 
+
+```{r}
+data_utdanning = ApiData("https://data.ssb.no/api/v0/no/table/09599", 
+                             UtdanNivaa = TRUE,
+                             Kjonn = FALSE,
+                             InnvandrKat = c("B", "Rest"),
+                              Alder = TRUE,
+                             ContentsCode = "InnvNo",
+                             Tid = TRUE
+                             )
+
+#de koda metadataene for denne tabellen er litt uforståelige uten bakgrunnsinfo
+#https://data.ssb.no/api/v0/no/console/meta/table/09599/
+
+#jeg vil aggregere dette til med og uten fullført vgs
+#for personer 24 år og eldre
+#innvandrere og resten
+#
+
+df_utdanning = data_utdanning$dataset |> 
+  #må først fjerne total-radene
+  filter(UtdanNivaa != "TOT") |> 
+  filter(Alder != "999") |> 
+  mutate(
+    har_fullført_vgs = NA,
+    har_fullført_vgs = ifelse(UtdanNivaa == "00" | UtdanNivaa == "1-2" | UtdanNivaa == "9",
+                              "nei",
+                              "ja"
+                              ),
+    er_24_eller_eldre = NA,
+    er_24_eller_eldre = ifelse(Alder == "16-19" | Alder == "20-24",
+                               "nei",
+                               "ja"
+                               )
+  ) |> 
+  filter(er_24_eller_eldre == "ja")
+
+
+  |> 
+  select(år, landbakgrunn, verdi = value)
+
+ggplot(data = df_sysselsetting) + 
+  geom_line(aes(x = år, y = verdi, colour = landbakgrunn, group = landbakgrunn))
+
+#beregner og plotter differanse direkte
+
+diff_sysselsetting = pivot_wider(df_sysselsetting, 
+                                 names_from = landbakgrunn, 
+                                 values_from = verdi) |> 
+  mutate(
+    differanse = `Befolkningen eksklusive innvandrere` - `Innvandrere i alt`
+  )
+
+ggplot(data = diff_sysselsetting) + 
+  geom_line(aes(x = år, y = differanse, group = 1))
+
+```
+
+
+## Politisk integrering
+
+Valgdeltakelse.
+
+## Sosial integrering
+
+Her mangler vi registerdata, så vi lar det ligge. Men det finnes mange utvalgsundersøkelser.
+
+# Så, hva sier samlemålet på integrering?
+
+Hvis vi lager en vekta indeks som måler utviklingen på disse områdene sammen, får vi følgende:
+
+
+
+# Men vent! Dette er jo for enkelt, fordi...
+
+## ... dette er bivariate data, er det ikke? 
+
+Jo. Slik vi definerte integrering over, handler det egentlig om forskjeller mellom grupper, korrigert for andre bakgrunnskjennetegn. Dvs. at når vi snakker om integrering av innvandrere, så er vi interessert i om kvinner med innvandrerbakgrunn oppnår samme resultater som kvinner uten innvandrerbakgrunn. Vi er ikke interessert i betydningen av kjønn - bortsett fra at den også kan ha betydning for f.eks. at innvandrerkvinner møter et annet Norge enn norskfødte menn.
+
+Tallene en får ut av statistikkbanker er ikke korrigerte på denne måten. 
+
+Canadas integreringsindeks følger denne tilnærminga.
+
+## ...gjennomsnittsverdier gir jo ingen mening?
+
+Jeg er fortsatt usikker på om det er et spørsmål det gir mening å besvare generelt. Som Lars Østby, emeritus-demograf i SSB og en virkelig nestor på feltet, gjerne sa (fritt etter hukommelsen): "Hvis du har beina i fryseren og huet i ovnen, så blir gjennomsnittstemperaturen din god den, men den sier ikke så mye om hvordan du har det". Det er virkelig tilfellet her. Kanskje det gir mer mening å sette opp disse indikatorene for ulike grupper? Prøver det neste gang. 
+

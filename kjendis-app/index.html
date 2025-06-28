@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kjendis-Spottingskonkurranse 🌟</title>
+    <meta name="description" content="Konkurrer om å spotte de beste kjendisene! Få poeng basert på hvor kjente de er.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .player-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .celebrity-input {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .celebrity-input input {
+            flex: 1;
+        }
+
+        .remove-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .add-btn, .calculate-btn {
+            background: #51cf66;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+
+        .add-btn:hover, .calculate-btn:hover {
+            background: #37b24d;
+        }
+
+        .calculate-btn {
+            background: #667eea;
+            font-size: 18px;
+            padding: 15px 30px;
+            display: block;
+            margin: 30px auto;
+        }
+
+        .calculate-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .calculate-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .player-result {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .player-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .celebrity-score {
+            background: #f1f3f4;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .celebrity-name {
+            font-weight: bold;
+        }
+
+        .score {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .score.estimated {
+            background: #ff9800;
+        }
+
+        .score.api-success {
+            background: #4caf50;
+        }
+
+        .total-score {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .winner {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 30px 0;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4); }
+            to { box-shadow: 0 5px 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .score-details {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .leaderboard {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .leaderboard h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .leaderboard-item.first {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            font-weight: bold;
+        }
+
+        .leaderboard-item.second {
+            background: linear-gradient(45deg, #c0c0c0, #dcdcdc);
+        }
+
+        .leaderboard-item.third {
+            background: linear-gradient(45deg, #cd7f32, #daa520);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .api-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .api-status.success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .api-status.fallback {
+            background: #ff9800;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .celebrity-input {
+                flex-direction: column;
+            }
+            
+            .celebrity-score {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 Kjendis-Spottingskonkurranse 🌟</h1>
+        
+        <div class="info-box">
+            <strong>Hvordan det fungerer:</strong> Legg til spillere og kjendisene de har spottet. 
+            Appen beregner poeng basert på hvor kjente de er (Wikipedia-data + språkversjoner + popularitet).
+        </div>
+        
+        <div id="setup">
+            <div id="players-container">
+                <div class="player-section">
+                    <div class="input-group">
+                        <label>Spillernavn:</label>
+                        <input type="text" class="player-name-input" placeholder="F.eks. Hanna">
+                    </div>
+                    <label>Kjendiser spottet:</label>
+                    <div class="celebrities-container">
+                        <div class="celebrity-input">
+                            <input type="text" placeholder="F.eks. Celine Dion">
+                            <button class="remove-btn" onclick="removeCelebrity(this)">Fjern</button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addCelebrity(this)">+ Legg til kjendis</button>
+                </div>
+            </div>
+            
+            <button class="add-btn" onclick="addPlayer()">+ Legg til spiller</button>
+            <button class="calculate-btn" onclick="calculateScores()">🏆 Beregn poeng og finn vinner!</button>
+        </div>
+
+        <div id="results" style="display: none;">
+            <div class="leaderboard">
+                <h3>🏆 Leaderboard</h3>
+                <div id="leaderboard-content"></div>
+            </div>
+            
+            <div id="detailed-results"></div>
+            
+            <button class="calculate-btn" onclick="resetCompetition()">🔄 Ny konkurranse</button>
+        </div>
+
+        <div class="footer">
+            Laget med ❤️ for kjendis-spotting | Data fra Wikipedia API
+        </div>
+    </div>
+
+    <script>
+        let isCalculating = false;
+        let currentProgress = 0;
+        let totalCelebrities = 0;
+
+        function addPlayer() {
+            const container = document.getElementById('players-container');
+            const playerDiv = document.createElement('div');
+            playerDiv.className = 'player-section';
+            
+            playerDiv.innerHTML = `
+                <div class="input-group">
+                    <label>Spillernavn:</label>
+                    <input type="text" class="player-name-input" placeholder="F.eks. Erik">
+                </div>
+                <label>Kjendiser spottet:</label>
+                <div class="celebrities-container">
+                    <div class="celebrity-input">
+                        <input type="text" placeholder="F.eks. Magnus Carlsen">
+                        <button class="remove-btn" onclick="removeCelebrity(this)">Fjern</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addCelebrity(this)">+ Legg til kjendis</button>
+                <button class="remove-btn" onclick="removePlayer(this)" style="margin-left: 10px;">Fjern spiller</button>
+            `;
+            
+            container.appendChild(playerDiv);
+        }
+
+        function removePlayer(button) {
+            button.closest('.player-section').remove();
+        }
+
+        function addCelebrity(button) {
+            const container = button.previousElementSibling;
+            const celebrityDiv = document.createElement('div');
+            celebrityDiv.className = 'celebrity-input';
+            
+            celebrityDiv.innerHTML = `
+                <input type="text" placeholder="Kjendis navn">
+                <button class="remove-btn" onclick="removeCelebrity(this)">Fjern</button>
+            `;
+            
+            container.appendChild(celebrityDiv);
+        }
+
+        function removeCelebrity(button) {
+            button.closest('.celebrity-input').remove();
+        }
+
+        function updateProgress() {
+            currentProgress++;
+            const progressElement = document.getElementById('progress-fill');
+            if (progressElement) {
+                const percentage = Math.round((currentProgress / totalCelebrities) * 100);
+                progressElement.style.width = percentage + '%';
+                progressElement.textContent = `${currentProgress}/${totalCelebrities}`;
+            }
+        }
+
+        async function getWikipediaScore(celebrityName) {
+            try {
+                console.log('Henter data for:', celebrityName);
+                
+                // 1. Søk etter Wikipedia-siden
+                const searchUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(celebrityName)}`;
+                
+                const response = await fetch(searchUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'User-Agent': 'CelebritySpottingApp/1.0 (https://example.com/contact)'
+                    }
+                });
+                
+                if (!response.ok) {
+                    console.log('Wikipedia page ikke funnet for:', celebrityName);
+                    const fallback = getFallbackScore(celebrityName);
+                    return { 
+                        name: celebrityName, 
+                        score: fallback.score, 
+                        details: fallback.reason,
+                        isEstimated: true
+                    };
+                }
+                
+                const pageData = await response.json();
+                const pageTitle = pageData.title;
+                console.log('Funnet Wikipedia-side:', pageTitle);
+                
+                // 2. Hent språkversjoner
+                let numLanguages = 1;
+                
+                try {
+                    const langUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=langlinks&lllimit=500&format=json&origin=*&formatversion=2`;
+                    
+                    const langResponse = await fetch(langUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+                    
+                    if (langResponse.ok) {
+                        const langData = await langResponse.json();
+                        
+                        if (langData.query && langData.query.pages && langData.query.pages.length > 0) {
+                            const page = langData.query.pages[0];
+                            if (page.langlinks) {
+                                numLanguages = page.langlinks.length + 1;
+                            }
+                        }
+                    }
+                } catch (langError) {
+                    console.log('Kunne ikke hente språkdata, bruker standard verdi');
+                }
+                
+                // 3. Hent sidevisninger
+                let pageviews = 0;
+                
+                try {
+                    const endDate = new Date();
+                    const startDate = new Date(endDate.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    
+                    const formatDate = (date) => {
+                        return date.getFullYear() + 
+                               String(date.getMonth() + 1).padStart(2, '0') + 
+                               String(date.getDate()).padStart(2, '0');
+                    };
+                    
+                    const pageviewsUrl = `https://wikimedia.org/api/rest_v1/metrics/pageviews-per-article/en.wikipedia/all-access/user/${encodeURIComponent(pageTitle.replace(/ /g, '_'))}/daily/${formatDate(startDate)}/${formatDate(endDate)}`;
+                    
+                    const pvResponse = await fetch(pageviewsUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+                    
+                    if (pvResponse.ok) {
+                        const pvData = await pvResponse.json();
+                        if (pvData.items && pvData.items.length > 0) {
+                            pageviews = pvData.items.reduce((sum, item) => sum + (item.views || 0), 0);
+                        }
+                    }
+                } catch (pvError) {
+                    console.log('Kunne ikke hente sidevisninger, bruker 0');
+                }
+                
+                // 4. Beregn poeng
+                const languageScore = Math.min(numLanguages * 3, 60);
+                const pageviewScore = Math.min(pageviews / 1000, 30);
+                const totalScore = Math.round((languageScore + pageviewScore) * 10) / 10;
+                
+                console.log(`${celebrityName}: ${numLanguages} språk, ${pageviews} visninger, ${totalScore} poeng`);
+                
+                return {
+                    name: celebrityName,
+                    wikipediaTitle: pageTitle,
+                    numLanguages: numLanguages,
+                    pageviews: pageviews,
+                    languageScore: Math.round(languageScore * 10) / 10,
+                    pageviewScore: Math.round(pageviewScore * 10) / 10,
+                    score: totalScore,
+                    details: `${numLanguages} språk, ${pageviews.toLocaleString()} visninger`,
+                    isEstimated: false
+                };
+                
+            } catch (error) {
+                console.error('Feil ved henting av data for', celebrityName, ':', error);
+                
+                const fallback = getFallbackScore(celebrityName);
+                
+                return { 
+                    name: celebrityName, 
+                    score: fallback.score, 
+                    details: fallback.reason,
+                    isEstimated: true,
+                    error: 'API utilgjengelig'
+                };
+            }
+        }
+
+        function getFallbackScore(celebrityName) {
+            const name = celebrityName.toLowerCase();
+            
+            // Internasjonale superstjerner
+            const globalStars = ['madonna', 'brad pitt', 'angelina jolie', 'leonardo dicaprio', 'beyonce', 'taylor swift', 'justin bieber', 'rihanna', 'lady gaga', 'michael jackson', 'elvis presley', 'marilyn monroe', 'tom cruise', 'will smith', 'jennifer lawrence'];
+            if (globalStars.some(star => name.includes(star))) {
+                return { score: 85, reason: 'Estimert (global superstjerne)' };
+            }
+            
+            // Store internasjonale navn
+            const internationalStars = ['celine dion', 'adele', 'ed sheeran', 'coldplay', 'u2', 'queen', 'david bowie', 'elton john', 'paul mccartney', 'madonna', 'sting', 'phil collins'];
+            if (internationalStars.some(star => name.includes(star))) {
+                return { score: 70, reason: 'Estimert (internasjonal stjerne)' };
+            }
+            
+            // Norske A-kjendiser
+            const norwegianAList = ['kygo', 'aurora', 'a-ha', 'magnus carlsen', 'erling haaland', 'karpe', 'anne-kat hærland', 'harald zwart', 'aksel hennie', 'kristofer hivju'];
+            if (norwegianAList.some(star => name.includes(star))) {
+                return { score: 55, reason: 'Estimert (norsk A-kjendis)' };
+            }
+            
+            // Norske B-kjendiser  
+            const norwegianBList = ['trude drevland', 'petter pilgaard', 'jan thomas', 'nicolay ramm', 'anders baasmo', 'ingrid bolsø berdal', 'dennis storhøi', 'marian saastad ottesen'];
+            if (norwegianBList.some(star => name.includes(star))) {
+                return { score: 35, reason: 'Estimert (norsk B-kjendis)' };
+            }
+            
+            return { score: 15, reason: 'Estimert (ukjent/lokal kjendis)' };
+        }
+
+        async function calculateScores() {
+            if (isCalculating) return;
+            
+            isCalculating = true;
+            const calculateBtn = document.querySelector('.calculate-btn');
+            calculateBtn.disabled = true;
+            calculateBtn.textContent = 'Beregner poeng...';
+            
+            // Samle spillerdata
+            const players = [];
+            const playerSections = document.querySelectorAll('.player-section');
+            
+            for (const section of playerSections) {
+                const playerNameInput = section.querySelector('.player-name-input');
+                const playerName = playerNameInput.value.trim();
+                
+                if (!playerName) {
+                    alert('Alle spillere må ha navn!');
+                    resetCalculateButton();
+                    return;
+                }
+                
+                const celebrityInputs = section.querySelectorAll('.celebrity-input input');
+                const celebrities = [];
+                
+                for (const input of celebrityInputs) {
+                    const celebrity = input.value.trim();
+                    if (celebrity) {
+                        celebrities.push(celebrity);
+                    }
+                }
+                
+                if (celebrities.length === 0) {
+                    alert(`${playerName} må ha minst én kjendis!`);
+                    resetCalculateButton();
+                    return;
+                }
+                
+                players.push({ name: playerName, celebrities: celebrities });
+            }
+            
+            if (players.length === 0) {
+                alert('Du må legge til minst én spiller!');
+                resetCalculateButton();
+                return;
+            }
+            
+            // Tell totalt antall kjendiser
+            totalCelebrities = players.reduce((sum, player) => sum + player.celebrities.length, 0);
+            currentProgress = 0;
+            
+            // Vis loading med progress bar
+            document.getElementById('setup').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('detailed-results').innerHTML = `
+                <div class="loading">
+                    Henter kjendisdata fra Wikipedia... 
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill" style="width: 0%;">0/${totalCelebrities}</div>
+                    </div>
+                    <small>Bruker live Wikipedia-data når tilgjengelig</small>
+                </div>
+            `;
+            
+            // Beregn poeng for alle spillere
+            const results = [];
+            
+            for (const player of players) {
+                const playerResult = {
+                    name: player.name,
+                    celebrities: [],
+                    totalScore: 0
+                };
+                
+                for (const celebrity of player.celebrities) {
+                    const score = await getWikipediaScore(celebrity);
+                    playerResult.celebrities.push(score);
+                    playerResult.totalScore += score.score;
+                    
+                    updateProgress();
+                    
+                    // Pause mellom API-kall
+                    await new Promise(resolve => setTimeout(resolve, 400));
+                }
+                
+                playerResult.totalScore = Math.round(playerResult.totalScore * 10) / 10;
+                results.push(playerResult);
+            }
+            
+            // Vis resultater
+            displayResults(results);
+            isCalculating = false;
+        }
+
+        function displayResults(results) {
+            // Sorter spillere etter poeng
+            results.sort((a, b) => b.totalScore - a.totalScore);
+            
+            // Vis leaderboard
+            const leaderboardContent = document.getElementById('leaderboard-content');
+            leaderboardContent.innerHTML = '';
+            
+            results.forEach((player, index) => {
+                const item = document.createElement('div');
+                item.className = 'leaderboard-item';
+                
+                if (index === 0) item.classList.add('first');
+                else if (index === 1) item.classList.add('second');
+                else if (index === 2) item.classList.add('third');
+                
+                const rank = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+                
+                item.innerHTML = `
+                    <span>${rank} ${player.name}</span>
+                    <span>${player.totalScore} poeng</span>
+                `;
+                
+                leaderboardContent.appendChild(item);
+            });
+            
+            // Vis detaljerte resultater
+            const detailedResults = document.getElementById('detailed-results');
+            
+            let html = '';
+            
+            // Vinner
+            if (results.length > 0) {
+                html += `<div class="winner">🏆 VINNER: ${results[0].name} med ${results[0].totalScore} poeng! 🎉</div>`;
+            }
+            
+            // Detaljerte resultater for hver spiller
+            results.forEach(player => {
+                html += `
+                    <div class="player-result">
+                        <div class="player-name">${player.name}</div>
+                `;
+                
+                player.celebrities.forEach(celebrity => {
+                    const statusClass = celebrity.isEstimated ? 'estimated' : 'api-success';
+                    const statusText = celebrity.isEstimated ? 'Estimert' : 'Live data';
+                    
+                    html += `
+                        <div class="celebrity-score">
+                            <div>
+                                <div class="celebrity-name">
+                                    ${celebrity.name}
+                                    <span class="api-status ${statusClass}">${statusText}</span>
+                                </div>
+                                ${celebrity.error ? 
+                                    `<div class="error">${celebrity.error}</div>` : 
+                                    `<div class="score-details">${celebrity.details}</div>`
+                                }
+                            </div>
+                            <span class="score ${statusClass}">${celebrity.score}</span>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        <div class="total-score">Total: ${player.totalScore} poeng</div>
+                    </div>
+                `;
+            });
+            
+            detailedResults.innerHTML = html;
+        }
+
+        function resetCalculateButton() {
+            isCalculating = false;
+            const calculateBtn = document.querySelector('.calculate-btn');
+            calculateBtn.disabled = false;
+            calculateBtn.textContent = '🏆 Beregn poeng og finn vinner!';
+        }
+
+        function resetCompetition() {
+            document.getElementById('setup').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            // Tøm alle input-felt
+            document.querySelectorAll('input').forEach(input => input.value = '');
+            
+            resetCalculateButton();
+        }
+
+        // Enter-key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !isCalculating) {
+                calculateScores();
+            }
+        });
+
+        // Service Worker for offline caching (valgfritt)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful');
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
